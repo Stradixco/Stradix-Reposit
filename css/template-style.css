@@ -1507,3 +1507,22 @@ section, header {
     background-position: center;
   }
 }
+contact-form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200vh; /* يملأ الصفحة بالكامل */
+  width: 200%; /* يجعل الحاوية تملأ العرض بالكامل */
+  padding: 0 20px; /* تباعد بسيط من الأطراف */
+  box-sizing: border-box;
+}
+
+.contact-form {
+  background-color: #f5f5f5;
+  padding: 8rem;
+  max-width: 500px; /* تعديل العرض حسب المطلوب */
+  width: 100%; /* يجعل النموذج يملأ الحاوية بالكامل */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  text-align: center;
+}
