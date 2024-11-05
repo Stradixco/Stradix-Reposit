@@ -33,10 +33,39 @@
       <header class="grid">
         <!-- Top Navigation -->
         <nav class="s-12 grid background-none background-primary-hightlight">
-           <!-- logo -->
-           <a href="index.html" class="m-12 l-3 padding-2x logo">
-              <img src="img/logo.svg">
-           </a>
+
+
+<!-- logo -->
+<a href="index.html" class="logo-container">
+    <img src="img/logov1.png" alt="Stradix Logo" class="logo">
+</a>
+
+<style>
+/* إزالة الهامش حول الشعار وجعل الشعار أكبر قليلاً */
+.logo-container {
+    display: flex;
+    justify-content: center; /* توسيط الشعار */
+    margin: 5; /* إزالة أي هامش */
+    padding: 0; /* إزالة أي حشوة */
+}
+
+.logo {
+    max-width: 120px; /* حجم الشعار، يمكنك تعديله */
+    height: auto;
+}
+
+/* تقليل المسافة بين الشعار والصور أسفل */
+.header-section {
+    margin-bottom: 0; /* إزالة المسافة السفلية */
+    padding-bottom: 0; /* إزالة الحشوة السفلية */
+}
+
+/* رفع الصور لتكون قريبة من الشعار */
+.image-gallery {
+    margin-top: -10px; /* يمكنك تعديل هذه القيمة لتقليل المسافة */
+    padding-top: 0;
+}
+</style></style>           
            <div class="top-nav s-12 l-9"> 
               <ul class="top-ul right chevron">
                 <li><a href="index.html">Home</a></li>
@@ -72,47 +101,76 @@
         
         <!-- SECTION 1 --> 
         <section class="grid margin text-center">
-          <a href="/" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-red">
+          <a href="gallery.html" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-red">
             <i class="icon-sli-equalizer text-size-60 text-white center margin-bottom-15"></i>
-            <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Unlimited Color Variants</h3>
+            <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Gallery</h3>
           </a>
-          <a href="/" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-blue">
+          <a href="https://drive.google.com/file/d/15YUHbcB3-Cs7yO1UW1tLTMMQ9o1Frf5H/view?usp=sharing" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-blue">
             <i class="icon-sli-layers text-size-60 text-white center margin-bottom-15"></i>
-            <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Many Reusable Elements</h3>
+            <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Downloan our broushur</h3>
           </a>
           
           <!-- Image-->
-          <img class="m-12 l-6 l-row-2 margin-bottom" src="img/img-06.jpg">
+          <img class="m-12 l-6 l-row-2 margin-bottom" src="img/img-11v1.jpg">
           
-          <a href="/" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-orange">
+          <a href="contact.html" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-orange">
             <i class="icon-sli-diamond text-size-60 text-white center margin-bottom-15"></i>
-            <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Responsive Layoute</h3>
+            <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Send Message</h3>
           </a>
-          <a href="/" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-aqua">
+
+          <a href="#" onclick="shareLink()" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-aqua">
             <i class="icon-sli-share text-size-60 text-white center margin-bottom-15"></i>
-            <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Clean Modern Code</h3>
-          </a>
-        </section>
+            <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Share</h3>
+        </a>
+        
+        <!-- JavaScript for sharing functionality -->
+        <script>
+            function shareLink() {
+                const stradixLink = "https://www.S-Tradix.com"; // ضع هنا رابط صفحة الاتصال الخاصة بشركتك
+        
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Stradix Contact Page',
+                        text: 'Check out Stradix Contact Page!',
+                        url: stradixLink
+                    }).then(() => {
+                        console.log('Thanks for sharing!');
+                    }).catch((error) => {
+                        console.error('Error sharing:', error);
+                    });
+                } else {
+                    // إذا لم يكن Web Share API مدعومًا
+                    alert("Copy this link to share: " + stradixLink);
+                }
+            }
+        </script>   
+            
+       </section>
         
         <!-- SECTION 2 -->
         <section class="grid section margin-bottom background-dark">
-          <h2 class="s-12 l-6 center text-thin text-size-30 text-white text-uppercase margin-bottom-30">Responsive <b>Parallax Background</b></h2>
-          <p class="s-12 l-6 center">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+          <h2 class="s-12 l-6 center text-thin text-size-30 text-white text-uppercase margin-bottom-30">Efficient   <b>Supply Chain Solutions</b></h2>
+          <p class="s-12 l-6 center">Stradix ensures a seamless and efficient supply chain experience, delivering quality products and services on time, every time. Our commitment to excellence drives us to maintain reliable and optimized logistics to support our clients’ needs across all sectors.</p>
         </section>
         
         <!-- SECTION 3 --> 
         <section class="grid margin">
           <!-- Image-->
-          <img class="s-12 m-6 margin-bottom" src="img/img-01.jpg">
+          <img class="s-12 m-6 margin-bottom" src="img/img-12v1.jpg">
         
           <div class="s-12 m-6 padding-2x margin-bottom background-blue">
-            <h2 class="text-strong text-size-50 text-line-height-1">Nonummy nibh euismod tincidunt ut laoreet<br> massa nec orci accusamus auctor aute</h2>
+            <h2 class="text-strong text-size-50 text-line-height-1">Comprehensive Marine Services at Tradix</h2>
             <ul>
-              <li>Sed diam nonummy nibh euismod tincidunt ut laoreet</li> 
-              <li>Dolore magna aliquam erat volutpat</li>
-              <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</li>
-              <li>Sed diam nonummy nibh euismod tincidunt ut laoreet</li>
-              <li>Dolore magna aliquam erat volutpat</li>
+              <li>Supply of Spare Parts and Equipment </li>
+              <li>Sewage Services, Oil, Mix water,Mud removal
+              <li>Manpower Supply </li>
+              <li>Fresh Food Supply,Efficient Cold Chain Management </li>
+              <li>Over 10 Years of Industry Experience</li> 
+              <li>Certified and Highly Qualified</li>
+              <li>Competitive Pricing</li>
+              <li>On-Time Project Delivery </li>
+              <li>Reliable Supply Chain </li>
+
             </ul>
           </div>
         </section>
@@ -121,63 +179,42 @@
         <h2 class="s-12 text-white text-thin text-size-30 text-white text-uppercase margin-top-bottom-40 center text-center">Top <b>References</b></h2>
         <section class="grid margin">
           <a class="s-12 m-6 margin-bottom" href="gallery.html">
-            <img class="full-img" src="img/portfolio/thumb-01.jpg" alt=""/>
+            <img class="full-img" src="img/portfolio/thumb-01v1.jpg" alt=""/>
           </a>	
           <a class="s-12 m-6 margin-bottom" href="gallery.html">
-            <img class="full-img" src="img/portfolio/thumb-02.jpg" alt=""/>
+            <img class="full-img" src="img/portfolio/thumb-03v1.jpg" alt=""/>
           </a>	
           <a class="s-12 m-6 margin-bottom" href="gallery.html">
-            <img class="full-img" src="img/portfolio/thumb-03.jpg" alt=""/>
+            <img class="full-img" src="img/portfolio/thumb-09v1.jpg" alt=""/>
           </a>	
           <a class="s-12 m-6 margin-bottom" href="gallery.html">
-            <img class="full-img" src="img/portfolio/thumb-04.jpg" alt=""/>
+            <img class="full-img" src="img/portfolio/thumb-07v1.jpg" alt=""/>
           </a>	
         </section>
         
-        <!-- SECTION 5 -->
-        <section class="grid margin text-center">
-          <div class="m-12 l-4 padding-2x background-dark margin-bottom text-right">
-            <h3 class="text-strong text-size-25 text-uppercase margin-bottom-10">Let's keep in touch</h3>
-            <p>Deleniti pertinacia eu est, te his soluta quaestio pericula illum vulputate lobortis facilisis.</p>
-          </div>
-          <a href="/" class="s-12 m-6 l-2 padding vertical-center margin-bottom facebook hover-zoom">
-             <i class="icon-sli-social-facebook text-size-60 text-white center"></i>
-          </a>
-          <a href="/" class="s-12 m-6 l-2 padding vertical-center margin-bottom twitter hover-zoom">
-            <i class="icon-sli-social-twitter text-size-60 text-white center"></i>
-          </a>
-          <a href="/" class="s-12 m-6 l-2 padding vertical-center margin-bottom youtube hover-zoom">
-            <i class="icon-sli-social-youtube text-size-60 text-white center"></i>
-          </a>
-          <a href="/" class="s-12 m-6 l-2 padding vertical-center margin-bottom linkedin hover-zoom">
-            <i class="icon-sli-social-linkedin text-size-60 text-white center"></i>
-          </a>
-        </section>
-                
-      </main>
       
        
       <!-- FOOTER -->
       <footer class="grid">
         <!-- Footer - top -->
         <!-- Image-->
-        <div class="s-12 l-3 m-row-3 margin-bottom background-image" style="background-image:url(img/img-04.jpg)"></div>
+        <div class="s-12 l-3 m-row-3 margin-bottom background-image" style="background-image:url(img/img-13v2.png)"></div>
         
         <div class="s-12 m-9 l-3 padding-2x margin-bottom background-dark">
            <h2 class="text-strong text-uppercase">Who We Are?</h2>
-           <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.</p>
+           <p>We are a leading provider of general contracting and comprehensive services, dedicated to excellence in construction, maintenance, and facility management across the Gulf and Egypt. With a commitment to high standards and a focus on quality and reliability.</p>
         </div>
         
         <div class="s-12 m-9 l-3 padding-2x margin-bottom background-dark">
            <h2 class="text-strong text-uppercase">Where We Are?</h2>
-           <img class="full-img" src="img/map.svg" alt=""/>
+           <img class="full-img" src="img/mapv1.svg" alt=""/>
         </div>
         
         <div class="s-12 m-9 l-3 padding-2x margin-bottom background-dark">
            <h2 class="text-strong text-uppercase">Contact Us</h2>
-           <p><b class="text-primary margin-right-10">P</b> +2010 20 101 101 Egypt</p>
-           <p><b class="text-primary margin-right-10">P</b> +2012 20 101 101 Egypt</p>
-           <p><b class="text-primary margin-right-10">P</b> +966 55 309 8934 / 50 612 2806 Middle East</p>
+           <p><b class="text-primary margin-right-10">P</b> +2010 20 101 101 </p>
+           <p><b class="text-primary margin-right-10">P</b> +2012 20 101 101 </p>
+           <p><b class="text-primary margin-right-10">P</b> +966 55 309 8934 / 50 612 2806</p>
            <p><b class="text-primary margin-right-10">M</b> <a class="text-primary-hover" href="mailto:sales@tradexgroupco.com">sales@tradexgroupco.com</a></p>
         </div>
         

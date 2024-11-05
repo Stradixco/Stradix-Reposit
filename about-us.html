@@ -33,11 +33,37 @@
       <header class="grid">
         <!-- Top Navigation -->
         <nav class="s-12 grid background-none background-primary-hightlight">
-           <!-- logo -->
-           <a href="index.html" class="m-12 l-3 padding-2x logo">
-              <img src="img/logo.svg">
-           </a>
-           <div class="top-nav s-12 l-9"> 
+<!-- logo -->
+<a href="index.html" class="logo-container">
+  <img src="img/logov1.png" alt="Stradix Logo" class="logo">
+</a>
+
+<style>
+/* إزالة الهامش حول الشعار وجعل الشعار أكبر قليلاً */
+.logo-container {
+  display: flex;
+  justify-content: center; /* توسيط الشعار */
+  margin: 0; /* إزالة أي هامش */
+  padding: 0; /* إزالة أي حشوة */
+}
+
+.logo {
+  max-width: 120px; /* حجم الشعار، يمكنك تعديله */
+  height: auto;
+}
+
+/* تقليل المسافة بين الشعار والصور أسفل */
+.header-section {
+  margin-bottom: 0; /* إزالة المسافة السفلية */
+  padding-bottom: 0; /* إزالة الحشوة السفلية */
+}
+
+/* رفع الصور لتكون قريبة من الشعار */
+.image-gallery {
+  margin-top: -10px; /* يمكنك تعديل هذه القيمة لتقليل المسافة */
+  padding-top: 0;
+}
+</style>           <div class="top-nav s-12 l-9"> 
               <ul class="top-ul right chevron">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about-us.html">About Us</a></li>
@@ -104,12 +130,12 @@
         <section class="grid margin">
           <h2 class="s-12 text-white text-thin text-size-30 text-white text-uppercase margin-top-bottom-20 center text-center">Our <b>Dream Team</b></h2> 
           <div class="s-12 m-6 l-2 margin-bottom">
-            <img src="img/team-01.jpg"/>
+            <img src="img/team-01v1.jpg"/>
             <h4 class="background-primary padding text-strong">Ahmed Alkhaldi</h4>
             <p class="margin-bottom-10 text-primary text-uppercase">General Manager</p>                                                                                                                                          
           </div>
           <div class="s-12 m-6 l-2 margin-bottom">
-            <img src="img/team-02.jpg"/>
+            <img src="img/team-02v1.jpg"/>
             <h4 class="background-primary padding text-strong">Fahd Hamad</h4>
             <p class="margin-bottom-10 text-primary text-uppercase">HR Manager</p>                                                                                                                                          
           </div>
@@ -124,14 +150,14 @@
             <p class="margin-bottom-10 text-primary text-uppercase">Boss/CEO</p>                                                                                                                                          
           </div>
           <div class="s-12 m-6 l-2 margin-bottom"> 
-            <img src="img/team-05.jpg"/>
-            <h4 class="background-primary padding text-strong">Hoda Hassan</h4>
-            <p class="margin-bottom-10 text-primary text-uppercase">Supoort services Manager</p>                                                                                                                                          
+            <img src="img/team-05v1.jpg"/>
+            <h4 class="background-primary padding text-strong">Dr. Mohamed Badawi</h4>
+            <p class="margin-bottom-10 text-primary text-uppercase">Legal Consultant</p>                                                                                                                                          
           </div>
           <div class="s-12 m-6 l-2 margin-bottom"> 
-            <img src="img/team-06.jpg"/>
-            <h4 class="background-primary padding text-strong">Shreif Shaban</h4>
-            <p class="margin-bottom-10 text-primary text-uppercase">Technical Manager</p>                                                                                                                                          
+            <img src="img/team-06v1.jpg"/>
+            <h4 class="background-primary padding text-strong">Hoda Hassan</h4>
+            <p class="margin-bottom-10 text-primary text-uppercase">Business Relation Manager</p>                                                                                                                                          
           </div>   
         </section>
                  
@@ -161,7 +187,7 @@
            <p><b class="text-primary margin-right-10">P</b> +966 55 309 8934 Middle East</p>
            <p><b class="text-primary margin-right-10">P</b> +966 55 309 8934 Middle East</p>
 
-           <p><b class="text-primary margin-right-10">E</b> <a class="text-primary-hover" href="mailto:sales@tradexgroupco.com">sales@tradexgroupcom.com</a></p>
+           <p><b class="text-primary margin-right-10">E</b> <a class="text-primary-hover" href="mailto:sales@s-tradix.com">sales@s-tradix.com</a></p>
 
         </div>
         

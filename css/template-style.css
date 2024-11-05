@@ -1507,22 +1507,64 @@ section, header {
     background-position: center;
   }
 }
-contact-form-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200vh; /* يملأ الصفحة بالكامل */
-  width: 200%; /* يجعل الحاوية تملأ العرض بالكامل */
-  padding: 0 20px; /* تباعد بسيط من الأطراف */
-  box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        /* تنسيقات بسيطة للنموذج */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        form {
+            background-color: #f0f2f359;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(117, 9, 9, 0.1);
+            width: 300px;
+            position: relative;
+        }
+        input, textarea, button {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #0e0000;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        /* تحديد ارتفاع صندوق النص */
+        textarea {
+            height: 250px; /* يمكنك تغيير القيمة حسب رغبتك */
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .thank-you {
+            color: #28a745;
+            display: none; /* مخفية افتراضيًا */
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
 
-.contact-form {
-  background-color: #f5f5f5;
-  padding: 8rem;
-  max-width: 500px; /* تعديل العرض حسب المطلوب */
-  width: 100%; /* يجعل النموذج يملأ الحاوية بالكامل */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  text-align: center;
-}
+        label {
+          color: #e8ecef; /* يمكنك تغيير اللون حسب رغبتك */
+          font-weight: bold; /* يجعل النص أكثر وضوحًا */
+      
+    </style>
+</head>
+<body>

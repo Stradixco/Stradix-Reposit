@@ -33,11 +33,37 @@
       <header class="grid">
         <!-- Top Navigation -->
         <nav class="s-12 grid background-none background-primary-hightlight">
-           <!-- logo -->
-           <a href="index.html" class="m-12 l-3 padding-2x logo">
-              <img src="img/logo.svg">
-           </a>
-           <div class="top-nav s-12 l-9"> 
+<!-- logo -->
+<a href="index.html" class="logo-container">
+  <img src="img/logov1.png" alt="Stradix Logo" class="logo">
+</a>
+
+<style>
+/* إزالة الهامش حول الشعار وجعل الشعار أكبر قليلاً */
+.logo-container {
+  display: flex;
+  justify-content: center; /* توسيط الشعار */
+  margin: 0; /* إزالة أي هامش */
+  padding: 0; /* إزالة أي حشوة */
+}
+
+.logo {
+  max-width: 120px; /* حجم الشعار، يمكنك تعديله */
+  height: auto;
+}
+
+/* تقليل المسافة بين الشعار والصور أسفل */
+.header-section {
+  margin-bottom: 0; /* إزالة المسافة السفلية */
+  padding-bottom: 0; /* إزالة الحشوة السفلية */
+}
+
+/* رفع الصور لتكون قريبة من الشعار */
+.image-gallery {
+  margin-top: -10px; /* يمكنك تعديل هذه القيمة لتقليل المسافة */
+  padding-top: 0;
+}
+</style>           <div class="top-nav s-12 l-9"> 
               <ul class="top-ul right chevron">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about-us.html">About Us</a></li>
@@ -65,20 +91,20 @@
           <div class="m-12 l-6 padding-2x background-white">
             <p class="text-strong text-size-80 text-red">01</p>
             
-            <h2 class="text-size-50 text-line-height-1 text-dark"><b>Comprehensive Marine Maintenance and Supply Solutions</b></h2>
+            <h2 class="text-size-50 text-line-height-1 text-dark"><b>Manpower Supply </b></h2>
             
-            <p>Stradix provides specialized marine maintenance services with a skilled team in welding, piping, painting, and mechanical repairs. We supply essential spare parts and handle used oil collection, marine sludge disposal, and mixed water waste management. </p>
-            <p>Additionally, we supply fresh food material provisions for vessels, ensuring efficient and reliable support for all marine operational needs. Our commitment to quality and environmental responsibility ensures that each service we provide meets the highest standards in the industry. </p>
+            <p>We offer a variety of skilled professionals including welders, carpenters, painters, mechanics, riggers, forklift operators, and crane operators, Scaffolders. Our workforce is equipped to handle demanding projects in the maritime industry, ensuring high standards of performance and safety.</p>
+            <p>Our supervisors are experienced professionals who oversee projects, ensuring that work is carried out efficiently and in compliance with industry standards. They bring expertise in managing maritime operations and guiding teams for optimal productivity.</p>
           </div>
           
           <!-- Image-->
-          <img class="m-12 l-6" src="img/img-06v1.jpg">
+          <img class="m-12 l-6" src="img/img-07v1.jpg">
         </section>
         
         <!-- SECTION 2 -->
         <section class="grid">
           <!-- Image-->
-          <img class="m-12 l-6" src="img/img-07v1.jpg">
+          <img class="m-12 l-6" src="img/img-06v1.jpg">
           
           <div class="m-12 l-6 padding-2x background-dark">
             <p class="text-strong text-size-80 text-red">02</p>
@@ -89,11 +115,43 @@
             <p>We also provide a full range of marine spare parts, fresh drinking water, and high-quality fresh food provisions, ensuring that our clients have access to essential resources for smooth and efficient operations. </p>
           </div>
         </section> 
-
+        
+        
         <!-- SECTION 3 -->
         <section class="grid">
+          <div class="m-12 l-6 padding-2x background-white">
+            <p class="text-strong text-size-80 text-red">03</p>
+            
+            <h2 class="text-size-50 text-line-height-1 text-dark"><b>Food Material Supply Services   </b></h2>
+            
+            <p>We provide fresh food supplies to companies and ship repair yards, ensuring the highest quality through refrigerated transportation and timely delivery. Our commitment is to meet your food needs promptly and reliably.              . </p>
+            <p>Our offerings include a complete variety of fresh and frozen products, covering dairy, meats, fish, fruits, and vegetables. We cater to the diverse dietary requirements of our clients with an extensive selection.            </p>
+          </div>
+          
+          <!-- Image-->
+          <img class="m-12 l-6" src="img/img-09v1.jpg">
+        </section>
+        
+        <!-- SECTION 4 -->
+        <section class="grid">
+          <!-- Image-->
+          <img class="m-12 l-6" src="img/img-10v1.jpg">
+          
+          <div class="m-12 l-6 padding-2x background-dark">
+            <p class="text-strong text-size-80 text-red">04</p>
+            
+            <h2 class="text-size-50 text-line-height-1 margin-bottom-30 text-white"><b>Sewage, Mix water services </b></h2>
+
+            <p>-Our sewage removal services utilize the latest equipment and secure trucks to ensure safe and efficient operations. We adhere to all environmental regulations, providing reliable and eco-friendly disposal solutions for wastewater, ensuring compliance with the highest standards.</p>
+            <p>-Our used oil disposal services utilize the latest equipment and secure trucks to ensure safe and efficient operations. We adhere to all environmental regulations, providing reliable and eco-friendly solutions for disposing of used oils, while maintaining compliance with the highest standards. </p>
+            <p>-Our Mud disposal services utilize the latest equipment and secure trucks to ensure safe and efficient operations. </p>
+          </div>
+        </section> 
+        
+        <!-- SECTION 5 -->
+        <section class="grid">
           <div class="m-12 l-6 padding-2x background-aqua">
-            <p class="text-strong text-size-80 text-white">03</p>
+            <p class="text-strong text-size-80 text-white">05</p>
             
             <h4 class="text-size-50 text-line-height-1 text-white"><b>E-Commerce Solutions with </b><p class="text-strong text-size-50 text-blue">Shopia</p>
             
@@ -136,7 +194,7 @@
            <p><b class="text-primary margin-right-10">P</b> +966 55 309 8934 Middle East</p>
            <p><b class="text-primary margin-right-10">P</b> +966 55 309 8934 Middle East</p>
 
-           <p><b class="text-primary margin-right-10">E</b> <a class="text-primary-hover" href="mailto:sales@tradexgroupco.com">sales@tradexgroupcom.com</a></p>
+           <p><b class="text-primary margin-right-10">E</b> <a class="text-primary-hover" href="mailto:sales@s-tradix.com">sales@s-tradix.com</a></p>
 
         </div>
         

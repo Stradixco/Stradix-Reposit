@@ -12,9 +12,3 @@ jQuery(document).ready(function($) {
     autoplayTimeout: 5000
   });
 });
-<script>
-function displayThankYouMessage() {
-    document.getElementById('contact-form').style.display = 'none';
-    document.getElementById('thank-you-message').style.display = 'block';
-}
-</script>
