@@ -33,48 +33,102 @@
       <header class="grid">
         <!-- Top Navigation -->
         <nav class="s-12 grid background-none background-primary-hightlight">
+
+
+
+
 <!-- logo -->
-<a href="index.html" class="logo-container">
-   <img src="img/logov1.png" alt="Stradix Logo" class="logo">
-</a>
+<header id="main-header" class="grid">
+
+  <a href="index.html" class="logo-container">
+    <img src="img/logov1.png" alt="Stradix Logo" class="logo">
+  </a>
+
+  <div class="top-nav s-12 l-9">
+    <ul class="top-ul right chevron">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about-us.html">About Us</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</header>
 
 <style>
-/* إزالة الهامش حول الشعار وجعل الشعار أكبر قليلاً */
+/* تنسيق الهيدر الافتراضي */
+#main-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+/* لون الخلفية الداكن عند التمرير */
+.scrolled {
+  background-color: #042531; /* اللون الداكن للشريط */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* تأثير الظل */
+}
+
+/* إعدادات الشعار */
 .logo-container {
-   display: flex;
-   justify-content: center; /* توسيط الشعار */
-   margin: 0; /* إزالة أي هامش */
-   padding: 0; /* إزالة أي حشوة */
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
-   max-width: 120px; /* حجم الشعار، يمكنك تعديله */
-   height: auto;
+  max-width: 120px;
+  height: auto;
 }
 
-/* تقليل المسافة بين الشعار والصور أسفل */
-.header-section {
-   margin-bottom: 0; /* إزالة المسافة السفلية */
-   padding-bottom: 0; /* إزالة الحشوة السفلية */
+/* إعدادات شريط التنقل */
+.top-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 10px 0;
 }
 
-/* رفع الصور لتكون قريبة من الشعار */
-.image-gallery {
-   margin-top: -10px; /* يمكنك تعديل هذه القيمة لتقليل المسافة */
-   padding-top: 0;
+.top-nav ul li {
+  list-style: none;
 }
-</style>           <div class="top-nav s-12 l-9"> 
-              <ul class="top-ul right chevron">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="contact.html">Contact</a></li>
-              </ul>
-           </div>
-        </nav>
-      </header>
-      
+
+.top-nav ul li a {
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  display: block;
+}
+
+main {
+  padding-top: 100px; /* لتجنب تغطية المحتوى بالهيدر الثابت */
+}
+</style>
+
+<script>
+  // إضافة تأثير التمرير على الهيدر
+  window.addEventListener("scroll", function() {
+    var header = document.getElementById("main-header");
+    if (window.scrollY > 50) { // يظهر الشريط الداكن عند التمرير 50 بكسل أو أكثر
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>
+              </div>
+        </header>
+
+        
+
+
+
+
+        
       <!-- MAIN -->
       <main role="main">
         <!-- TOP SECTION -->
@@ -84,29 +138,43 @@
             <p class="text-size-20 text-white text-center center text-uppercase">Our portfolio reflects our commitment to excellence and professionalism. We have successfully completed numerous projects across marine, industrial, and safety sectors, providing high-quality solutions tailored to each client’s needs. From ship repairs to supplying essential safety equipment, our team is dedicated to maintaining the highest standards and ensuring client satisfaction.</p>
           </div>
         </header>
-      
-        <section class="grid margin">
-          <img class="s-12 m-6 margin-bottom" src="img/portfolio/thumb-01v1.jpg" alt=""/>
-          <img class="s-12 m-6 margin-bottom" src="img/portfolio/thumb-02v1.jpg" alt=""/>
-          <img class="s-12 m-6 margin-bottom" src="img/portfolio/thumb-03v1.jpg" alt=""/>
-          <img class="s-12 m-6 margin-bottom" src="img/portfolio/thumb-04v1.jpg" alt=""/>
-          <img class="s-12 m-6 margin-bottom" src="img/portfolio/thumb-05v1.jpg" alt=""/>
-          <img class="s-12 m-6 margin-bottom" src="img/portfolio/thumb-06v1.jpg" alt=""/>
-          <img class="s-12 m-6 margin-bottom" src="img/portfolio/thumb-07v1.jpg" alt=""/>
-          <img class="s-12 m-6 margin-bottom" src="img/portfolio/thumb-08v1.jpg" alt=""/>
-        </section>
         
-      </section> 
-        
-      <!-- SECTION 6 -->
-        <div class="s-12 padding-2x background-dark">
-          <a href="contact.html" class="s-12 m-9 l-3 center button text-size-20 text-white background-red">CONTACT US</a>
-        </div>
-      </section>      
-    </main>
+<section class="grid margin">
+  <!-- الفيديو الأول -->
+  <div class="video-container s-12 m-6 l-6 margin-bottom">
+    <video src="img/portfolio/thumb-01v1.mp4" controls autoplay loop muted></video>
+  </div>
+  
+  <!-- الفيديو الثاني -->
+  <div class="video-container s-12 m-6 l-6 margin-bottom">
+    <video src="img/portfolio/thumb-02v1.mp4" controls autoplay loop muted></video>
+  </div>
+  <!-- الفيديو الثالث -->
+  <div class="video-container s-12 m-6 l-6 margin-bottom">
+   <video src="img/portfolio/thumb-03v1.mp4" controls autoplay loop muted></video>
+</div>
 
-      </main>
+  <!-- الصور الأخرى -->
+  <img class="s-12 m-6 l-6 margin-bottom" src="img/portfolio/thumb-06v1.jpg" alt=""/>
+  <img class="s-12 m-6 l-6 margin-bottom" src="img/portfolio/thumb-05v1.jpg" alt=""/>
+  <img class="s-12 m-6 l-6 margin-bottom" src="img/portfolio/thumb-09v1.jpg" alt=""/>
+  <img class="s-12 m-6 l-6 margin-bottom" src="img/portfolio/thumb-07v1.jpg" alt=""/>
+  <img class="s-12 m-6 l-6 margin-bottom" src="img/portfolio/thumb-08v1.jpg" alt=""/>
+</section>
 
+<style>
+.video-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.video-container video {
+  width: 100%;
+  height: auto;
+}
+</style>
 
 
       <!-- FOOTER -->

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
  <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Free responsive business website template</title>
@@ -33,48 +34,99 @@
       <header class="grid">
         <!-- Top Navigation -->
         <nav class="s-12 grid background-none background-primary-hightlight">
+
+
+
 <!-- logo -->
-<a href="index.html" class="logo-container">
-  <img src="img/logov1.png" alt="Stradix Logo" class="logo">
-</a>
+<header id="main-header" class="grid">
+
+  <a href="index.html" class="logo-container">
+    <img src="img/logov1.png" alt="Stradix Logo" class="logo">
+  </a>
+
+  <div class="top-nav s-12 l-9">
+    <ul class="top-ul right chevron">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about-us.html">About Us</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</header>
 
 <style>
-/* إزالة الهامش حول الشعار وجعل الشعار أكبر قليلاً */
+/* تنسيق الهيدر الافتراضي */
+#main-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+/* لون الخلفية الداكن عند التمرير */
+.scrolled {
+  background-color: #042531; /* اللون الداكن للشريط */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* تأثير الظل */
+}
+
+/* إعدادات الشعار */
 .logo-container {
   display: flex;
-  justify-content: center; /* توسيط الشعار */
-  margin: 0; /* إزالة أي هامش */
-  padding: 0; /* إزالة أي حشوة */
+  justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
-  max-width: 120px; /* حجم الشعار، يمكنك تعديله */
+  max-width: 120px;
   height: auto;
 }
 
-/* تقليل المسافة بين الشعار والصور أسفل */
-.header-section {
-  margin-bottom: 0; /* إزالة المسافة السفلية */
-  padding-bottom: 0; /* إزالة الحشوة السفلية */
+/* إعدادات شريط التنقل */
+.top-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 10px 0;
 }
 
-/* رفع الصور لتكون قريبة من الشعار */
-.image-gallery {
-  margin-top: -10px; /* يمكنك تعديل هذه القيمة لتقليل المسافة */
-  padding-top: 0;
+.top-nav ul li {
+  list-style: none;
 }
-</style>           <div class="top-nav s-12 l-9"> 
-              <ul class="top-ul right chevron">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="contact.html">Contact</a></li>
-              </ul>
-           </div>
-        </nav>
-      </header>
-      
+
+.top-nav ul li a {
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  display: block;
+}
+
+main {
+  padding-top: 100px; /* لتجنب تغطية المحتوى بالهيدر الثابت */
+}
+</style>
+
+<script>
+  // إضافة تأثير التمرير على الهيدر
+  window.addEventListener("scroll", function() {
+    var header = document.getElementById("main-header");
+    if (window.scrollY > 50) { // يظهر الشريط الداكن عند التمرير 50 بكسل أو أكثر
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>
+              </div>
+        </header>
+
+        
+
+
+        
       <!-- MAIN -->
       <main role="main">
         <!-- TOP SECTION -->
@@ -85,46 +137,61 @@
           </div>
         </header>
   
-        
-        <!-- SECTION 1 -->
-        <section class="grid">        
-          <div class="m-12 l-6 padding-2x background-white">
-            <h2 class="text-dark">Comprehensive Marine Services</h2>
-            <p>At Stradix, we offer a wide range of marine services, including maintenance and repair of marine equipment and vessels, ensuring the efficiency and reliability of our clients’ marine operations. Our team of specialized technicians brings extensive experience and in-depth knowledge of the latest industry standards and technologies, allowing us to provide tailored solutions to meet each client’s unique needs. We are committed to delivering the highest quality in our services, ensuring safety, sustainability, and operational efficiency in all marine projects we manage.<br><br></p>
-            <h2 class="text-dark">General Contracting and Infrastructure</h2>
-            <p>Stradix is a trusted partner in general contracting, providing comprehensive solutions in the design and execution of major infrastructure projects. Expertise to manage all aspects of projects, including planning, design, and execution, while ensuring adherence to timelines and budgets. We also provide business establishment support, helping clients launch their projects with confidence and stability,backed by our in-depth market knowledge and ability to deliver solutions that meet their specific needs.<p>
-          </div>
-          
-          <!-- Image-->
-          <img class="l-6 hide-s hide-m" src="img/img-01v1.jpg">
-        </section>
-        
-        <!-- SECTION 2 -->
-        <section class="grid margin margin-bottom padding-2x background-primary">
-          <div class="s-12 m-6 l-3">
-            <span class="timer text-size-50 text-white text-strong">1500</span>
-            <h3 class="text-uppercase text-strong">Completed Projects</h3>
-            <p class="text-size-16 margin-m-bottom-20">Successful projects delivered across various sectors, ensuring reliability and efficiency.</p> 
-          </div>
+<!-- SECTION 1 -->
+<section class="grid">        
+  <div class="m-12 l-6 padding-2x background-white">
+    <!-- السطر الأول -->
+    <h2 class="text-dark" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-offset="200">Comprehensive Marine Services</h2>
+    <p data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="200" data-aos-offset="200">
+      At Stradix, we offer a wide range of marine services, including maintenance and repair of marine equipment and vessels, ensuring the efficiency and reliability of our clients’ marine operations. Our team of specialized technicians brings extensive experience and in-depth knowledge of the latest industry standards and technologies, allowing us to provide tailored solutions to meet each client’s unique needs. We are committed to delivering the highest quality in our services, ensuring safety, sustainability, and operational efficiency in all marine projects we manage.
+    </p>
+    
+    <!-- السطر الثاني -->
+    <h2 class="text-dark" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="300" data-aos-offset="200">General Contracting and Infrastructure</h2>
+    <p data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="600" data-aos-offset="200">
+      Stradix is a trusted partner in general contracting, providing comprehensive solutions in the design and execution of major infrastructure projects. Expertise to manage all aspects of projects, including planning, design, and execution, while ensuring adherence to timelines and budgets. We also provide business establishment support, helping clients launch their projects with confidence and stability, backed by our in-depth market knowledge and ability to deliver solutions that meet their specific needs.
+    </p>
+  </div>
 
-          <div class="s-12 m-6 l-3">
-            <span class="timer text-size-50 text-white text-strong">98</span> <span class="text-size-50 text-white text-strong">%</span>
-            <h3 class="text-uppercase text-strong">Client Satisfaction</h3>
-            <p class="text-size-16 margin-m-bottom-20">With a client satisfaction , our focus is on building long-term relationships and exceeding expectations.</p> 
-          </div>
+  <!-- Image on the right -->
+  <div class="m-12 l-6">
+    <img class="full-img" src="img/img-01v1.jpg" >
+  </div>
+</section>
+<!-- SECTION 2 -->
+<section class="grid margin margin-bottom padding-2x background-primary">
+  <div class="s-12 m-6 l-3">
+    <!-- الرقم يتحرك أولاً -->
+    <span class="timer text-size-50 text-white text-strong" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="80">1500</span>
+    <!-- النص يتحرك بعد الرقم -->
+    <h3 class="text-uppercase text-strong" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="200">Completed Projects</h3>
+    <p class="text-size-16 margin-m-bottom-20" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="400">Successful projects delivered across various sectors, ensuring reliability and efficiency.</p> 
+  </div>
 
-          <div class="s-12 m-6 l-3">
-            <span class="timer text-size-50 text-white text-strong">400+</span>
-            <h3 class="text-uppercase text-strong">Experienced Engineers and Technicians</h3>
-            <p class="text-size-16 margin-m-bottom-20">A dedicated team of over 400 certified engineers and technicians with extensive expertise.</p> 
-          </div>
+  <div class="s-12 m-6 l-3">
+    <span class="timer text-size-50 text-white text-strong" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="80">98%</span>
+    <h3 class="text-uppercase text-strong" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="200">Client Satisfaction</h3>
+    <p class="text-size-16 margin-m-bottom-20" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="400">With a client satisfaction , our focus is on building long-term relationships and exceeding expectations.</p> 
+  </div>
 
-          <div class="s-12 m-6 l-3">
-            <span class="timer text-size-50 text-white text-strong">10</span> <span class="text-size-50 text-white text-strong">Years</span>
-            <h3 class="text-uppercase text-strong">Industry Experience</h3>
-            <p class="text-size-16 margin-m-bottom-20">With more than 15 years of experience, we understand the complexities of our industries.</p> 
-          </div>
-        </section>
+  <div class="s-12 m-6 l-3">
+    <span class="timer text-size-50 text-white text-strong" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="80">400+</span>
+    <h3 class="text-uppercase text-strong" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="400">Experienced Engineers and Technicians</h3>
+    <p class="text-size-16 margin-m-bottom-20" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="400">A dedicated team of over 400 certified engineers and technicians with extensive expertise.</p> 
+  </div>
+
+  <div class="s-12 m-6 l-3">
+    <span class="timer text-size-50 text-white text-strong" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="80">10 Years</span>
+    <h3 class="text-uppercase text-strong" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="400">Industry Experience</h3>
+    <p class="text-size-16 margin-m-bottom-20" data-aos="fade-up" data-aos-easing="ease" data-aos-duration="1000" data-aos-delay="400">With more than 15 years of experience, we understand the complexities of our industries.</p> 
+  </div>
+</section>
+
+<!-- AOS Initialization Script -->
+<script>
+  AOS.init(); // لتشغيل مكتبة AOS
+</script>
+
         
         <!-- SECTION 3 -->
         <section class="grid margin">
@@ -164,11 +231,22 @@
       </main>
     </section> 
         
-    <!-- SECTION 6 -->
-      <div class="s-12 padding-2x background-dark">
-        <a href="contact.html" class="s-12 m-9 l-3 center button text-size-20 text-white background-red">CONTACT US</a>
-      </div>
-    </section>      
+<!-- SECTION 6 -->
+<div class="s-12 padding-2x background-dark">
+    <a href="contact.html" class="s-12 m-9 l-3 center button text-size-20 text-white background-red custom-button">CONTACT US</a>
+</div>
+</section>
+</main>
+
+<style>
+  /* تنسيق الزر ثلاثي الأبعاد */
+  /*  يدخل للداخل عند الضغط على الزر */
+  .custom-button:active {
+    background-color: #800000; /* لون أغمق عند الضغط */
+    transform: translateY(8px); /* إدخال الزر للداخل */
+  }
+
+</style>
   </main>
 
        
@@ -210,5 +288,18 @@
       <script type="text/javascript" src="owl-carousel/owl.carousel.js"></script>
       <script type="text/javascript" src="js/template-scripts.js"></script>
 
+
+
+
+      <!-- AOS CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" />
+
+<!-- AOS JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+
    </body>
+   <script>
+    AOS.init();
+  </script>
+  
 </html>

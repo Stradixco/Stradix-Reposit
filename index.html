@@ -36,47 +36,90 @@
 
 
 <!-- logo -->
-<a href="index.html" class="logo-container">
+<header id="main-header" class="grid">
+
+  <a href="index.html" class="logo-container">
     <img src="img/logov1.png" alt="Stradix Logo" class="logo">
-</a>
+  </a>
+
+  <div class="top-nav s-12 l-9">
+    <ul class="top-ul right chevron">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about-us.html">About Us</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</header>
 
 <style>
-/* إزالة الهامش حول الشعار وجعل الشعار أكبر قليلاً */
+/* تنسيق الهيدر الافتراضي */
+#main-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+/* لون الخلفية الداكن عند التمرير */
+.scrolled {
+  background-color: #042531; /* اللون الداكن للشريط */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* تأثير الظل */
+}
+
+/* إعدادات الشعار */
 .logo-container {
-    display: flex;
-    justify-content: center; /* توسيط الشعار */
-    margin: 5; /* إزالة أي هامش */
-    padding: 0; /* إزالة أي حشوة */
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
-    max-width: 120px; /* حجم الشعار، يمكنك تعديله */
-    height: auto;
+  max-width: 120px;
+  height: auto;
 }
 
-/* تقليل المسافة بين الشعار والصور أسفل */
-.header-section {
-    margin-bottom: 0; /* إزالة المسافة السفلية */
-    padding-bottom: 0; /* إزالة الحشوة السفلية */
+/* إعدادات شريط التنقل */
+.top-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 10px 0;
 }
 
-/* رفع الصور لتكون قريبة من الشعار */
-.image-gallery {
-    margin-top: -10px; /* يمكنك تعديل هذه القيمة لتقليل المسافة */
-    padding-top: 0;
+.top-nav ul li {
+  list-style: none;
 }
-</style></style>           
-           <div class="top-nav s-12 l-9"> 
-              <ul class="top-ul right chevron">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="contact.html">Contact</a></li>
-              </ul>
-           </div>
-        </nav>
-      </header>
+
+.top-nav ul li a {
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  display: block;
+}
+
+main {
+  padding-top: 100px; /* لتجنب تغطية المحتوى بالهيدر الثابت */
+}
+</style>
+
+<script>
+  // إضافة تأثير التمرير على الهيدر
+  window.addEventListener("scroll", function() {
+    var header = document.getElementById("main-header");
+    if (window.scrollY > 50) { // يظهر الشريط الداكن عند التمرير 50 بكسل أو أكثر
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>
+              </div>
+        </header>
       
       <!-- MAIN -->
       <main role="main">
@@ -102,11 +145,11 @@
         <!-- SECTION 1 --> 
         <section class="grid margin text-center">
           <a href="gallery.html" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-red">
-            <i class="icon-sli-equalizer text-size-60 text-white center margin-bottom-15"></i>
+            <i class="icon-sli-picture text-size-60 text-white center margin-bottom-15"></i>
             <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Gallery</h3>
           </a>
           <a href="https://drive.google.com/file/d/15YUHbcB3-Cs7yO1UW1tLTMMQ9o1Frf5H/view?usp=sharing" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-blue">
-            <i class="icon-sli-layers text-size-60 text-white center margin-bottom-15"></i>
+            <i class="icon-download text-size-60 text-white center margin-bottom-15"></i>
             <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Downloan our broushur</h3>
           </a>
           
@@ -114,13 +157,13 @@
           <img class="m-12 l-6 l-row-2 margin-bottom" src="img/img-11v1.jpg">
           
           <a href="contact.html" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-orange">
-            <i class="icon-sli-diamond text-size-60 text-white center margin-bottom-15"></i>
+            <i class="icon-discussion text-size-60 text-white center margin-bottom-15"></i>
             <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Send Message</h3>
           </a>
 
-          <a href="#" onclick="shareLink()" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-aqua">
-            <i class="icon-sli-share text-size-60 text-white center margin-bottom-15"></i>
-            <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">Share</h3>
+          <a href="about-us.html" class="s-12 m-6 l-3 padding-2x vertical-center margin-bottom background-aqua">
+            <i class="icon-sli-people text-size-60 text-white center margin-bottom-15"></i>
+            <h3 class="text-strong text-size-20 text-line-height-1 margin-bottom-30 text-uppercase">About us</h3>
         </a>
         
         <!-- JavaScript for sharing functionality -->
@@ -146,7 +189,26 @@
         </script>   
             
        </section>
-        
+       <section class="grid margin text-center">
+        <div class="m-12 l-4 padding-2x background-dark margin-bottom text-right">
+          <h3 class="text-strong text-size-25 text-uppercase margin-bottom-10">Let's keep in touch</h3>
+          <p>we value every connection and believe in building lasting relationships with our clients and partners.</p>
+        </div>
+        <a href="https://x.com/STradixco" class="s-12 m-6 l-2 padding vertical-center margin-bottom twitter hover-zoom">
+          <i class="icon-sli-social-twitter text-size-60 text-white center"></i>
+        </a>
+        <a href="https://www.youtube.com/@tradix3846" class="s-12 m-6 l-2 padding vertical-center margin-bottom youtube hover-zoom">
+          <i class="icon-sli-social-youtube text-size-60 text-white center"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/s-tradix-company-a34791337" class="s-12 m-6 l-2 padding vertical-center margin-bottom linkedin hover-zoom">
+          <i class="icon-sli-social-linkedin text-size-60 text-white center"></i>
+        </a>
+      </section>
+          </div>
+
+
+
+          
         <!-- SECTION 2 -->
         <section class="grid section margin-bottom background-dark">
           <h2 class="s-12 l-6 center text-thin text-size-30 text-white text-uppercase margin-bottom-30">Efficient   <b>Supply Chain Solutions</b></h2>

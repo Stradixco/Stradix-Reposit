@@ -33,48 +33,102 @@
       <header class="grid">
         <!-- Top Navigation -->
         <nav class="s-12 grid background-none background-primary-hightlight">
+
+
+
+
+
 <!-- logo -->
-<a href="index.html" class="logo-container">
-  <img src="img/logov1.png" alt="Stradix Logo" class="logo">
-</a>
+<header id="main-header" class="grid">
+
+  <a href="index.html" class="logo-container">
+    <img src="img/logov1.png" alt="Stradix Logo" class="logo">
+  </a>
+
+  <div class="top-nav s-12 l-9">
+    <ul class="top-ul right chevron">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about-us.html">About Us</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</header>
 
 <style>
-/* إزالة الهامش حول الشعار وجعل الشعار أكبر قليلاً */
+/* تنسيق الهيدر الافتراضي */
+#main-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+/* لون الخلفية الداكن عند التمرير */
+.scrolled {
+  background-color: #042531; /* اللون الداكن للشريط */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* تأثير الظل */
+}
+
+/* إعدادات الشعار */
 .logo-container {
   display: flex;
-  justify-content: center; /* توسيط الشعار */
-  margin: 0; /* إزالة أي هامش */
-  padding: 0; /* إزالة أي حشوة */
+  justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
-  max-width: 120px; /* حجم الشعار، يمكنك تعديله */
+  max-width: 120px;
   height: auto;
 }
 
-/* تقليل المسافة بين الشعار والصور أسفل */
-.header-section {
-  margin-bottom: 0; /* إزالة المسافة السفلية */
-  padding-bottom: 0; /* إزالة الحشوة السفلية */
+/* إعدادات شريط التنقل */
+.top-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 10px 0;
 }
 
-/* رفع الصور لتكون قريبة من الشعار */
-.image-gallery {
-  margin-top: -10px; /* يمكنك تعديل هذه القيمة لتقليل المسافة */
-  padding-top: 0;
+.top-nav ul li {
+  list-style: none;
 }
-</style>           <div class="top-nav s-12 l-9"> 
-              <ul class="top-ul right chevron">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="contact.html">Contact</a></li>
-              </ul>
-           </div>
-        </nav>
-      </header>
-      
+
+.top-nav ul li a {
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  display: block;
+}
+
+main {
+  padding-top: 100px; /* لتجنب تغطية المحتوى بالهيدر الثابت */
+}
+</style>
+
+<script>
+  // إضافة تأثير التمرير على الهيدر
+  window.addEventListener("scroll", function() {
+    var header = document.getElementById("main-header");
+    if (window.scrollY > 50) { // يظهر الشريط الداكن عند التمرير 50 بكسل أو أكثر
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>
+              </div>
+        </header>
+
+        
+
+
+
+        
       <!-- MAIN -->
       <main role="main">
         <!-- TOP SECTION -->

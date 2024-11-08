@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-US">
+
  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -33,48 +34,101 @@
     <header class="grid">
       <!-- Top Navigation -->
       <nav class="s-12 grid background-none background-primary-hightlight">
+
+
+
+
 <!-- logo -->
-<a href="index.html" class="logo-container">
-  <img src="img/logov1.png" alt="Stradix Logo" class="logo">
-</a>
+<header id="main-header" class="grid">
+
+  <a href="index.html" class="logo-container">
+    <img src="img/logov1.png" alt="Stradix Logo" class="logo">
+  </a>
+
+  <div class="top-nav s-12 l-9">
+    <ul class="top-ul right chevron">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about-us.html">About Us</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</header>
 
 <style>
-/* إزالة الهامش حول الشعار وجعل الشعار أكبر قليلاً */
+/* تنسيق الهيدر الافتراضي */
+#main-header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+/* لون الخلفية الداكن عند التمرير */
+.scrolled {
+  background-color: #042531; /* اللون الداكن للشريط */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* تأثير الظل */
+}
+
+/* إعدادات الشعار */
 .logo-container {
   display: flex;
-  justify-content: center; /* توسيط الشعار */
-  margin: 0; /* إزالة أي هامش */
-  padding: 0; /* إزالة أي حشوة */
+  justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .logo {
-  max-width: 120px; /* حجم الشعار، يمكنك تعديله */
+  max-width: 120px;
   height: auto;
 }
 
-/* تقليل المسافة بين الشعار والصور أسفل */
-.header-section {
-  margin-bottom: 0; /* إزالة المسافة السفلية */
-  padding-bottom: 0; /* إزالة الحشوة السفلية */
+/* إعدادات شريط التنقل */
+.top-nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 10px 0;
 }
 
-/* رفع الصور لتكون قريبة من الشعار */
-.image-gallery {
-  margin-top: -10px; /* يمكنك تعديل هذه القيمة لتقليل المسافة */
-  padding-top: 0;
+.top-nav ul li {
+  list-style: none;
 }
-</style>         <div class="top-nav s-12 l-9"> 
-            <ul class="top-ul right chevron">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about-us.html">About Us</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="gallery.html">Gallery</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-         </div>
-      </nav>
-    </header>
-      
+
+.top-nav ul li a {
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  display: block;
+}
+
+main {
+  padding-top: 100px; /* لتجنب تغطية المحتوى بالهيدر الثابت */
+}
+</style>
+
+<script>
+  // إضافة تأثير التمرير على الهيدر
+  window.addEventListener("scroll", function() {
+    var header = document.getElementById("main-header");
+    if (window.scrollY > 50) { // يظهر الشريط الداكن عند التمرير 50 بكسل أو أكثر
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>
+              </div>
+        </header>
+
+
+
+
+
+        
       <!-- MAIN -->
       <main role="main">
         <!-- TOP SECTION -->
@@ -191,23 +245,212 @@
             <div class="contact-form-section">
                 <form id="contact-form" action="https://formspree.io/f/mvgokvor" method="POST">
                     <label for="name">Your Name:</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" placeholder="name" required>
 
                     <label for="email">Your Email:</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
 
-                    <label for="phone">Your Phone Number:</label>
-                    <input type="text" id="phone" name="phone">
 
+                    <label for="phone">Your Phone Number:</label> 
+                    <div style="display: flex;">
+                      <select id="country-code" name="country-code" style="width: 30%; padding: 5px; font-size: 16px;">
+                         <option value="+966">+966 (Saudi Arabia)</option>
+                         <option value="+20">+20 (Egypt)</option>
+                         <option value="+971">+971 (UAE)</option>
+                         <option value="+968">+968 (Oman)</option>
+                         <option value="+974">+974 (Qatar)</option>
+                         <option value="+965">+965 (Kuwait)</option>
+                         <option value="+973">+973 (Bahrain)</option>
+                         <option value="+93">+93 (Afghanistan)</option>
+                          <option value="+355">+355 (Albania)</option>
+                          <option value="+213">+213 (Algeria)</option>
+                          <option value="+376">+376 (Andorra)</option>
+                          <option value="+244">+244 (Angola)</option>
+                          <option value="+1">+1 (Canada)</option>
+                          <option value="+54">+54 (Argentina)</option>
+                          <option value="+374">+374 (Armenia)</option>
+                          <option value="+61">+61 (Australia)</option>
+                          <option value="+43">+43 (Austria)</option>
+                          <option value="+880">+880 (Bangladesh)</option>
+                          <option value="+375">+375 (Belarus)</option>
+                          <option value="+32">+32 (Belgium)</option>
+                          <option value="+501">+501 (Belize)</option>
+                          <option value="+229">+229 (Benin)</option>
+                          <option value="+975">+975 (Bhutan)</option>
+                          <option value="+591">+591 (Bolivia)</option>
+                          <option value="+55">+55 (Brazil)</option>
+                          <option value="+673">+673 (Brunei)</option>
+                          <option value="+359">+359 (Bulgaria)</option>
+                          <option value="+257">+257 (Burundi)</option>
+                          <option value="+855">+855 (Cambodia)</option>
+                          <option value="+237">+237 (Cameroon)</option>
+                          <option value="+1">+1 (US)</option>
+                          <option value="+235">+235 (Chad)</option>
+                          <option value="+56">+56 (Chile)</option>
+                          <option value="+86">+86 (China)</option>
+                          <option value="+57">+57 (Colombia)</option>
+                          <option value="+269">+269 (Comoros)</option>
+                          <option value="+242">+242 (Congo)</option>
+                          <option value="+385">+385 (Croatia)</option>
+                          <option value="+53">+53 (Cuba)</option>
+                          <option value="+357">+357 (Cyprus)</option>
+                          <option value="+45">+45 (Denmark)</option>
+                          <option value="+253">+253 (Djibouti)</option>
+                          <option value="+593">+593 (Ecuador)</option>
+                          <option value="+291">+291 (Eritrea)</option>
+                          <option value="+372">+372 (Estonia)</option>
+                          <option value="+251">+251 (Ethiopia)</option>
+                          <option value="+679">+679 (Fiji)</option>
+                          <option value="+358">+358 (Finland)</option>
+                          <option value="+33">+33 (France)</option>
+                          <option value="+241">+241 (Gabon)</option>
+                          <option value="+995">+995 (Georgia)</option>
+                          <option value="+49">+49 (Germany)</option>
+                          <option value="+233">+233 (Ghana)</option>
+                          <option value="+30">+30 (Greece)</option>
+                          <option value="+224">+224 (Guinea)</option>
+                          <option value="+592">+592 (Guyana)</option>
+                          <option value="+509">+509 (Haiti)</option>
+                          <option value="+504">+504 (Honduras)</option>
+                          <option value="+36">+36 (Hungary)</option>
+                          <option value="+91">+91 (India)</option>
+                          <option value="+62">+62 (Indonesia)</option>
+                          <option value="+98">+98 (Iran)</option>
+                          <option value="+964">+964 (Iraq)</option>
+                          <option value="+353">+353 (Ireland)</option>
+                          <option value="+972">+972 (Israel)</option>
+                          <option value="+39">+39 (Italy)</option>
+                          <option value="+81">+81 (Japan)</option>
+                          <option value="+962">+962 (Jordan)</option>
+                          <option value="+254">+254 (Kenya)</option>
+                          <option value="+856">+856 (Laos)</option>
+                          <option value="+371">+371 (Latvia)</option>
+                          <option value="+961">+961 (Lebanon)</option>
+                          <option value="+231">+231 (Liberia)</option>
+                          <option value="+218">+218 (Libya)</option>
+                          <option value="+265">+265 (Malawi)</option>
+                          <option value="+60">+60 (Malaysia)</option>
+                          <option value="+223">+223 (Mali)</option>
+                          <option value="+356">+356 (Malta)</option>
+                          <option value="+230">+230 (Mauritius)</option>
+                          <option value="+52">+52 (Mexico)</option>
+                          <option value="+377">+377 (Monaco)</option>
+                          <option value="+976">+976 (Mongolia)</option>
+                          <option value="+212">+212 (Morocco)</option>
+                          <option value="+258">+258 (Mozambique)</option>
+                          <option value="+264">+264 (Namibia)</option>
+                          <option value="+977">+977 (Nepal)</option>
+                          <option value="+31">+31 (Netherlands)</option>
+                          <option value="+64">+64 (New Zealand)</option>
+                          <option value="+234">+234 (Nigeria)</option>
+                          <option value="+47">+47 (Norway)</option>
+                          <option value="+92">+92 (Pakistan)</option>
+                          <option value="+970">+970 (Palestine)</option>
+                          <option value="+507">+507 (Panama)</option>
+                          <option value="+595">+595 (Paraguay)</option>
+                          <option value="+51">+51 (Peru)</option>
+                          <option value="+63">+63 (Philippines)</option>
+                          <option value="+48">+48 (Poland)</option>
+                          <option value="+351">+351 (Portugal)</option>
+                          <option value="+40">+40 (Romania)</option>
+                          <option value="+7">+7 (Russia)</option>
+                          <option value="+250">+250 (Rwanda)</option>
+                          <option value="+221">+221 (Senegal)</option>
+                          <option value="+381">+381 (Serbia)</option>
+                          <option value="+65">+65 (Singapore)</option>
+                          <option value="+421">+421 (Slovakia)</option>
+                          <option value="+386">+386 (Slovenia)</option>
+                          <option value="+27">+27 (South Africa)</option>
+                          <option value="+82">+82 (South Korea)</option>
+                          <option value="+34">+34 (Spain)</option>
+                          <option value="+94">+94 (Sri Lanka)</option>
+                          <option value="+46">+46 (Sweden)</option>
+              
+                            <!-- يمكنك إضافة جميع الدول الأخرى هنا -->
+                        </select>
+                        <input type="text" id="phone" name="phone" style="flex: 1;" placeholder="0xxxxxxxxxx" required>
+                    </div>
+                            <!-- خانة البحث عن الدول -->
+
+                    <script>
+                      function filterCountries() {
+                          const searchInput = document.getElementById('country-search').value.toLowerCase();
+                          const options = document.getElementById('country-code').options;
+                      
+                          for (let i = 0; i < options.length; i++) {
+                              const text = options[i].text.toLowerCase();
+                              const value = options[i].value.toLowerCase();
+                              
+                              if (text.includes(searchInput) || value.includes(searchInput)) {
+                                  options[i].style.display = ""; // Show matching option
+                              } else {
+                                  options[i].style.display = "none"; // Hide non-matching option
+                              }
+                          }
+                      }
+                      </script>
+                      
+                
                     <label for="subject">Subject:</label>
                     <input type="text" id="subject" name="subject">
 
                     <label for="message">Message:</label>
                     <textarea id="message" name="message" required></textarea>
-
-                    <button type="submit">Send</button>
+                    <button type="submit" class="submit-button">Send</button>
                     <p class="thank-you" id="thank-you-message">Thank you! Your message has been sent.</p>
                 </form>
+                
+                <style>
+                    .submit-button {
+                        background-color: #28a745; /* لون الزر الأساسي */
+                        color: white;
+                        font-size: 16px;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        transition: all 0.1s ease-in-out;
+                        box-shadow: 0px 5px 0px #218838; /* ظل خفيف يعطي تأثير ثلاثي الأبعاد */
+                    }
+                
+                    .submit-button:active {
+                        background-color: #218838; /* لون داكن عند الضغط */
+                        box-shadow: 0px 2px 0px #1e7e34; /* ظل داخلي يوحي بالضغط */
+                        transform: translateY(3px); /* تحريك الزر لأسفل */
+                    }
+                
+                    /* إخفاء رسالة الشكر في البداية */
+                    .thank-you {
+                        display: none;
+                        color: green;
+                        margin-top: 10px;
+                    }
+                </style>
+                
+                <script>
+                    document.querySelector('#contact-form').addEventListener('submit', function(event) {
+                        event.preventDefault(); // منع الإرسال الافتراضي للنموذج
+                        const form = event.target;
+                
+                        // إرسال البيانات إلى Formspree
+                        fetch(form.action, {
+                            method: form.method,
+                            body: new FormData(form),
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        }).then(response => {
+                            if (response.ok) {
+                                form.reset(); // مسح الحقول بعد الإرسال
+                                document.getElementById("thank-you-message").style.display = "block"; // إظهار رسالة الشكر
+                            } else {
+                                alert("Oops! There was a problem submitting your form.");
+                            }
+                        }).catch(error => {
+                            alert("Oops! There was a problem submitting your form.");
+                        });
+                    });
+                </script>
                 
             </div>
 
