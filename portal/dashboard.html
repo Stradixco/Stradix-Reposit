@@ -61,9 +61,9 @@
           <label for="invoiceDigits">رقم الفاتورة</label>
           <div style="display:flex; flex-direction:row-reverse; gap:6px; margin-top:6px;">
             <input type="text" value="S-TDX-INV-2025/" readonly 
-              style="width:100px; text-align:center; background:#1a2540; color:#cfe3ff; 
+              style="width:200px; text-align:center; background:#1a2540; color:#cfe3ff; 
               border-radius:14px; border:1px solid #2b3550; padding:12px 0; font-weight:bold;">
-            <input id="invoiceDigits" class="input" type="text" maxlength="6" placeholder="100123"
+            <input id="invoiceDigits" class="input" type="text" maxlength="3" placeholder="100123"
               style="text-align:center;" 
               oninput="this.value=this.value.replace(/[^0-9]/g,'')">
           </div>

@@ -19,3 +19,12 @@ export function checkAuth(onSuccess, onFail) {
     }
   });
 }
+document.getElementById("invoice-number").addEventListener("input", function (e) {
+  const input = e.target;
+  const value = input.value;
+
+  // اسمح فقط بـ 3 أرقام
+  if (value.length > 3) {
+    input.value = value.slice(0, 3);
+  }
+});
