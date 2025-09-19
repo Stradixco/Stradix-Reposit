@@ -60,16 +60,24 @@
         <div>
           <label for="invoiceDigits">رقم الفاتورة</label>
           <div style="display:flex; flex-direction:row-reverse; gap:6px; margin-top:6px;">
-<div style="display:flex; flex-direction:row-reverse; gap:6px; margin-top:6px;">
+<!-- عنوان الفاتورة -->
+<div style="text-align: right; margin-top: 30px; margin-bottom: 10px;">
+  <label for="invoiceDigits" style="font-weight: bold; color: white;">رقم الفاتورة</label>
+</div>
+
+<!-- الحقول محاذاة لليمين -->
+<div style="display: flex; flex-direction: row-reverse; gap: 6px; justify-content: flex-end;">
+
   <!-- الجزء الثابت -->
   <input type="text" value="/S-TDX-INV-2025" readonly 
-    style="flex: 0 0 40%; text-align:center; background:#1a2540; color:#cfe3ff; 
-    border-radius:14px; border:1px solid #2b3550; padding:12px 0; font-weight:bold;">
+    style="flex: 0 0 40%; text-align: center; background: #1a2540; color: #cfe3ff; 
+    border-radius: 14px; border: 1px solid #2b3550; padding: 12px 0; font-weight: bold;">
 
   <!-- الجزء اليدوي -->
-  <input id="invoiceDigits" class="input" type="text" maxlength="6" placeholder="100123"
-    style="flex: 0 0 60%; text-align:center;" 
+  <input id="invoiceDigits" class="input" type="text" maxlength="3" placeholder="000"
+    style="flex: 0 0 60%; text-align: center;" 
     oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
 </div>
           </div>
 
