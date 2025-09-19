@@ -1,4 +1,3 @@
-
 /* ====== Utils: Time ====== */
 function pad(n){return String(n).padStart(2,'0')}
 function toIsoLocal(d){
@@ -156,12 +155,3 @@ document.getElementById('download')?.addEventListener('click', ()=>{
     a.click();
   }
 });
-// ...
-
-const invoiceDigits = document.getElementById('invoiceDigits').value.trim();
-if (!/^[0-9]{3}$/.test(invoiceDigits)) {
-  showStatus('⚠️ رقم الفاتورة يجب أن يكون 3 أرقام صحيحة', false);
-  return;
-}
-
-// ...
