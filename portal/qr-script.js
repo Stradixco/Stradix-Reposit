@@ -148,7 +148,7 @@ document.getElementById('download')?.addEventListener('click', ()=>{
       showStatus('⚠️ رقم الفاتورة يجب أن يكون 3 أرقام صحيحة', false);
       return;
     }
-    const invoiceNo = "INV-" + invoiceDigits;
+    const invoiceNo = "/S-TDX-INV-2025-" + invoiceDigits;
     const a = document.createElement('a');
     a.download = `${invoiceNo}_zatca_qr.png`;
     a.href = currentCanvas.toDataURL('image/png');
