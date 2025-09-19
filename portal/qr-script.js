@@ -144,7 +144,7 @@ function generate(){
 document.getElementById('download')?.addEventListener('click', ()=>{
   if(currentCanvas){
     const invoiceDigits = document.getElementById('invoiceDigits').value.trim();
-    if(!/^[0-9]{3}$/.test(invoiceDigits)){
+    if(!/^[0-9]{6}$/.test(invoiceDigits)){
       showStatus('⚠️ رقم الفاتورة يجب أن يكون 6 أرقام صحيحة', false);
       return;
     }
