@@ -143,11 +143,11 @@ function generate(){
 
 document.getElementById('download')?.addEventListener('click', ()=>{
   if(currentCanvas){
-    const invoiceDigits = document.getElementById('invoiceDigits').value.trim();
-    if(!/^[0-9]{3}$/.test(invoiceDigits)){
-      showStatus('⚠️ رقم الفاتورة يجب أن يكون 6 أرقام صحيحة', false);
-      return;
-    }
+const invoiceNumber = document.getElementById("invoice-number").value;
+if (invoiceNumber.length !== 3) {
+  alert("رقم الفاتورة يجب أن يتكون من 3 أرقام فقط");
+  return;
+}
     const invoiceNo = "INV-" + invoiceDigits;
     const a = document.createElement('a');
     a.download = `${invoiceNo}_zatca_qr.png`;
