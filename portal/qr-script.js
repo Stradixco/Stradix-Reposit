@@ -144,8 +144,8 @@ function generate(){
 document.getElementById('download')?.addEventListener('click', ()=>{
   if(currentCanvas){
     const invoiceDigits = document.getElementById('invoiceDigits').value.trim();
-    if(!/^[0-9]{3}$/.test(invoiceDigits)){
-      showStatus('⚠️ رقم الفاتورة يجب أن يكون 3 أرقام صحيحة', false);
+    if (!/^[0-9]{3,}$/.test(invoiceDigits)) {
+     showStatus('⚠️ رقم الفاتورة يجب أن يكون 3 أرقام على الأقل', false);
       return;
     }
     const invoiceNo = "/S-TDX-INV-2025-" + invoiceDigits;
