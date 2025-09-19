@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>لوحة التحكم - Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<!-- حماية الدخول -->
+<script type="module">
+  import { checkAuth, logout } from './auth.js';
+
+  checkAuth(
+    () => { document.getElementById("protected").style.display = "block"; },
+    () => { window.location.href = 'index.html'; }
+  );
+
+  window.logout = logout;
+</script>
+
+<!-- ================== PORTAL ================== -->
+<div id="protected">
+  <div class="ribbons"><div class="rib"></div><div class="rib2"></div><div class="rib3"></div></div>
+  <div class="grid-mask"></div>
+
+  <div class="workspace">
+    <div class="card">
+      <div class="header">
+        <div class="brand">
+          <h1>Mamzar For General Contracting EST</h1>
+          <span class="vat">VAT: 300949914100003</span>
+          <h5>مؤسسة ممزر للمقاولات العامة</h5>
+        </div>
+        <div>
+          <button class="btn btn-danger" onclick="logout().then(()=>location.href='index.html')">تسجيل الخروج</button>
+        </div>
+      </div>
+
+      <div class="hint">بورتال ممزر لانشاء الفواتير الضريبية وفق متطلبات ZATCA.</div>
+
+      <label for="seller">اسم البائع</label>
+      <input id="seller" class="input" type="text" value="Mamzar For General Contracting EST مؤسسة ممزر للمقاولات العامة" readonly>
+
+      <label for="vat">الرقم الضريبي للبائع</label>
+      <input id="vat" class="input" type="text" value="300949914100003" readonly>
+
+      <label for="ts">تاريخ ووقت الفاتورة</label>
+      <div class="btns">
+        <input id="ts" class="input" type="text" style="flex:1" placeholder="مثال: 2025-09-18T12:30:00+03:00">
+        <button class="btn btn-secondary" type="button" onclick="fillNowLocal()">الآن بتوقيت جهازك</button>
+      </div>
+
+      <div class="row subcalc" style="margin-top:10px;">
+        <div>
+          <label for="invoiceDigits">رقم الفاتورة</label>
+          <div style="display:flex; flex-direction:row-reverse; gap:6px; margin-top:6px;">
+            <input type="text" value="-INV" readonly 
+              style="width:100px; text-align:center; background:#1a2540; color:#cfe3ff; 
+              border-radius:14px; border:1px solid #2b3550; padding:12px 0; font-weight:bold;">
+            <input id="invoiceDigits" class="input" type="text" maxlength="6" placeholder="100123"
+              style="text-align:center;" 
+              oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          </div>
+
+          <label for="subtotal">القيمة قبل الضريبة</label>
+          <input id="subtotal" class="input" type="text" placeholder="100.00">
+        </div>
+        <div>
+          <button class="btn btn-primary" type="button" id="btnCalcVAT">احتساب الضريبة</button>
+        </div>
+      </div>
+
+      <div class="row two">
+        <div>
+          <label for="vatamt">مبلغ الضريبة (15%)</label>
+          <input id="vatamt" class="input" type="text" readonly>
+        </div>
+        <div>
+          <label for="total">إجمالي الفاتورة شامل الضريبة</label>
+          <input id="total" class="input" type="text" readonly>
+        </div>
+      </div>
+
+      <div class="btns">
+        <button class="btn btn-primary" type="button" onclick="generate()">توليد QR</button>
+        <button class="btn btn-secondary" type="button" onclick="clearAll()">مسح الحقول</button>
+        <button class="btn btn-secondary" type="button" onclick="saveDefaults()">حفظ البيانات</button>
+        <button class="btn btn-secondary" type="button" onclick="loadDefaults()">تحميل البيانات</button>
+        <button class="btn btn-primary" id="download" style="display:none;">تحميل QR</button>
+      </div>
+
+      <div id="status" class="status"></div>
+
+      <div class="out" id="out" style="display:none;">
+        <div>
+          <label for="b64">نص Base64</label>
+          <textarea id="b64" class="input" readonly></textarea>
+          <div class="btns" style="margin-top:8px;">
+            <button class="btn btn-secondary" type="button" onclick="copyB64()">نسخ Base64</button>
+          </div>
+        </div>
+
+        <div class="qr-preview">
+          <div class="qr-orbit-wrap">
+            <div class="qr-orbit o1"><div class="qr-electron"></div></div>
+            <div class="qr-orbit o2"><div class="qr-electron"></div></div>
+            <div class="qr-orbit o3"><div class="qr-electron"></div></div>
+          </div>
+          <div id="qrContainer"></div>
+        </div>
+
+      </div>
+
+      <footer>⚠️ هذا البورتال خاص بمؤسسة ممزر للمقاولات العامة</footer>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="./qr-script.js"></script>
+
+</body>
+</html>
