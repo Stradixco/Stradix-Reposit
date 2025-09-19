@@ -3,84 +3,145 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تسجيل دخول - Tradix</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet" />
+  <title>بوابة مميز - Tradix</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
       font-family: 'Cairo', sans-serif;
-      background: linear-gradient(to bottom right, #0f172a, #1e293b);
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #0f2027);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      direction: rtl;
     }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .login-box {
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 30px;
-      border-radius: 20px;
-      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 40px 30px;
+      width: 90%;
       max-width: 400px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
-      backdrop-filter: blur(10px);
-      color: white;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
       text-align: center;
+      color: #fff;
     }
-    .login-box img {
-      width: 80px;
+
+    .login-box .icon {
+      font-size: 60px;
       margin-bottom: 20px;
     }
+
     .login-box h2 {
+      font-size: 26px;
       margin-bottom: 10px;
-      font-weight: 900;
     }
+
     .login-box p {
       font-size: 14px;
-      opacity: 0.8;
-      margin-bottom: 20px;
+      color: #ccc;
+      margin-bottom: 30px;
     }
+
     .login-box input {
       width: 100%;
-      padding: 12px 15px;
-      margin-bottom: 15px;
+      padding: 12px;
+      margin-bottom: 20px;
       border: none;
-      border-radius: 10px;
-      background-color: #0f172a;
-      color: white;
-      font-size: 15px;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 14px;
+      outline: none;
     }
+
     .login-box input::placeholder {
-      color: #94a3b8;
+      color: #ddd;
     }
+
     .login-box button {
       width: 100%;
       padding: 12px;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
       border: none;
-      border-radius: 10px;
-      background: linear-gradient(to right, #3b82f6, #06b6d4);
+      border-radius: 8px;
       color: white;
       font-size: 16px;
-      font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: 0.3s;
     }
+
     .login-box button:hover {
-      background: linear-gradient(to right, #2563eb, #0ea5e9);
+      opacity: 0.9;
     }
   </style>
 </head>
 <body>
+
   <div class="login-box">
-    <img src="https://img.icons8.com/ios-filled/100/ffffff/login-rounded-right.png" alt="login icon" />
+    <div class="icon">🔐</div>
     <h2>بوابة مميز / Tradix</h2>
-    <p>دخول آمن لمولد QR للفواتير الضريبية</p>
-    <input type="email" id="email" placeholder="اسم المستخدم" />
-    <input type="password" id="password" placeholder="كلمة المرور" />
-    <button onclick="checkLogin()">دخول</button>
+    <p>دخول آمن لمولّد QR للفواتير الضريبية</p>
+
+    <form id="login-form">
+      <input type="email" id="email" placeholder="البريد الإلكتروني" required />
+      <input type="password" id="password" placeholder="كلمة المرور" required />
+      <button type="submit">دخول</button>
+    </form>
   </div>
 
-  <script src="firebase-config.js"></script>
-  <script src="auth.js"></script>
+  <!-- Firebase -->
+  <script type="module">
+    // firebase-config.js المحتوى الخاص بك هنا
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCjLXXAGlafMwZLBnEXgwfDBFUiKwY6GsQ",
+      authDomain: "tradix-portal.firebaseapp.com",
+      projectId: "tradix-portal",
+      storageBucket: "tradix-portal.firebasestorage.app",
+      messagingSenderId: "18982343212",
+      appId: "1:18982343212:web:ce602a4609c2a303927789",
+      measurementId: "G-CS9QFQXWHP"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        alert("خطأ في تسجيل الدخول: تأكد من البيانات.");
+        console.error(error);
+      }
+    });
+  </script>
+
 </body>
 </html>
