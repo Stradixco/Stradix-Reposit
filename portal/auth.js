@@ -1,4 +1,3 @@
-// auth.js
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { auth } from './firebase-config.js';
 

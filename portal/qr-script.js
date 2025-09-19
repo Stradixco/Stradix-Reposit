@@ -155,8 +155,12 @@ document.getElementById('download')?.addEventListener('click', ()=>{
     a.click();
   }
 });
-const invoiceNumber = document.getElementById("invoice-number").value;
-if (invoiceNumber.length !== 3) {
-  alert("رقم الفاتورة يجب أن يتكون من 3 أرقام فقط");
+// ...
+
+const invoiceDigits = document.getElementById('invoiceDigits').value.trim();
+if (!/^[0-9]{3}$/.test(invoiceDigits)) {
+  showStatus('⚠️ رقم الفاتورة يجب أن يكون 3 أرقام صحيحة', false);
   return;
 }
+
+// ...
