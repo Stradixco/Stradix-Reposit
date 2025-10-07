@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>📋 قائمة العملاء</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="./background-header/Header-style.css">
+  <link rel="stylesheet" href="sidebar/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background-color: #0f172a;
+      color: #e2e8f0;
+      display: flex;
+      height: 100vh;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+      margin-top: 80px;
+      margin-right: 250px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background-color: #1e293b;
+      color: white;
+      width: 200px;
+    }
+
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-create {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    .btn-delete {
+      background-color: #ef4444;
+      color: white;
+    }
+
+    .btn-export {
+      background-color: #10b981;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #1e293b;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #334155;
+      text-align: center;
+    }
+
+    th {
+      background-color: #0f172a;
+      color: #93c5fd;
+    }
+
+    tbody tr:hover {
+      background-color: #334155;
+    }
+
+    .edit-btn {
+      background-color: #f59e0b;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .pagination {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .pagination button {
+      margin: 0 4px;
+      padding: 6px 10px;
+      background-color: #1e293b;
+      color: white;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .pagination button.active {
+      background-color: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header & Sidebar -->
+<script src="./background-header/load-header.js" defer></script>
+<div id="header"></div>
+<div id="sidebar-container"></div>
+
+<div class="main">
+  <h1>📋 قائمة العملاء</h1>
+
+  <div class="controls">
+    <input type="text" id="searchByName" placeholder="🔍 ابحث بالاسم">
+    <input type="text" id="searchById" placeholder="🔍 ابحث برقم العميل">
+    <button class="btn-create" onclick="window.location.href='Customer-Create.html'">➕ إنشاء عميل</button>
+    <button class="btn-delete" onclick="deleteSelected()">🗑️ حذف</button>
+    <button class="btn-export" onclick="exportToExcel()">📤 تصدير Excel</button>
+  </div>
+
+  <table id="customersTable">
+    <thead>
+      <tr>
+        <th>📌 رقم العميل</th>
+        <th>🧾 الاسم</th>
+        <th>🌍 الدولة</th>
+        <th>📞 الاتصال</th>
+        <th>📧 البريد</th>
+        <th>✏️ تعديل</th>
+        <th>✔️ اختيار</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="pagination" id="pagination"></div>
+</div>
+
+<script src="sidebar/load-sidebar.js"></script>
+
+<script>
+  const rowsPerPage = 20;
+  let customers = [];
+
+  function loadCustomers() {
+    customers = JSON.parse(localStorage.getItem("customersList") || "[]");
+    renderTable();
+  }
+
+  function renderTable() {
+    const tbody = document.querySelector("#customersTable tbody");
+    tbody.innerHTML = "";
+
+    const nameQuery = document.getElementById("searchByName").value.trim();
+    const idQuery = document.getElementById("searchById").value.trim();
+
+    const filtered = customers.filter(c => {
+      const nameMatch = c.nameAr.includes(nameQuery);
+      const idMatch = c.id.includes(idQuery);
+      return nameMatch && idMatch;
+    });
+
+    const start = (currentPage - 1) * rowsPerPage;
+    const paginated = filtered.slice(start, start + rowsPerPage);
+
+    paginated.forEach(c => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${c.id}</td>
+        <td>${c.nameAr}</td>
+        <td>${c.country}</td>
+        <td>${c.phone || "-"}</td>
+        <td>${c.email || "-"}</td>
+        <td><button class="edit-btn" onclick="editCustomer('${c.id}')">تعديل</button></td>
+        <td><input type="checkbox" class="select-customer" value="${c.id}"></td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    renderPagination(filtered.length);
+  }
+
+  function renderPagination(total) {
+    const totalPages = Math.ceil(total / rowsPerPage);
+    const container = document.getElementById("pagination");
+    container.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = i;
+      if (i === currentPage) btn.classList.add("active");
+      btn.addEventListener("click", () => {
+        currentPage = i;
+        renderTable();
+      });
+      container.appendChild(btn);
+    }
+  }
+
+  function deleteSelected() {
+    const selected = Array.from(document.querySelectorAll(".select-customer:checked")).map(cb => cb.value);
+    if (selected.length === 0) return alert("❗ اختر عميلًا واحدًا على الأقل");
+
+    // تحقق من عدم وجود فواتير أو كريدت نوت هنا
+    const updated = customers.filter(c => !selected.includes(c.id));
+    localStorage.setItem("customersList", JSON.stringify(updated));
+
+    // حفظ الأرقام المحذوفة لإعادة استخدامها
+    let deletedIds = JSON.parse(localStorage.getItem("deletedCustomerIds") || "[]");
+    deletedIds = [...deletedIds, ...selected];
+    localStorage.setItem("deletedCustomerIds", JSON.stringify(deletedIds));
+
+    alert("✅ تم حذف العملاء المحددين");
+    loadCustomers();
+  }
+
+  function editCustomer(id) {
+    localStorage.setItem("editCustomerId", id);
+    window.location.href = "Customer-Edit.html";
+  }
+
+  function exportToExcel() {
+    alert("🚧 سيتم دعم التصدير إلى Excel لاحقًا");
+  }
+
+  document.getElementById("searchByName").addEventListener("input", renderTable);
+  document.getElementById("searchById").addEventListener("input", renderTable);
+
+  let currentPage = 1;
+  loadCustomers();
+</script>
+
+</body>
+</html>

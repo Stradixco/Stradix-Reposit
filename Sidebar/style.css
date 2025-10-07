@@ -1,0 +1,43 @@
+
+    /* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #111827;
+  color: #fff;
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 15px;
+}
+
+.sidebar a {
+  color: #cfe3ff;
+  text-decoration: none;
+  font-weight: 600;
+  display: block;
+  padding: 8px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.sidebar a:hover {
+  background-color: #1e293b;
+}
+
+
+body {
+  margin-right: 240px; /* علشان السايد بار مايخليش المحتوى يضيق */
+}

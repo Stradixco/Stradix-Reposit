@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>عرض الفاتورة</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- خطوط Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #0D3C66;
+      --secondary-color: #f7941d;
+      --border-color: #ddd;
+      --light-gray: #f9f9f9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f2f5;
+      color: #333;
+    }
+
+    .invoice-container {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 40px 50px;
+      margin: auto;
+      background: #fff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 3px solid var(--primary-color);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+
+    .invoice-header .company-info {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .invoice-header .company-info h2 {
+      margin: 0;
+      color: var(--primary-color);
+    }
+
+    .invoice-header .company-info small {
+      color: #666;
+    }
+
+    .invoice-title {
+      font-size: 26px;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .section-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+      margin-top: 30px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .col {
+      width: 48%;
+      margin-bottom: 15px;
+    }
+
+    .label {
+      color: #777;
+      font-size: 14px;
+    }
+
+    .value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .qr-code {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .qr-code img {
+      width: 160px;
+      height: 160px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 40px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .no-print {
+        display: none;
+      }
+
+      .invoice-container {
+        box-shadow: none;
+        margin: 0;
+        padding: 20mm;
+        width: auto;
+        height: auto;
+      }
+    }
+
+    .btn-print {
+      margin: 30px auto;
+      display: block;
+      padding: 10px 30px;
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn-print:hover {
+      background-color: #072e50;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="invoice-container">
+
+    <div class="invoice-header">
+      <div class="company-info">
+        <h2>Mamzar For General Contracting EST</h2>
+        <div>مؤسسة ممزر للمقاولات العامة</div>
+        <small>الرقم الضريبي: 300949914100003</small><br>
+        <small>العنوان: الدمام - غرناطة - شارع طرفة بن العبد</small>
+      </div>
+
+      <div class="invoice-title">
+        فاتورة ضريبية<br>
+        TAX INVOICE
+      </div>
+    </div>
+
+    <!-- معلومات الفاتورة -->
+    <div class="section-title">معلومات الفاتورة</div>
+    <div class="row">
+      <div class="col">
+        <div class="label">رقم الفاتورة:</div>
+        <div class="value" id="invNumber">---</div>
+      </div>
+      <div class="col">
+        <div class="label">تاريخ الإصدار:</div>
+        <div class="value" id="invDate">---</div>
+      </div>
+    </div>
+
+    <div class="section-title">تفاصيل المبالغ</div>
+    <div class="row">
+      <div class="col">
+        <div class="label">المبلغ قبل الضريبة:</div>
+        <div class="value" id="invSubtotal">---</div>
+      </div>
+      <div class="col">
+        <div class="label">قيمة الضريبة (15٪):</div>
+        <div class="value" id="invVatAmount">---</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="label">إجمالي المبلغ:</div>
+        <div class="value" id="invTotal">---</div>
+      </div>
+    </div>
+
+    <!-- كود QR -->
+    <div class="section-title">رمز الاستجابة السريعة</div>
+    <div class="qr-code">
+      <img id="qrPreview" alt="QR Code" />
+    </div>
+
+    <!-- طباعة -->
+    <button class="btn-print no-print" onclick="window.print()">🖨️ طباعة الفاتورة</button>
+
+    <!-- فوتر -->
+    <div class="footer">
+      شكراً لتعاملكم معنا. | هذه الفاتورة متوافقة مع هيئة الزكاة والضريبة والجمارك.
+    </div>
+  </div>
+
+  <script>
+    // عند تحميل الصفحة، اجلب البيانات من localStorage واعرضها
+    window.onload = function () {
+      const invoiceDigits = localStorage.getItem("invoiceDigits");
+      const invoiceTs = localStorage.getItem("invoiceTs");
+      const invoiceSubtotal = localStorage.getItem("invoiceSubtotal");
+      const invoiceVat = localStorage.getItem("invoiceVat");
+      const invoiceTotal = localStorage.getItem("invoiceTotal");
+      const invoiceQR = localStorage.getItem("invoiceQR");
+
+      document.getElementById("invNumber").innerText = invoiceDigits ? "INV-" + invoiceDigits : "غير متوفر";
+      document.getElementById("invDate").innerText = invoiceTs || "غير متوفر";
+      document.getElementById("invSubtotal").innerText = invoiceSubtotal ? invoiceSubtotal + " ر.س" : "غير متوفر";
+      document.getElementById("invVatAmount").innerText = invoiceVat ? invoiceVat + " ر.س" : "غير متوفر";
+      document.getElementById("invTotal").innerText = invoiceTotal ? invoiceTotal + " ر.س" : "غير متوفر";
+
+      if (invoiceQR) {
+        document.getElementById("qrPreview").src = invoiceQR;
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>✏️ تعديل بيانات العميل</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="./background-header/Header-style.css">
+  <link rel="stylesheet" href="sidebar/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background-color: #0f172a;
+      color: #e2e8f0;
+      display: flex;
+      height: 100vh;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+      margin-top: 80px;
+      margin-right: 250px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      background-color: #1e293b;
+      color: white;
+    }
+
+    input[readonly] {
+      background-color: #334155;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .btn-save {
+      background-color: #10b981;
+      color: white;
+    }
+
+    .btn-back {
+      background-color: #6b7280;
+      color: white;
+    }
+
+    .error {
+      color: #f87171;
+      font-size: 14px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header & Sidebar -->
+<script src="./background-header/load-header.js" defer></script>
+<div id="header"></div>
+<div id="sidebar-container"></div>
+
+<div class="main">
+  <h1>✏️ تعديل بيانات العميل</h1>
+
+  <form id="editForm">
+    <label>📌 رقم العميل</label>
+    <input type="text" id="customerId" readonly>
+
+    <label>👤 الاسم (عربي)</label>
+    <input type="text" id="nameAr" required>
+    <div class="error" id="errorAr"></div>
+
+    <label>👤 الاسم (إنجليزي)</label>
+    <input type="text" id="nameEn" required>
+    <div class="error" id="errorEn"></div>
+
+    <label>🌍 الدولة</label>
+    <input type="text" id="country">
+
+    <label>📞 رقم الاتصال</label>
+    <input type="text" id="phone">
+
+    <label>📧 البريد الإلكتروني</label>
+    <input type="email" id="email">
+
+    <label>🏢 العنوان (عربي)</label>
+    <input type="text" id="addressAr">
+    <div class="error" id="errorAdrAr"></div>
+
+    <label>🏢 العنوان (إنجليزي)</label>
+    <input type="text" id="addressEn">
+    <div class="error" id="errorAdrEn"></div>
+
+    <label>🔢 الرقم الضريبي</label>
+    <input type="text" id="vat" maxlength="15">
+    <div class="error" id="errorVat"></div>
+
+    <button type="button" class="btn btn-save" id="saveBtn" disabled>💾 حفظ التعديلات</button>
+    <button type="button" class="btn btn-back" onclick="window.location.href='customers-list.html'">🔙 رجوع إلى العملاء</button>
+  </form>
+</div>
+
+<script src="sidebar/load-sidebar.js"></script>
+<script>
+  const form = document.getElementById("editForm");
+  const saveBtn = document.getElementById("saveBtn");
+  const id = localStorage.getItem("editCustomerId");
+  const customers = JSON.parse(localStorage.getItem("customersList") || "[]");
+
+  const fields = {
+    id: document.getElementById("customerId"),
+    nameAr: document.getElementById("nameAr"),
+    nameEn: document.getElementById("nameEn"),
+    country: document.getElementById("country"),
+    phone: document.getElementById("phone"),
+    email: document.getElementById("email"),
+    addressAr: document.getElementById("addressAr"),
+    addressEn: document.getElementById("addressEn"),
+    vat: document.getElementById("vat")
+  };
+
+  const errors = {
+    nameAr: document.getElementById("errorAr"),
+    nameEn: document.getElementById("errorEn"),
+    addressAr: document.getElementById("errorAdrAr"),
+    addressEn: document.getElementById("errorAdrEn"),
+    vat: document.getElementById("errorVat")
+  };
+
+  function loadCustomerData() {
+    const customer = customers.find(c => c.id === id);
+    if (!customer) return alert("❌ عميل غير موجود");
+
+    fields.id.value = customer.id;
+    fields.nameAr.value = customer.nameAr;
+    fields.nameEn.value = customer.nameEn;
+    fields.country.value = customer.country;
+    fields.phone.value = customer.phone;
+    fields.email.value = customer.email;
+    fields.addressAr.value = customer.addressAr;
+    fields.addressEn.value = customer.addressEn;
+    fields.vat.value = customer.vat;
+  }
+
+  function validateFields() {
+    let valid = true;
+
+    // تحقق من الاسم العربي
+    if (!/^[\u0600-\u06FF\s]+$/.test(fields.nameAr.value)) {
+      errors.nameAr.textContent = "❗ الاسم بالعربية فقط";
+      valid = false;
+    } else {
+      errors.nameAr.textContent = "";
+    }
+
+    // تحقق من الاسم الإنجليزي
+    if (!/^[A-Za-z\s]+$/.test(fields.nameEn.value)) {
+      errors.nameEn.textContent = "❗ الاسم بالإنجليزية فقط";
+      valid = false;
+    } else {
+      errors.nameEn.textContent = "";
+    }
+
+    // تحقق من العنوان العربي
+    if (fields.addressAr.value && !/^[\u0600-\u06FF\s]+$/.test(fields.addressAr.value)) {
+      errors.addressAr.textContent = "❗ العنوان بالعربية فقط";
+      valid = false;
+    } else {
+      errors.addressAr.textContent = "";
+    }
+
+    // تحقق من العنوان الإنجليزي
+    if (fields.addressEn.value && !/^[A-Za-z0-9\s]+$/.test(fields.addressEn.value)) {
+      errors.addressEn.textContent = "❗ العنوان بالإنجليزية فقط";
+      valid = false;
+    } else {
+      errors.addressEn.textContent = "";
+    }
+
+    // تحقق من الرقم الضريبي
+    if (fields.vat.value.length !== 15 || !/^\d{15}$/.test(fields.vat.value)) {
+      errors.vat.textContent = "❗ الرقم الضريبي يجب أن يتكون من 15 رقمًا";
+      valid = false;
+    } else {
+      errors.vat.textContent = "";
+    }
+
+    saveBtn.disabled = !valid;
+  }
+
+  saveBtn.addEventListener("click", () => {
+    const index = customers.findIndex(c => c.id === id);
+    if (index === -1) return alert("❌ عميل غير موجود");
+
+    customers[index] = {
+      ...customers[index],
+      nameAr: fields.nameAr.value,
+      nameEn: fields.nameEn.value,
+      country: fields.country.value,
+      phone: fields.phone.value,
+      email: fields.email.value,
+      addressAr: fields.addressAr.value,
+      addressEn: fields.addressEn.value,
+      vat: fields.vat.value
+    };
+
+    localStorage.setItem("customersList", JSON.stringify(customers));
+    alert("✅ تم حفظ التعديلات بنجاح");
+    window.location.href = "customers-list.html";
+  });
+
+  Object.values(fields).forEach(input => {
+    input.addEventListener("input", validateFields);
+  });
+
+  loadCustomerData();
+  validateFields();
+</script>
+
+</body>
+</html>

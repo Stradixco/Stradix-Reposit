@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>📁 قائمة الفواتير</title>
+  <link rel="stylesheet" href="../background-header/Header-style.css" />
+  <script src="../background-header/load-header.js" defer></script>
+  <link rel="stylesheet" href="../sidebar/sidebar-style.css" />
+  <script src="../sidebar/load-sidebar.js" defer></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .main {
+      margin-right: 250px;
+      margin-top: 80px;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #0d1a3d;
+    }
+
+    .top-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .top-controls input {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .top-controls .btns {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-controls button {
+      padding: 10px 15px;
+      background-color: #f45c02;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+    }
+
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+
+    table th {
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+
+    table tbody tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .pagination button {
+      margin: 0 5px;
+      padding: 8px 15px;
+      border: 1px solid #ccc;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .pagination button.active {
+      background-color: #f45c02;
+      color: white;
+    }
+
+    .action-button {
+      background-color: #0d1a3d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .action-button:hover {
+      background-color: #1e2a5a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header & Sidebar -->
+  <div id="header"></div>
+<div id="sidebar-container"></div>
+
+  <div class="main">
+<h1 style="text-align: left;">Invoice List 📁</h1>
+
+    <div class="top-controls">
+      <input type="text" id="searchInput" placeholder="🔍 Search by Invoice Number or Customer name..." />
+      <div class="btns">
+        <button onclick="goToAddInvoice()">➕ إنشاء فاتورة</button>
+        <button onclick="goToCreditNote()">+ Credit Note</button>
+      </div>
+    </div>
+
+    <table id="invoiceTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable('invoiceNumber')">Invoice Number</th>
+          <th onclick="sortTable('clientName')">Customer Name</th>
+          <th onclick="sortTable('invoiceDate')">Invoice Date</th>
+          <th onclick="sortTable('totalAmount')">Total </th>
+          <th>To do</th>
+        </tr>
+      </thead>
+      <tbody id="invoiceBody">
+        <!-- سيتم ملء الصفوف من الجافاسكريبت -->
+      </tbody>
+    </table>
+
+    <div class="pagination" id="pagination">
+      <!-- أزرار الصفحات -->
+    </div>
+  </div>
+
+  <script>
+    let invoices = JSON.parse(localStorage.getItem("invoices")) || [];
+    let currentPage = 1;
+    const rowsPerPage = 30;
+
+    function renderTable(data = invoices) {
+      const start = (currentPage - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const pageData = data.slice(start, end);
+
+      const tbody = document.getElementById("invoiceBody");
+      tbody.innerHTML = "";
+
+      pageData.forEach(inv => {
+        const row = `
+          <tr>
+            <td>${inv.invoiceNumber}</td>
+            <td>${inv.clientName}</td>
+            <td>${inv.invoiceDate}</td>
+            <td>${inv.totalAmount}</td>
+            <td><button class="action-button" onclick="viewInvoice('${inv.invoiceNumber}')">👁️ عرض</button></td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+
+      renderPagination(data.length);
+    }
+
+    function renderPagination(totalRows) {
+      const totalPages = Math.ceil(totalRows / rowsPerPage);
+      const pagination = document.getElementById("pagination");
+      pagination.innerHTML = "";
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        btn.className = i === currentPage ? "active" : "";
+        btn.onclick = () => {
+          currentPage = i;
+          renderTable();
+        };
+        pagination.appendChild(btn);
+      }
+    }
+
+    function viewInvoice(invoiceNumber) {
+      localStorage.setItem("selectedInvoice", invoiceNumber);
+      window.location.href = "invoice-view.html";
+    }
+
+    function goToCreditNote() {
+      window.location.href = "Credit-note.html";
+    }
+
+    function goToAddInvoice() {
+      window.location.href = "add-invoice.html";
+    }
+
+    function sortTable(field) {
+      invoices.sort((a, b) => {
+        if (a[field] < b[field]) return -1;
+        if (a[field] > b[field]) return 1;
+        return 0;
+      });
+      renderTable();
+    }
+
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const filtered = invoices.filter(inv =>
+        inv.invoiceNumber.toLowerCase().includes(query) ||
+        inv.clientName.toLowerCase().includes(query) ||
+        inv.invoiceDate.toLowerCase().includes(query)
+      );
+      currentPage = 1;
+      renderTable(filtered);
+    });
+
+    // أول تحميل
+    renderTable();
+  </script>
+</body>
+</html>

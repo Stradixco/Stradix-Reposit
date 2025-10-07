@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <title>Mamzar For General Contracting EST - Ultra Secure Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- خطوط فاخرة -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    /* ================== Reset & Tokens ================== */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    :root{
+      --bg1:#0A0F1C;
+      --bg2:#0C1B2A;
+      --glass:rgba(255,255,255,.12);
+      --panel:#101828;
+      --panel-2:rgba(255,255,255,.06);
+      --ink:#E7ECF7;
+      --muted:#9AB1D7;
+
+      --primary:#60A5FA;    /* سماوي */
+      --primary-2:#7C3AED;  /* بنفسجي نيون */
+      --accent:#22D3EE;     /* تيفاني */
+      --success:#10B981;
+      --danger:#EF4444;
+
+      --glow-a: 0 0 30px rgba(124, 58, 237,.45), 0 0 60px rgba(96,165,250,.25);
+      --glow-b: 0 0 22px rgba(34,211,238,.45), 0 0 56px rgba(124,58,237,.25);
+      --ring:0 0 0 3px rgba(124,58,237,.25);
+
+      --radius:18px;
+      --blur:16px;
+      --shadow-lg: 0 30px 80px rgba(0,0,0,.45);
+      --shadow-md: 0 18px 40px rgba(0,0,0,.35);
+      --shadow-sm: 0 10px 20px rgba(0,0,0,.25);
+    }
+    body{
+      font-family:"Cairo","Poppins",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 800px at 10% -10%, #0f2a6b33 0%, transparent 60%),
+        radial-gradient(1200px 800px at 110% 110%, #7c3aed22 0%, transparent 60%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* ================== LOGIN PAGE ================== */
+    #loginBox{
+      min-height:100vh; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
+    }
+    /* طبقات خلفية متحركة */
+    .orbit, .orbit2{
+      position:absolute; width:110vmax; height:110vmax; border-radius:50%;
+      background: conic-gradient(from 210deg, #7c3aed11, #22d3ee11, #60a5fa11, #7c3aed11);
+      filter: blur(30px);
+      animation: spin 40s linear infinite;
+    }
+    .orbit{ top:-20vmax; left:-20vmax }
+    .orbit2{ bottom:-20vmax; right:-20vmax; animation-duration:55s; animation-direction:reverse }
+    @keyframes spin{ to{ transform: rotate(360deg) } }
+
+    .login-card{
+      width:380px; max-width:92vw;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:24px; padding:28px 24px;
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      box-shadow: var(--shadow-lg);
+      position:relative; z-index:2;
+      animation: pop .9s cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes pop{ from{ opacity:0; transform: translateY(16px) scale(.985)} to{opacity:1; transform:none} }
+
+    .brand-badge{
+      width:82px; height:82px; margin:0 auto 14px; border-radius:22px;
+      background: radial-gradient( circle at 30% 30%, #ffffffaa 0 12%, transparent 14% ),
+                  conic-gradient(from 120deg, var(--primary), var(--accent), var(--primary-2), var(--primary));
+      box-shadow: var(--glow-a);
+      position:relative;
+    }
+    .brand-badge::after{
+      content:""; position:absolute; inset:12px; border-radius:16px; background:#ffffff1a; filter: blur(8px);
+    }
+    .login-title{ text-align:center; font-weight:800; letter-spacing:.2px; font-size:22px; margin-bottom:6px }
+    .login-sub{ text-align:center; color:var(--muted); font-size:13px; margin-bottom:16px }
+
+    .login-card input{
+      width:100%; padding:12px 14px; margin:8px 0 12px;
+      border-radius:14px; border:1px solid #2b3550; background:#0e1626; color:var(--ink);
+      transition: .25s border-color, .25s box-shadow, .25s background;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,.04);
+    }
+    .login-card input:focus{ outline:none; border-color:#4f46e5; box-shadow: var(--ring) }
+    .glow-btn{
+      width:100%; padding:12px 16px; border:none; border-radius:14px; cursor:pointer;
+      color:white; font-weight:800; letter-spacing:.3px; font-size:15px;
+      background: linear-gradient(135deg, #4f46e5 0%, #22d3ee 50%, #60a5fa 100%);
+      background-size: 200% 200%;
+      box-shadow: var(--glow-b);
+      transition: .25s transform, .3s filter, .4s background-position;
+    }
+    .glow-btn:hover{ transform: translateY(-2px); background-position: 100% 0 }
+    #msg{
+      display:none; margin-top:10px; font-size:13px;
+      color:#ffdede; background:#7f1d1d; border:1px solid #ef444444; padding:6px 10px; border-radius:10px;
+    }
+
+    /* ================== PORTAL PAGE ================== */
+    #protected{ display:none; position:relative; min-height:100vh; padding:36px 18px; }
+    /* خلفية زخارف 3D */
+    .ribbons{
+      pointer-events:none; position:absolute; inset:0; overflow:hidden; z-index:0;
+    }
+    .rib, .rib2, .rib3{
+      position:absolute; height:18vmax; width:80vmax; border-radius:999px; filter: blur(22px); opacity:.32;
+      background: conic-gradient(from 180deg, #22d3ee55, #7c3aed55, #60a5fa55, #22d3ee55);
+    }
+    .rib{ top:6%; left:-12%; transform: rotate(-12deg) }
+    .rib2{ bottom:6%; right:-10%; transform: rotate(10deg) }
+    .rib3{ top:45%; left:12%; transform: rotate(2deg); opacity:.22; }
+
+    .grid-mask{
+      position:absolute; inset:0; pointer-events:none; opacity:.12;
+      background-image: linear-gradient(#2d3b60 1px, transparent 1px), linear-gradient(90deg, #2d3b60 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: radial-gradient(ellipse at 60% 40%, black 50%, transparent 75%);
+      z-index:0;
+    }
+
+    .workspace{ position:relative; z-index:2; max-width:1020px; margin:0 auto; }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.06));
+      backdrop-filter: blur(var(--blur)); -webkit-backdrop-filter: blur(var(--blur));
+      border:1px solid rgba(255,255,255,.16); border-radius: var(--radius);
+      box-shadow: var(--shadow-md); padding:22px;
+    }
+
+    .header{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:16px;
+    }
+    .brand h1{ font-size:22px; line-height:1.2; font-weight:800; background: linear-gradient(90deg, #e7ecf7, #bcd2ff); -webkit-background-clip:text; background-clip:text; color:transparent }
+    .brand h5{ font-size:14px; color:#c8d6f1; opacity:.9 }
+    .vat{ font-size:13px; color:#cfe3ff; opacity:.85 }
+
+    .hint{
+      color:#c7d4ef; font-size:13px; padding:10px 12px; border-radius:14px; margin: 8px 0 14px;
+      background: linear-gradient(180deg, rgba(96,165,250,.12), rgba(124,58,237,.10));
+      border:1px dashed rgba(124,58,237,.35);
+    }
+
+    label{ display:block; margin-top:12px; font-weight:800; color:#eaf1ff; font-size:13px; letter-spacing:.2px }
+    .input, input[type="text"], input[type="number"], textarea{
+      width:100%; padding:12px 14px; margin-top:6px; border-radius:14px;
+      border:1px solid #2b3550; background:#0f172a; color:#e7ecf7;
+      transition: .2s border-color, .2s box-shadow, .2s background;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,.04);
+      font-size:15px;
+    }
+    .input:focus, input:focus, textarea:focus{ outline:none; border-color:#4f46e5; box-shadow: var(--ring) }
+
+    .row{ display:grid; gap:12px }
+    .two{ grid-template-columns: 1fr 1fr }
+    .subcalc{ grid-template-columns: 1fr auto; align-items:end }
+
+    .btns{ margin-top:16px; display:flex; gap:10px; flex-wrap:wrap }
+    .btn{
+      padding:11px 18px; border:none; border-radius:14px; cursor:pointer; font-weight:800; letter-spacing:.3px;
+      color:#0b1323; background:#cfe3ff; box-shadow: var(--shadow-sm);
+      transition: .2s transform, .2s filter, .2s background;
+    }
+    .btn:active{ transform: translateY(1px) }
+    .btn-primary{
+      color:white;
+      background: linear-gradient(135deg, #4f46e5 0%, #22d3ee 50%, #60a5fa 100%);
+      background-size: 200% 200%;
+      box-shadow: var(--glow-a);
+    }
+    .btn-primary:hover{ transform: translateY(-2px); background-position: 100% 0 }
+    .btn-secondary{ color:#dbe6ff; background:#1a2540; border:1px solid #2b3550 }
+    .btn-secondary:hover{ filter: brightness(1.05) }
+    .btn-danger{ color:white; background: linear-gradient(135deg, #ef4444, #f97316) }
+
+    .out{ margin-top:18px; display:grid; grid-template-columns: 1fr 320px; gap:18px; align-items:start }
+
+    /* ===== مربع QR + الإضاءات + الأيونات ===== */
+.qr-preview {
+  display: inline-flex;         /* flex للتوسيط */
+  align-items: center;
+  justify-content: center;
+  background: hsl(225, 20%, 96%);
+  border-radius: 12px;
+  border: 2px solid #24304f;
+  padding: 6px;                 /* 👈 فراغ صغير فقط */
+  position: relative;
+  animation: glowPulse 3s ease-in-out infinite;
+  overflow: visible;
+}
+    @keyframes glowPulse{
+      0%{   box-shadow:0 6px 16px rgba(0,0,0,.25),0 0 20px rgba(124,58,237,.35),0 0 35px rgba(96,165,250,.35);}
+      50%{  box-shadow:0 14px 36px rgba(0,0,0,.5),0 0 55px rgba(124,58,237,.7),0 0 95px rgba(96,165,250,.7);}
+      100%{ box-shadow:0 6px 16px rgba(0,0,0,.25),0 0 20px rgba(124,58,237,.35),0 0 35px rgba(96,165,250,.35);}
+    }
+
+    /* أيونات تدور حوالين مربع QR (مسمّاة بدون تعارض مع .orbit بتاعة صفحة الدخول) */
+    .qr-orbit-wrap{ position:absolute; inset:0; z-index:-1; display:flex; align-items:center; justify-content:center; }
+    .qr-orbit{
+      position:absolute; top:50%; left:50%;
+      border-radius:50%;
+      transform: translate(-50%, -50%);
+      animation: qrSpin 12s linear infinite;
+    }
+    .qr-orbit.o1{ width:340px; height:340px; }
+    .qr-orbit.o2{ width:360px; height:390px; animation-duration:6s; }
+    .qr-orbit.o3{ width:340px; height:340px; animation-duration:4s; }
+
+    .qr-electron{
+      width:14px; height:14px; border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #ffffff, #60a5fa 60%, #7c3aed);
+      position:absolute; top:50%; left:50%;
+      transform: translate(-50%, -50%) translateX(170px);
+      box-shadow:0 0 14px rgba(96,165,250,.85);
+    }
+    .qr-orbit.o2 .qr-electron{ transform: translate(-50%,-50%) translateX(140px); background:radial-gradient(circle at 30% 30%, #fff, #22d3ee 60%, #7c3aed);}
+    .qr-orbit.o3 .qr-electron{ transform: translate(-50%,-50%) translateX(110px); background:radial-gradient(circle at 30% 30%, #fff, #7c3aed 60%, #60a5fa);}
+    @keyframes qrSpin{ to{ transform: translate(-50%,-50%) rotate(360deg);} }
+
+    textarea{ height:130px; resize:vertical }
+
+    .status{ margin-top:10px; font-size:13px; color:#a4c2ff }
+    .status.ok{ color: var(--success) }
+    .status.error{ color: var(--danger) }
+
+    footer{ margin-top:14px; color:#96a9cc; font-size:12px; text-align:center }
+
+    @media (max-width: 960px){ .out{ grid-template-columns: 1fr } }
+  </style>
+</head>
+<body>
+
+
+<!-- ================== LOGIN ================== -->
+<div id="loginBox">
+  <div class="orbit"></div><div class="orbit2"></div>
+  <div class="login-card">
+    <div class="brand-badge"></div>
+    <div class="login-title">بوابة ممزر / Tradix</div>
+    <div class="login-sub">دخول آمن لمولّد QR للفواتير الضريبية</div>
+    <input id="user" type="text" placeholder="اسم المستخدم">
+    <input id="pass" type="password" placeholder="كلمة المرور" onkeypress="if(event.key==='Enter'){checkLogin()}">
+    <button class="glow-btn" onclick="checkLogin()">دخول</button>
+    <div id="msg">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
+  </div>
+</div>
+
+<!-- ================== PORTAL ================== -->
+<div id="protected">
+  <div class="ribbons"><div class="rib"></div><div class="rib2"></div><div class="rib3"></div></div>
+  <div class="grid-mask"></div>
+
+  <div class="workspace">
+    <div class="card">
+      <div class="header">
+        <div class="brand">
+          <h1>Mamzar For General Contracting EST</h1>
+          <span class="vat">VAT: 300949914100003</span>
+          <h5>مؤسسة ممزر للمقاولات العامة</h5>
+        </div>
+      </div>
+
+      <div class="hint">بورتال ممزر لانشاءالفواتير الضريبية وفق متطلبات ZATAC  ).</div>
+
+      <label for="seller">اسم البائع</label>
+      <input id="seller" class="input" type="text" value="Mamzar For General Contracting EST مؤسسة ممزر للمقاولات العامة" readonly>
+
+      <label for="vat">الرقم الضريبي للبائع</label>
+      <input id="vat" class="input" type="text" value="300949914100003" readonly>
+
+      <label for="ts">تاريخ ووقت الفاتورة</label>
+      <div class="btns">
+        <input id="ts" class="input" type="text" style="flex:1" placeholder="مثال: 2025-09-18T12:30:00+03:00">
+        <button class="btn btn-secondary" type="button" onclick="fillNowLocal()">الآن بتوقيت جهازك</button>
+      </div>
+
+      <div class="row subcalc" style="margin-top:10px;">
+        <div>
+
+<label for="invoiceDigits">رقم الفاتورة</label>
+<div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; margin-top:6px;">
+  <div style="display:flex; flex-direction:row-reverse; gap:6px;">
+    <!-- الجزء الثابت INV- -->
+    <input type="text" value="-INV" readonly 
+           style="width:400px; text-align:center; background:#1a2540; color:#cfe3ff; 
+                  border-radius:14px; border:1px solid #2b3550; padding:12px 0; font-weight:bold;">
+
+                      <!-- خانة إدخال الأرقام -->
+    <input id="invoiceDigits" class="input" type="text" maxlength="6" placeholder="100123"
+           style="width:400px; text-align:center;" 
+           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+
+  </div>
+</div>
+
+
+
+          <label for="subtotal">القيمة قبل الضريبة</label>
+          <input id="subtotal" class="input" type="text" placeholder="100.00">
+        </div>
+        <div>
+          <button class="btn btn-primary" type="button" id="btnCalcVAT">احتساب الضريبة</button>
+        </div>
+      </div>
+
+      <div class="row two">
+        <div>
+          <label for="vatamt">مبلغ الضريبة (15%)</label>
+          <input id="vatamt" class="input" type="text" readonly>
+        </div>
+        <div>
+          <label for="total">إجمالي الفاتورة شامل الضريبة</label>
+          <input id="total" class="input" type="text" readonly>
+        </div>
+      </div>
+
+      <div class="btns">
+        <button class="btn btn-primary" type="button" onclick="generate()">توليد QR</button>
+        <button class="btn btn-secondary" type="button" onclick="clearAll()">مسح الحقول</button>
+        <button class="btn btn-secondary" type="button" onclick="saveDefaults()">حفظ البيانات</button>
+        <button class="btn btn-secondary" type="button" onclick="loadDefaults()">تحميل البيانات</button>
+        <button class="btn btn-primary" id="download" style="display:none;">تحميل QR</button>
+      </div>
+
+      <div id="status" class="status"></div>
+
+      <div class="out" id="out" style="display:none;">
+        <div>
+          <label for="b64">نص Base64</label>
+          <textarea id="b64" class="input" readonly></textarea>
+          <div class="btns" style="margin-top:8px;">
+            <button class="btn btn-secondary" type="button" onclick="copyB64()">نسخ Base64</button>
+          </div>
+        </div>
+
+        <!-- مربع QR مع الأيونات المتحركة (نسخة نهائية) -->
+        <div class="qr-preview">
+          <div class="qr-orbit-wrap">
+            <div class="qr-orbit o1"><div class="qr-electron"></div></div>
+            <div class="qr-orbit o2"><div class="qr-electron"></div></div>
+            <div class="qr-orbit o3"><div class="qr-electron"></div></div>
+          </div>
+          <div id="qrContainer"></div>
+        </div>
+
+      </div>
+
+      <footer>⚠️ هذا البورتال خاص بمؤسسة ممزر للمقاولات العامة</footer>
+    </div>
+  </div>
+</div>
+
+<!-- QR lib -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+  /* ====== Login ====== */
+  function checkLogin(){
+    const u=document.getElementById('user').value.trim();
+    const p=document.getElementById('pass').value.trim();
+    const msg=document.getElementById('msg');
+    if(u.toLowerCase()==="soliman" && p==="may4soli"){
+      document.getElementById('loginBox').style.display="none";
+      document.getElementById('protected').style.display="block";
+      msg.style.display='none';
+    }else{
+      msg.style.display='block';
+    }
+  }
+
+  /* ====== Utils: Time ====== */
+  function pad(n){return String(n).padStart(2,'0')}
+  function toIsoLocal(d){
+    const y=d.getFullYear(), m=pad(d.getMonth()+1), day=pad(d.getDate());
+    const hh=pad(d.getHours()), mm=pad(d.getMinutes()), ss=pad(d.getSeconds());
+    const offMin=-d.getTimezoneOffset(), sign=offMin>=0?'+':'-';
+    const oh=pad(Math.floor(Math.abs(offMin)/60)), om=pad(Math.abs(offMin)%60);
+    return `${y}-${m}-${day}T${hh}:${mm}:${ss}${sign}${oh}:${om}`;
+  }
+  function fillNowLocal(){ const el=document.getElementById('ts'); if(el) el.value = toIsoLocal(new Date()); }
+
+  /* ====== Numbers ====== */
+  function formatNumber(num){ return num.toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2}); }
+  function parseNumber(str){ return parseFloat((str||'').toString().replace(/,/g,'')) || 0; }
+
+  function calcVAT(){
+    const subtotal=parseNumber(document.getElementById("subtotal").value);
+    const vat=subtotal*0.15, total=subtotal+vat;
+    document.getElementById("subtotal").value=formatNumber(subtotal);
+    document.getElementById("vatamt").value=vat.toFixed(2);
+    document.getElementById("total").value=total.toFixed(2);
+  }
+  document.getElementById("btnCalcVAT").addEventListener("click", calcVAT);
+  document.getElementById("subtotal").addEventListener("blur", function(){
+    const v=parseNumber(this.value); if(v){ this.value = formatNumber(v); }
+  });
+
+  /* ====== Status ====== */
+  function showStatus(msg, ok=false){
+    const el=document.getElementById('status');
+    el.className='status ' + (ok?'ok':'error');
+    el.textContent=msg;
+  }
+
+  /* ====== Save/Load ====== */
+  function saveDefaults(){
+    const s=document.getElementById('seller').value.trim();
+    const v=document.getElementById('vat').value.trim();
+    if(!s||!v){ showStatus('ادخل الاسم والرقم الضريبي قبل الحفظ',false); return; }
+    localStorage.setItem('zatca_seller',s);
+    localStorage.setItem('zatca_vat',v);
+    showStatus('تم حفظ البيانات',true);
+  }
+  function loadDefaults(){
+    const s=localStorage.getItem('zatca_seller')||'';
+    const v=localStorage.getItem('zatca_vat')||'';
+    if(s) document.getElementById('seller').value=s;
+    if(v) document.getElementById('vat').value=v;
+    showStatus('تم تحميل البيانات',true);
+  }
+
+  /* ====== Clear ====== */
+  function clearAll(){
+    ['ts','subtotal','vatamt','total'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.value='';
+    });
+    document.getElementById('qrContainer').innerHTML='';
+    document.getElementById('out').style.display='none';
+    document.getElementById('status').textContent='';
+    const dl=document.getElementById('download'); if(dl) dl.style.display='none';
+  }
+
+  /* ====== TLV + Base64 ====== */
+  function tlv(tag,value){
+    const enc=new TextEncoder(); const v=enc.encode(String(value??''));
+    if(v.length>255) throw new Error('قيمة حقل أطول من 255 بايت: '+tag);
+    return Uint8Array.from([tag,v.length,...v]);
+  }
+  function b64(u8){ let bin=''; u8.forEach(b=>bin+=String.fromCharCode(b)); return btoa(bin); }
+  function nice2(num){ const n=Number(num); return isFinite(n)? n.toFixed(2):''; }
+
+  /* ====== Copy ====== */
+  function copyB64(){
+    const t=document.getElementById('b64');
+    t.select(); document.execCommand('copy');
+    showStatus('تم نسخ Base64',true);
+  }
+
+  /* ====== Validate & Generate ====== */
+  function validateInputs(){
+    const seller=document.getElementById('seller').value.trim();
+    const vat=document.getElementById('vat').value.trim();
+    const ts=document.getElementById('ts').value.trim();
+    const total=document.getElementById('total').value.trim();
+    const vatamt=document.getElementById('vatamt').value.trim();
+    if(!seller) return '⚠️ اسم البائع مطلوب';
+    if(!/^[0-9]{15}$/.test(vat)) return '⚠️ الرقم الضريبي يجب أن يكون 15 رقمًا';
+    if(!ts) return '⚠️ التاريخ/الوقت مطلوب';
+    if(total===''||isNaN(Number(total))) return '⚠️ إجمالي الفاتورة غير صحيح';
+    if(vatamt===''||isNaN(Number(vatamt))) return '⚠️ مبلغ الضريبة غير صحيح';
+    return '';
+  }
+
+  let currentCanvas=null;
+  function generate(){
+    const err=validateInputs();
+    if(err){ showStatus(err,false); return; }
+    const seller=document.getElementById('seller').value.trim();
+    const vat=document.getElementById('vat').value.trim();
+    const ts=document.getElementById('ts').value.trim();
+    const total=nice2(document.getElementById('total').value.trim());
+    const vatamt=nice2(document.getElementById('vatamt').value.trim());
+const invoiceDigits = document.getElementById('invoiceDigits').value.trim();
+if(!/^[0-9]{6}$/.test(invoiceDigits)){
+  showStatus('⚠️ رقم الفاتورة يجب أن يكون 6 أرقام صحيحة', false);
+  return;
+}
+const invoiceNo = "INV-" + invoiceDigits;
+
+
+
+
+    try{
+      const tlvAll=new Uint8Array([
+        ...tlv(1,seller), ...tlv(2,vat), ...tlv(3,ts), ...tlv(4,total), ...tlv(5,vatamt)
+      ]);
+      const b64str=b64(tlvAll);
+      document.getElementById('b64').value=b64str;
+
+      const cont=document.getElementById('qrContainer'); cont.innerHTML='';
+new QRCode(cont,{
+  text: b64str,
+  width: 264,
+  height: 264,
+  correctLevel: QRCode.CorrectLevel.M,
+  margin: 0
+});
+
+// شيل أي margin/padding من الكانفس نفسه
+const qrCanvas = cont.querySelector("canvas");
+if(qrCanvas){
+  qrCanvas.style.display = "block";
+  qrCanvas.style.margin = "0";
+  qrCanvas.style.padding = "0";
+}
+      setTimeout(()=>{
+        currentCanvas=cont.querySelector('canvas');
+        const dl=document.getElementById('download'); if(dl) dl.style.display='inline-block';
+      },180);
+
+      document.getElementById('out').style.display='grid';
+      showStatus('تم توليد QR ✔',true);
+    }catch(e){
+      showStatus('خطأ: '+e.message,false);
+    }
+  }
+
+document.getElementById('download')?.addEventListener('click', ()=>{
+  if(currentCanvas){
+    const invoiceDigits = document.getElementById('invoiceDigits').value.trim();
+    if(!/^[0-9]{6}$/.test(invoiceDigits)){
+      showStatus('⚠️ رقم الفاتورة يجب أن يكون 6 أرقام صحيحة', false);
+      return;
+    }
+    const invoiceNo = "INV-" + invoiceDigits;
+    const a = document.createElement('a');
+    a.download = `${invoiceNo}_zatca_qr.png`;
+    a.href = currentCanvas.toDataURL('image/png');
+    a.click();
+  }
+});
+
+</script>
+</body>
+</html>

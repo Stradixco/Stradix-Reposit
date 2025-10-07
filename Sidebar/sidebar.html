@@ -1,0 +1,98 @@
+<style>
+  .sidebar {
+    width: 220px;
+    background: #111827;
+    color: #fff;
+    padding: 20px;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 0;
+    overflow-y: auto;
+    z-index: 999;
+  }
+
+  .sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #fbbf24; /* لون عنوان لوحة التحكم */
+  }
+
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 40px; /* بداية الروابط من تحت شوي */
+  }
+
+  .sidebar li {
+    margin-bottom: 18px; /* المسافة بين كل لينك */
+  }
+
+  .sidebar a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 14px;
+  }
+  .sidebar-btn {
+  display: block;
+  background-color: hwb(170 7% 47%); /* برتقالي */
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar-btn:hover {
+  background-color: hsl(21, 67%, 71%); /* برتقالي غامق عند التحويم */
+  transform: translateX(4px);
+}
+
+.logout-btn {
+  background-color: #dc2626 !important; /* أحمر لتسجيل الخروج */
+}
+
+.logout-btn:hover {
+  background-color: hwb(25 56% 4%) !important;
+}
+
+
+  /* ألوان مخصصة لكل لينك */
+  .sidebar a.link-home      { color: #ffffff; } 
+  .sidebar a.link-add       { color: #ffffff; } 
+  .sidebar a.link-invoices  { color: #ffffff; } 
+  .sidebar a.link-Credit    { color: #ffffff; } 
+  .sidebar a.link-reports   { color: #ffffff; } 
+  .sidebar a.link-clients   { color: #ffffff; } 
+  .sidebar a.link-settings  { color: #ffffff; } 
+  .sidebar a.link-logout    { color: #ffffff; } 
+
+  /* تأثير عند المرور */
+  .sidebar a:hover {
+    background-color: #2d4469;
+    transform: translateX(-4px);
+  }
+</style>
+
+<div class="sidebar" style="padding: 20px; text-align: left;">
+  <h2 style="font-size: 18px; color: #ffffff; margin-top: 70px; margin-bottom: 30px;">📌 TRADIX Dashboard</h2>
+  <div class="sidebar-buttons">
+    <a href="dashboard.html" class="sidebar-btn"> Home 🏠</a>
+    <a href="add-invoice.html" class="sidebar-btn">✚ Create Invoice 🧾</a>
+    <a href="Credit-note.html" class="sidebar-btn">➖ Credit Note 🧾</a>
+    <a href="invoices.html" class="sidebar-btn"> All Invoices 📁</a>
+    <a href="reports.html" class="sidebar-btn"> Reports 📊</a>
+    <a href="customers-list.html" class="sidebar-btn"> Customers 👥</a>
+    <a href="setting.html" class="sidebar-btn"> Settings ⚙️</a>
+    <a href="login.html" class="sidebar-btn logout-btn">🔓 Logout</a>
+  </div>
+</div>

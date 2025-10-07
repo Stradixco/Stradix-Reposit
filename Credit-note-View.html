@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Credit Note / إشعار دائن</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4a90e2;   /* 🟦 فخم */
+      --secondary-color: #1f2d3d; /* 🟦 غامق */
+      --gray-bg: #f7f9fc;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'Montserrat', 'Cairo', sans-serif;
+      background-color: #fff;
+      direction: ltr;
+      color: #333;
+    }
+
+    .credit-box {
+      max-width: 900px;
+      margin: auto;
+      border: 1px solid #ddd;
+      padding: 40px 50px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+      background-color: #fff;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 4px solid var(--primary-color);
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+
+    .header .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--secondary-color);
+    }
+
+    .header .type {
+      font-size: 30px;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .info .section {
+      width: 48%;
+    }
+
+    .info .section .title {
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+
+    table thead {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+
+    table th, table td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    table tbody tr:nth-child(even) {
+      background-color: var(--gray-bg);
+    }
+
+    .totals {
+      float: right;
+      margin-top: 30px;
+      text-align: left;
+      width: 320px;
+    }
+
+    .totals table {
+      width: 100%;
+    }
+
+    .totals td {
+      padding: 8px 0;
+    }
+
+    .totals td:first-child {
+      color: #555;
+    }
+
+    .totals td:last-child {
+      font-weight: bold;
+    }
+
+    .reason {
+      margin-top: 40px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .signature {
+      margin-top: 60px;
+      text-align: right;
+    }
+
+    .signature span {
+      display: inline-block;
+      margin-top: 20px;
+      width: 200px;
+      border-top: 1px solid #000;
+    }
+
+    .footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+<div class="credit-box">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      LUXURY SOFT<br>
+      <span style="font-family:'Cairo',sans-serif; font-size: 14px; color:#888;">شركة لوكسري سوفت</span>
+    </div>
+    <div class="type">CREDIT NOTE / <span style="font-family:'Cairo'">إشعار دائن</span></div>
+  </div>
+
+  <!-- Info -->
+  <div class="info">
+    <div class="section">
+      <div class="title">Customer Info / بيانات العميل:</div>
+      Al Reyadah Trading Est.<br>
+      VAT No: 301234567800003<br>
+      CR No: 1012345678<br>
+      Riyadh, Saudi Arabia
+    </div>
+    <div class="section">
+      <div class="title">Credit Note Details / تفاصيل الإشعار:</div>
+      Credit Note No: CN-20251002-001<br>
+      Date: 2025-10-02T10:45:00+03:00<br>
+      Reference Invoice: INV-20250915-002<br>
+      Seller VAT: 312345678900003
+    </div>
+  </div>
+
+  <!-- Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Item<br><span style="font-family:'Cairo'; font-size:12px;">البند</span></th>
+        <th>Price (Excl. VAT)<br><span style="font-family:'Cairo'; font-size:12px;">السعر بدون ضريبة</span></th>
+        <th>VAT 15%<br><span style="font-family:'Cairo'; font-size:12px;">ضريبة</span></th>
+        <th>Qty<br><span style="font-family:'Cairo'; font-size:12px;">الكمية</span></th>
+        <th>Total (Incl. VAT)<br><span style="font-family:'Cairo'; font-size:12px;">الإجمالي</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Returned Hosting Service</td>
+        <td>2,000 SAR</td>
+        <td>300 SAR</td>
+        <td>1</td>
+        <td>2,300 SAR</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Totals -->
+  <div class="totals">
+    <table>
+      <tr>
+        <td>Subtotal / الإجمالي بدون ضريبة:</td>
+        <td>2,000 SAR</td>
+      </tr>
+      <tr>
+        <td>VAT 15% / ضريبة:</td>
+        <td>300 SAR</td>
+      </tr>
+      <tr>
+        <td><strong>Total Credit / المبلغ المُعاد:</strong></td>
+        <td><strong>2,300 SAR</strong></td>
+      </tr>
+    </table>
+  </div>
+
+  <div style="clear: both;"></div>
+
+  <!-- Reason -->
+  <div class="reason">
+    <strong>Reason for Credit / سبب إصدار الإشعار:</strong><br>
+    Service canceled by customer due to duplicate order.<br>
+    تم إلغاء الخدمة من قبل العميل بسبب تكرار الطلب.
+  </div>
+
+  <!-- Signature -->
+  <div class="signature">
+    Authorized Sign / التوقيع<br>
+    <span></span>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    This document is issued in compliance with ZATCA e-invoicing regulations. <br>
+    تم إصدار هذا الإشعار وفقًا للوائح هيئة الزكاة والضريبة والجمارك.
+  </div>
+
+</div>
+
+</body>
+</html>

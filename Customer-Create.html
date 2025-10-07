@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>إضافة عميل جديد</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./background-header/Header-style.css">
+  <link rel="stylesheet" href="sidebar/style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background-color: #0f172a;
+      color: #e2e8f0;
+      display: flex;
+      height: 100vh;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+      margin-top: 80px;
+      margin-right: 250px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background-color: #1e293b;
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 800px;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background-color: #0f172a;
+      color: white;
+      font-size: 14px;
+    }
+
+    .readonly-box {
+      margin-bottom: 20px;
+      font-weight: bold;
+      background-color: #1e293b;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .row > div {
+      flex: 1;
+    }
+
+    .buttons {
+      margin-top: 24px;
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #createBtn {
+      background-color: #3b82f6;
+      color: white;
+      opacity: 0.6;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+
+    #createBtn.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #cancelBtn {
+      background-color: #ef4444;
+      color: white;
+    }
+
+    .error {
+      color: #f87171;
+      font-size: 13px;
+      margin-top: 4px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- الهيدر -->
+<script src="./background-header/load-header.js" defer></script>
+<div id="header"></div>
+
+<!-- السايد بار -->
+<div id="sidebar-container"></div>
+
+<div class="main">
+  <h1>➕ إنشاء عميل جديد</h1>
+
+  <div class="readonly-box">
+    رقم العميل: <span id="customerIdDisplay">CUST-...</span>
+  </div>
+
+  <form id="customerForm">
+    <div>
+      <label for="type">نوع العميل *</label>
+      <select id="type" required>
+        <option value="">اختر</option>
+        <option value="Individual">Individual</option>
+        <option value="Corporate">Corporate</option>
+        <option value="Government">Government</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="vat">الرقم الضريبي *</label>
+        <input type="text" id="vat" maxlength="15">
+        <div class="error" id="vatError">⚠️ يجب أن يكون الرقم 15 رقمًا.</div>
+      </div>
+      <div>
+        <label for="country">الدولة *</label>
+        <select id="country" required>
+          <option value="">اختر الدولة</option>
+          <option value="السعودية">السعودية</option>
+          <option value="الإمارات">الإمارات</option>
+          <option value="مصر">مصر</option>
+          <option value="الكويت">الكويت</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="enName">الاسم بالإنجليزية *</label>
+        <input type="text" id="enName">
+        <div class="error" id="enNameError">⚠️ الاسم يجب أن يكون بالإنجليزية فقط.</div>
+      </div>
+      <div>
+        <label for="arName">الاسم بالعربية *</label>
+        <input type="text" id="arName">
+        <div class="error" id="arNameError">⚠️ الاسم يجب أن يكون بالعربية فقط.</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="email">البريد الإلكتروني</label>
+        <input type="email" id="email">
+      </div>
+      <div>
+        <label for="phone">رقم الاتصال</label>
+        <input type="text" id="phone">
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="address">العنوان (بالإنجليزية) *</label>
+        <input type="text" id="address">
+        <div class="error" id="addressError">⚠️ يجب إدخال العنوان بالإنجليزية فقط.</div>
+      </div>
+      <div>
+        <label for="addressAr">العنوان (بالعربية) *</label>
+        <input type="text" id="addressAr">
+        <div class="error" id="addressArError">⚠️ يجب إدخال العنوان بالعربية فقط.</div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="button" id="createBtn">إنشاء</button>
+      <button type="button" id="cancelBtn" onclick="window.location.href='customers-list.html'">إلغاء</button>
+    </div>
+  </form>
+</div>
+
+<script src="sidebar/load-sidebar.js"></script>
+
+<script>
+  // توليد رقم العميل تلقائيًا
+  function generateCustomerId() {
+    const deletedIds = JSON.parse(localStorage.getItem("deletedCustomerIds") || "[]");
+    if (deletedIds.length > 0) {
+      const reusedId = deletedIds.shift();
+      localStorage.setItem("deletedCustomerIds", JSON.stringify(deletedIds));
+      return reusedId;
+    }
+
+    let counter = parseInt(localStorage.getItem("customerCounter") || "11001");
+    const newId = `CUST-${counter}`;
+    localStorage.setItem("customerCounter", counter + 1);
+    return newId;
+  }
+
+  const generatedCustomerId = generateCustomerId();
+  document.getElementById("customerIdDisplay").textContent = generatedCustomerId;
+
+  function isArabic(text) {
+    return /^[\u0600-\u06FF\s]+$/.test(text);
+  }
+
+  function isEnglish(text) {
+    return /^[A-Za-z\s]+$/.test(text);
+  }
+
+  function validate() {
+    const enName = document.getElementById("enName");
+    const arName = document.getElementById("arName");
+    const address = document.getElementById("address");
+    const addressAr = document.getElementById("addressAr");
+    const vat = document.getElementById("vat");
+    const createBtn = document.getElementById("createBtn");
+
+    let valid = true;
+
+    // Reset errors
+    document.querySelectorAll(".error").forEach(e => e.style.display = "none");
+
+    if (!isEnglish(enName.value.trim())) {
+      document.getElementById("enNameError").style.display = "block";
+      valid = false;
+    }
+
+    if (!isArabic(arName.value.trim())) {
+      document.getElementById("arNameError").style.display = "block";
+      valid = false;
+    }
+
+    if (!isEnglish(address.value.trim())) {
+      document.getElementById("addressError").style.display = "block";
+      valid = false;
+    }
+
+    if (!isArabic(addressAr.value.trim())) {
+      document.getElementById("addressArError").style.display = "block";
+      valid = false;
+    }
+
+    if (!/^\d{15}$/.test(vat.value.trim())) {
+      document.getElementById("vatError").style.display = "block";
+      valid = false;
+    }
+
+    if (valid) {
+      createBtn.classList.add("active");
+    } else {
+      createBtn.classList.remove("active");
+    }
+  }
+
+  document.querySelectorAll("input, select").forEach(input => {
+    input.addEventListener("input", validate);
+  });
+
+  document.getElementById("createBtn").addEventListener("click", () => {
+    const enName = document.getElementById("enName").value.trim();
+    const arName = document.getElementById("arName").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const addressAr = document.getElementById("addressAr").value.trim();
+    const vat = document.getElementById("vat").value.trim();
+    const country = document.getElementById("country").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const type = document.getElementById("type").value;
+
+    const newCustomer = {
+      id: generatedCustomerId,
+      nameEn: enName,
+      nameAr: arName,
+      addressEn: address,
+      addressAr: addressAr,
+      vat,
+      country,
+      email,
+      phone,
+      type
+    };
+
+    const list = JSON.parse(localStorage.getItem("customersList") || "[]");
+    list.push(newCustomer);
+    localStorage.setItem("customersList", JSON.stringify(list));
+
+    alert("✅ تم إنشاء العميل بنجاح");
+    window.location.href = "customers-list.html";
+  }
+
+  
+  
+  );
+</script>
+
+</body>
+</html>

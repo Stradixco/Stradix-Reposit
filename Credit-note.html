@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>إنشاء إشعار دائن</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sidebar/style.css" />
+  <link rel="stylesheet" href="./background-header/Header-style.css" />
+  <script src="./background-header/load-header.js" defer></script>
+  <script src="sidebar/load-sidebar.js" defer></script>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(160deg, #0A0F1C, #0C1B2A);
+      color: #E7ECF7;
+      margin: 0;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+      margin-top: 80px;      /* 🟦 للهيدر */
+      margin-right: 250px;   /* 🟥 للسايد بار */
+    }
+
+    .workspace {
+      max-width: 800px;
+      margin: auto;
+      padding: 24px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #0f172a;
+      color: #e7ecf7;
+      border: 1px solid #2b3550;
+      margin-top: 6px;
+    }
+
+    .btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 14px;
+      border: none;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5, #22d3ee);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #1a2540;
+      color: #dbe6ff;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .status.ok { color: #10B981 }
+    .status.error { color: #EF4444 }
+
+    .qr-preview {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="header"></div>
+<div id="sidebar-container"></div>
+
+<div class="main">
+  <div class="workspace">
+    <h2 style="margin-bottom: 20px;">إشعار دائن (Credit Note)</h2>
+
+    <label>اسم العميل</label>
+    <select id="client">
+      <option value="">اختر العميل</option>
+      <option value="Client A">Client A</option>
+      <option value="Client B">Client B</option>
+    </select>
+
+    <label>رقم الفاتورة المرتبطة</label>
+    <select id="invoice">
+      <option value="">اختر الفاتورة</option>
+      <option value="INV-001">INV-001</option>
+      <option value="INV-002">INV-002</option>
+    </select>
+
+    <label>سبب الإشعار</label>
+    <textarea id="reason" placeholder="سبب إصدار إشعار دائن..."></textarea>
+
+    <label>تاريخ الإشعار</label>
+    <input type="text" id="creditDate" placeholder="YYYY-MM-DDTHH:MM:SS+03:00">
+    <button class="btn btn-secondary" onclick="fillNow()">📅 التاريخ الآن</button>
+
+    <label>رقم الإشعار</label>
+    <input id="creditNoteDigits" type="text" placeholder="مثال: 100123" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+    <label>المبلغ قبل الضريبة (بالسالب)</label>
+    <input id="subtotal" type="text" placeholder="-100.00">
+
+    <div class="btns">
+      <button class="btn btn-primary" onclick="calcVAT()">احسب الضريبة</button>
+    </div>
+
+    <label>مبلغ الضريبة (15%)</label>
+    <input id="vatamt" type="text" readonly>
+
+    <label>الإجمالي شامل الضريبة</label>
+    <input id="total" type="text" readonly>
+
+    <div class="btns">
+      <button class="btn btn-primary" onclick="generateQR()">🔄 توليد QR</button>
+      <button class="btn btn-secondary" onclick="clearAll()">🧹 مسح الحقول</button>
+      <button class="btn btn-primary" onclick="downloadQR()" id="download" style="display:none;">⬇️ تحميل QR</button>
+      <button id="saveBtn" class="btn btn-primary" onclick="saveCreditNote()">💾 حفظ الإشعار</button>
+    </div>
+
+    <div class="status" id="status"></div>
+    <div class="qr-preview" id="qrContainer"></div>
+    <textarea id="b64" readonly style="margin-top:10px;"></textarea>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  function fillNow() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const y = d.getFullYear(), m = pad(d.getMonth() + 1), day = pad(d.getDate());
+    const hh = pad(d.getHours()), mm = pad(d.getMinutes()), ss = pad(d.getSeconds());
+    const off = -d.getTimezoneOffset();
+    const sign = off >= 0 ? '+' : '-';
+    const oh = pad(Math.floor(Math.abs(off) / 60)), om = pad(Math.abs(off) % 60);
+    document.getElementById('creditDate').value = `${y}-${m}-${day}T${hh}:${mm}:${ss}${sign}${oh}:${om}`;
+  }
+
+  function parseNumber(val) {
+    return parseFloat((val || '').toString().replace(/,/g, '')) || 0;
+  }
+
+  function calcVAT() {
+    const subtotalInput = document.getElementById("subtotal");
+    const subtotal = parseNumber(subtotalInput.value);
+
+    if (subtotal >= 0) {
+      showStatus("⚠️ يجب أن يكون المبلغ بالسالب", false);
+      return;
+    }
+
+    const vat = subtotal * 0.15;
+    const total = subtotal + vat;
+
+    document.getElementById("vatamt").value = vat.toFixed(2);
+    document.getElementById("total").value = total.toFixed(2);
+    showStatus("✔ تم احتساب الضريبة", true);
+  }
+
+  function tlv(tag, value) {
+    const enc = new TextEncoder();
+    const val = enc.encode(String(value ?? ''));
+    if (val.length > 255) throw new Error("قيمة طويلة");
+    return Uint8Array.from([tag, val.length, ...val]);
+  }
+
+  let currentCanvas = null;
+
+  function generateQR() {
+    const seller = "Mamzar For General Contracting EST";
+    const vat = "300949914100003";
+    const date = document.getElementById("creditDate").value.trim();
+    const total = document.getElementById("total").value.trim();
+    const vatamt = document.getElementById("vatamt").value.trim();
+    const creditNoteDigits = document.getElementById("creditNoteDigits").value.trim();
+    const client = document.getElementById("client").value;
+    const invoice = document.getElementById("invoice").value;
+    const reason = document.getElementById("reason").value.trim();
+
+    if (!client || !invoice || !date || !reason || !creditNoteDigits || !/^[0-9]{6}$/.test(creditNoteDigits) || !total || !vatamt) {
+      showStatus("⚠️ تأكد من ملء جميع الحقول وتوليد QR", false);
+      return;
+    }
+
+    const tlvData = new Uint8Array([
+      ...tlv(1, seller),
+      ...tlv(2, vat),
+      ...tlv(3, date),
+      ...tlv(4, Number(total).toFixed(2)),
+      ...tlv(5, Number(vatamt).toFixed(2))
+    ]);
+
+    const b64 = btoa(String.fromCharCode(...tlvData));
+    document.getElementById("b64").value = b64;
+
+    const cont = document.getElementById("qrContainer");
+    cont.innerHTML = '';
+    new QRCode(cont, {
+      text: b64,
+      width: 200,
+      height: 200,
+      correctLevel: QRCode.CorrectLevel.M,
+      margin: 0
+    });
+
+    currentCanvas = cont.querySelector('canvas');
+    document.getElementById("download").style.display = "inline-block";
+    document.getElementById("saveBtn").style.display = "inline-block";
+    document.getElementById("saveBtn").innerHTML = "💾 حفظ الإشعار";
+    document.getElementById("saveBtn").disabled = false;
+
+    showStatus("✔ تم توليد الكود بنجاح", true);
+  }
+
+  function clearAll() {
+    const fields = ["creditDate", "subtotal", "vatamt", "total", "creditNoteDigits", "b64", "reason"];
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    document.getElementById("client").selectedIndex = 0;
+    document.getElementById("invoice").selectedIndex = 0;
+    document.getElementById("qrContainer").innerHTML = '';
+    document.getElementById("status").textContent = '';
+    document.getElementById("download").style.display = "none";
+    document.getElementById("saveBtn").style.display = "none";
+  }
+
+  function downloadQR() {
+    const number = document.getElementById("creditNoteDigits").value.trim();
+    if (!/^[0-9]{6}$/.test(number)) {
+      showStatus("⚠️ رقم الإشعار يجب أن يكون 6 أرقام", false);
+      return;
+    }
+    if (currentCanvas) {
+      const a = document.createElement('a');
+      a.download = `CRN-${number}_zatca_qr.png`;
+      a.href = currentCanvas.toDataURL("image/png");
+      a.click();
+    }
+  }
+
+  function saveCreditNote() {
+    const noteNumber = document.getElementById("creditNoteDigits")?.value.trim();
+    const client = document.getElementById("client")?.value.trim();
+    const invoice = document.getElementById("invoice")?.value.trim();
+    const reason = document.getElementById("reason")?.value.trim();
+    const date = document.getElementById("creditDate")?.value.trim();
+    const subtotal = document.getElementById("subtotal")?.value.trim();
+    const vatamt = document.getElementById("vatamt")?.value.trim();
+    const total = document.getElementById("total")?.value.trim();
+    const qr = document.getElementById("b64")?.value.trim();
+
+    if (!noteNumber || !client || !invoice || !reason || !date || !subtotal || !vatamt || !total || !qr) {
+      showStatus("⚠️ تأكد من ملء جميع الحقول وتوليد QR قبل الحفظ", false);
+      return;
+    }
+
+    const savedNote = {
+      number: noteNumber,
+      client: client,
+      invoice: invoice,
+      reason: reason,
+      date: date,
+      subtotal: subtotal,
+      vat: vatamt,
+      total: total,
+      qrCode: qr
+    };
+
+    let saved = JSON.parse(localStorage.getItem("creditNotes") || "[]");
+    saved.push(savedNote);
+    localStorage.setItem("creditNotes", JSON.stringify(saved));
+
+    const saveBtn = document.getElementById("saveBtn");
+    saveBtn.innerHTML = "✔ تم الحفظ";
+    saveBtn.disabled = true;
+    saveBtn.style.backgroundColor = "#10b981";
+    showStatus("✔ تم حفظ الإشعار بنجاح", true);
+  }
+
+  function showStatus(msg, ok = false) {
+    const el = document.getElementById("status");
+    if (!el) return;
+    el.textContent = msg;
+    el.className = "status " + (ok ? "ok" : "error");
+  }
+</script>
+</body>
+</html>
