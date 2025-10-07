@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="sidebar-style.css" />
   <script src="load-sidebar.js" defer></script>
     
+
+
   <!-- ✅ ستايل الداشبورد -->
   <style>
     body {
@@ -84,7 +86,7 @@
     }
 
     .status-card {
-      background: #1e3a8a;
+      background: hsl(184, 56%, 28%);
       padding: 15px;
       border-radius: 8px;
       text-align: center;
@@ -115,7 +117,7 @@
     }
 
     .data-table th {
-      background: #1e40af;
+      background: hsl(189, 50%, 29%);
     }
 
     .data-table td {
@@ -136,47 +138,70 @@
     <h1>لوحة التحكم الرئيسية 📊</h1>
 
         <!-- ✅ بيانات الشاحنات -->
-    <h2 class="section-title">🛻 بيانات الشاحنات</h2>
-    <div class="trucks-section">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Truck Number </th>
-            <th>الفحص الدوري</th>
-            <th>Insurrance</th>
-            <th>تصريح الحظر</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>ب ب س 3080</td>
-            <td>00/00/000</td>
-            <td>00/00/000</td>
-            <td>00/00/000</td>
-          </tr>
-          <tr>
-            <td>ب ط س 4439</td>
-            <td>00/00/000</td>
-            <td>00/00/000</td>
-            <td>00/00/000</td>
-          </tr>
-          <tr>
-            <td>ب ع ط 2596</td>
-            <td>00/00/000</td>
-            <td>00/00/000</td>
-            <td>00/00/000</td>
-          <tr>
-            <td>أ ح س 9096</td>
-            <td>00/00/000</td>
-            <td>00/00/000</td>
-            <td>00/00/000</td>
-        </tbody>
-      </table>
-    </div>
-
+        <h2 class="section-title">🛻 بيانات الشاحنات</h2>
+        <div class="trucks-section">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Truck Number </th>
+                <th>الفحص الدوري</th>
+                <th>Insurrance</th>
+                <th>تصريح الحظر</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ب ب س 3080</td>
+                <td>00/00/000</td>
+                <td>00/00/000</td>
+                <td>00/00/000</td>
+              </tr>
+              <tr>
+                <td>ب ط س 4439</td>
+                <td>00/00/000</td>
+                <td>00/00/000</td>
+                <td>00/00/000</td>
+              </tr>
+              <tr>
+                <td>ب ع ط 2596</td>
+                <td>00/00/000</td>
+                <td>00/00/000</td>
+                <td>00/00/000</td>
+              <tr>
+                <td>أ ح س 9096</td>
+                <td>00/00/000</td>
+                <td>00/00/000</td>
+                <td>00/00/000</td>
+            </tbody>
+          </table>
+        </div>
     
 
-        <!-- ✅ حالة التصاريح -->
+    <!-- ✅ كروت الإحصائيات -->
+    <div class="cards">
+      <div class="card">
+        <h3>عدد الفواتير</h3>
+        <p id="totalInvoices">0</p>
+      </div>
+      <div class="card">
+        <h3>عدد الاتفاقيات</h3>
+        <p id="totalAgreements">0</p>
+      </div>
+      <div class="card">
+        <h3>القيمة المضافة (ريال)</h3>
+        <p id="totalVAT">0</p>
+      </div>
+      <div class="card">
+        <h3>إجمالي المبيعات</h3>
+        <p id="totalSales">0</p>
+      </div>
+      <div class="card">
+        <h3>عدد العملاء</h3>
+        <p id="totalClients">0</p>
+      </div>
+    </div>
+
+    <!-- ✅ حالة التصاريح -->
     <h2 class="section-title">📌 حالة التصاريح</h2>
     <div class="status-section status-grid">
       <div class="status-card">
@@ -207,32 +232,28 @@
     </div>
 
 
-
-
-    <!-- ✅ كروت الإحصائيات -->
-    <div class="cards">
-      <div class="card">
-        <h3>عدد الفواتير</h3>
-        <p id="totalInvoices">0</p>
-      </div>
-      <div class="card">
-        <h3>عدد الاتفاقيات</h3>
-        <p id="totalAgreements">0</p>
-      </div>
-      <div class="card">
-        <h3>القيمة المضافة (ريال)</h3>
-        <p id="totalVAT">0</p>
-      </div>
-      <div class="card">
-        <h3>إجمالي المبيعات</h3>
-        <p id="totalSales">0</p>
-      </div>
-      <div class="card">
-        <h3>عدد العملاء</h3>
-        <p id="totalClients">0</p>
-      </div>
-    </div>
-
+    <!-- ✅ بيانات السائقين -->
+    <h2 class="section-title">👷‍♂️ بيانات السائقين</h2>
+    <div class="drivers-section">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>اسم السائق</th>
+            <th>انتهاء الإقامة</th>
+            <th>انتهاء التأمين</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>احمد سعد عطية</td>
+            <td>2026-01-10</td>
+            <td>2025-12-15</td>
+          </tr>
+          <tr>
+            <td>محمد مصطفي شعبان</td>
+            <td>2025-11-20</td>
+            <td>2025-10-30</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -252,3 +273,5 @@
 
 </body>
 </html>
+
+
