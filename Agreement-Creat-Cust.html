@@ -598,14 +598,14 @@ h2 {
 
 <!-- ✅ أزرار التحميل (Word + PDF) -->
 <div id="download-section" style="display: none; text-align: center; margin-top: 30px;">
-  <a href="http://127.0.0.1:5000/download" class="download-btn word-btn" download style="margin-right: 15px;">
+  <a href="https://agreement-generator-kfsp.onrender.com/download" class="download-btn word-btn" download style="margin-right: 15px;">
     <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Microsoft_Office_Word_%282019%E2%80%93present%29.svg" 
          alt="Word" 
          style="width: 24px; vertical-align: middle; margin-right: 8px;">
     Word Download (Word)
   </a>
 
-  <a href="http://127.0.0.1:5000/download-pdf" class="download-btn pdf-btn" download>
+  <a href="https://agreement-generator-kfsp.onrender.com/download-pdf" class="download-btn pdf-btn" download>
     <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF" style="width: 24px; vertical-align: middle; margin-right: 8px;">
     PDF Download (PDF)
   </a>
@@ -674,11 +674,12 @@ function saveAgreement(e) {
     extra_en: document.getElementById('extra-en').value
   };
 
-  fetch("http://127.0.0.1:5000/generate", {
+// تعديل طلب POST لإرسال البيانات إلى السيرفر الفعلي
+fetch("https://agreement-generator-kfsp.onrender.com/generate", {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data)
-  })
+})
   .then(res => {
     if (res.ok) {
       document.getElementById('save-btn').textContent = '✅ تم الحفظ';
