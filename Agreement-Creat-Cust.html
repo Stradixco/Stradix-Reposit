@@ -459,7 +459,7 @@ h2 {
       <select id="client" onchange="fillClientInfo()">
       <div style="text-align: left;">
         <option value="">-- Chose --</option>
-        <option value="client1">شركة الابتكار البحرية</option>
+        <option value="شركة الابتكار البحرية">شركة الابتكار البحرية</option>
         <option value="client2">شركة أخرى</option>
       </select>
 </div>
@@ -655,10 +655,10 @@ function saveAgreement(e) {
   if (e) e.preventDefault();
 
   const items = [...document.querySelectorAll('#items-table tbody tr')].map(row => ({
-    desc: row.cells[1].querySelector('input').value,
+    desc: row.cells[4].querySelector('input').value,
     uom: row.cells[3].querySelector('input').value,
     price: row.cells[2].querySelector('input').value,
-    note: row.cells[4].querySelector('input').value,
+    note: row.cells[1].querySelector('input').value,
   }));
 
   const data = {
