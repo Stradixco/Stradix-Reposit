@@ -656,8 +656,8 @@ function saveAgreement(e) {
 
   const items = [...document.querySelectorAll('#items-table tbody tr')].map(row => ({
     desc: row.cells[1].querySelector('input').value,
-    uom: row.cells[2].querySelector('input').value,
-    price: row.cells[3].querySelector('input').value,
+    uom: row.cells[3].querySelector('input').value,
+    price: row.cells[2].querySelector('input').value,
     note: row.cells[4].querySelector('input').value,
   }));
 
