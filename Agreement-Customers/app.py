@@ -19,6 +19,12 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 def agreement_form():
     return send_from_directory(directory='S-TRADIX-DASHBOARD', path='Agreement-Creat-Cust.html')
 
+from flask import send_from_directory
+
+@app.route('/customers.json', methods=['GET'])
+def serve_customers_json():
+    return send_from_directory("Stradix-Reposit", "customers.json")
+
 # ✅ توليد الاتفاقية
 @app.route('/generate', methods=['POST'])
 def generate_agreement():
