@@ -19,11 +19,6 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 def agreement_form():
     return send_from_directory(directory='S-TRADIX-DASHBOARD', path='Agreement-Creat-Cust.html')
 
-from flask import send_from_directory
-
-@app.route('/customers.json', methods=['GET'])
-def serve_customers_json():
-    return send_from_directory("Stradix-Reposit", "customers.json")
 
 # ✅ توليد الاتفاقية
 @app.route('/generate', methods=['POST'])
@@ -161,6 +156,18 @@ def download_pdf():
         return f"❌ خطأ أثناء التحويل إلى PDF: {e}", 500
 
     return send_file(pdf_path, as_attachment=True)
+
+
+from flask import send_from_directory
+import os
+
+# المسار الكامل لملف customers.json داخل مشروعك
+CUSTOMERS_JSON_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'Stradix-Reposit')
+
+@app.route('/customers.json', methods=['GET'])
+def serve_customers_json():
+    return send_from_directory(CUSTOMERS_JSON_PATH, 'customers.json')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
