@@ -80,6 +80,8 @@
       margin-top: -10px;
       margin-bottom: 10px;
     }
+
+    
   </style>
 </head>
 <body>
@@ -89,163 +91,123 @@
 <div id="header"></div>
 <div id="sidebar-container"></div>
 
-<div class="main">
-  <h1>✏️ تعديل بيانات العميل</h1>
 
-  <form id="editForm">
-    <label>📌 رقم العميل</label>
-    <input type="text" id="customerId" readonly>
+  <div class="form-container">
+    <h2>تعديل بيانات العميل</h2>
+    
+    <div class="form-group">
+      <label for="customerId">رقم العميل</label>
+      <input type="text" id="customerId" disabled />
+    </div>
 
-    <label>👤 الاسم (عربي)</label>
-    <input type="text" id="nameAr" required>
-    <div class="error" id="errorAr"></div>
+    <div class="form-group">
+      <label for="nameAr">الاسم بالعربية</label>
+      <input type="text" id="nameAr" />
+    </div>
 
-    <label>👤 الاسم (إنجليزي)</label>
-    <input type="text" id="nameEn" required>
-    <div class="error" id="errorEn"></div>
+    <div class="form-group">
+      <label for="nameEn">الاسم بالإنجليزية</label>
+      <input type="text" id="nameEn" />
+    </div>
 
-    <label>🌍 الدولة</label>
-    <input type="text" id="country">
+    <div class="form-group">
+      <label for="country">الدولة</label>
+      <input type="text" id="country" />
+    </div>
 
-    <label>📞 رقم الاتصال</label>
-    <input type="text" id="phone">
+    <div class="form-group">
+      <label for="phone">رقم الجوال</label>
+      <input type="text" id="phone" />
+    </div>
 
-    <label>📧 البريد الإلكتروني</label>
-    <input type="email" id="email">
+    <div class="form-group">
+      <label for="email">البريد الإلكتروني</label>
+      <input type="email" id="email" />
+    </div>
 
-    <label>🏢 العنوان (عربي)</label>
-    <input type="text" id="addressAr">
-    <div class="error" id="errorAdrAr"></div>
+    <div class="form-group">
+      <label for="addressAr">العنوان (بالعربية)</label>
+      <input type="text" id="addressAr" />
+    </div>
 
-    <label>🏢 العنوان (إنجليزي)</label>
-    <input type="text" id="addressEn">
-    <div class="error" id="errorAdrEn"></div>
+    <div class="form-group">
+      <label for="addressEn">العنوان (بالإنجليزية)</label>
+      <input type="text" id="addressEn" />
+    </div>
 
-    <label>🔢 الرقم الضريبي</label>
-    <input type="text" id="vat" maxlength="15">
-    <div class="error" id="errorVat"></div>
+    <div class="form-group">
+      <label for="vat">الرقم الضريبي</label>
+      <input type="text" id="vat" />
+    </div>
 
-    <button type="button" class="btn btn-save" id="saveBtn" disabled>💾 حفظ التعديلات</button>
-    <button type="button" class="btn btn-back" onclick="window.location.href='customers-list.html'">🔙 رجوع إلى العملاء</button>
-  </form>
-</div>
+    <button class="btn" id="saveBtn">💾 حفظ التعديلات</button>
+  </div>
 
-<script src="sidebar/load-sidebar.js"></script>
-<script>
-  const form = document.getElementById("editForm");
-  const saveBtn = document.getElementById("saveBtn");
-  const id = localStorage.getItem("editCustomerId");
-  const customers = JSON.parse(localStorage.getItem("customersList") || "[]");
+  <script>
+    const id = localStorage.getItem("editCustomerId");
 
-  const fields = {
-    id: document.getElementById("customerId"),
-    nameAr: document.getElementById("nameAr"),
-    nameEn: document.getElementById("nameEn"),
-    country: document.getElementById("country"),
-    phone: document.getElementById("phone"),
-    email: document.getElementById("email"),
-    addressAr: document.getElementById("addressAr"),
-    addressEn: document.getElementById("addressEn"),
-    vat: document.getElementById("vat")
-  };
+    async function loadCustomerData() {
+      try {
+        const res = await fetch("https://agreement-generator-kfsp.onrender.com/customers");
+        const customers = await res.json();
+        const customer = customers.find(c => c.client_id === id);
 
-  const errors = {
-    nameAr: document.getElementById("errorAr"),
-    nameEn: document.getElementById("errorEn"),
-    addressAr: document.getElementById("errorAdrAr"),
-    addressEn: document.getElementById("errorAdrEn"),
-    vat: document.getElementById("errorVat")
-  };
+        if (!customer) return alert("❌ لم يتم العثور على العميل");
 
-  function loadCustomerData() {
-    const customer = customers.find(c => c.id === id);
-    if (!customer) return alert("❌ عميل غير موجود");
+        document.getElementById("customerId").value = customer.client_id;
+        document.getElementById("nameAr").value = customer.client_name_ar;
+        document.getElementById("nameEn").value = customer.client_name_en;
+        document.getElementById("country").value = customer.country || "";
+        document.getElementById("phone").value = customer.phone || "";
+        document.getElementById("email").value = customer.email || "";
+        document.getElementById("addressAr").value = customer.client_address_ar;
+        document.getElementById("addressEn").value = customer.client_address_en;
+        document.getElementById("vat").value = customer.client_vat;
 
-    fields.id.value = customer.id;
-    fields.nameAr.value = customer.nameAr;
-    fields.nameEn.value = customer.nameEn;
-    fields.country.value = customer.country;
-    fields.phone.value = customer.phone;
-    fields.email.value = customer.email;
-    fields.addressAr.value = customer.addressAr;
-    fields.addressEn.value = customer.addressEn;
-    fields.vat.value = customer.vat;
-  }
-
-  function validateFields() {
-    let valid = true;
-
-    // تحقق من الاسم العربي
-    if (!/^[\u0600-\u06FF\s]+$/.test(fields.nameAr.value)) {
-      errors.nameAr.textContent = "❗ الاسم بالعربية فقط";
-      valid = false;
-    } else {
-      errors.nameAr.textContent = "";
+      } catch (err) {
+        console.error(err);
+        alert("حدث خطأ أثناء تحميل البيانات.");
+      }
     }
 
-    // تحقق من الاسم الإنجليزي
-    if (!/^[A-Za-z\s]+$/.test(fields.nameEn.value)) {
-      errors.nameEn.textContent = "❗ الاسم بالإنجليزية فقط";
-      valid = false;
-    } else {
-      errors.nameEn.textContent = "";
-    }
+    document.getElementById("saveBtn").addEventListener("click", async () => {
+      const updatedCustomer = {
+        client_id: document.getElementById("customerId").value,
+        client_name_ar: document.getElementById("nameAr").value,
+        client_name_en: document.getElementById("nameEn").value,
+        country: document.getElementById("country").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        client_address_ar: document.getElementById("addressAr").value,
+        client_address_en: document.getElementById("addressEn").value,
+        client_vat: document.getElementById("vat").value,
+      };
 
-    // تحقق من العنوان العربي
-    if (fields.addressAr.value && !/^[\u0600-\u06FF\s]+$/.test(fields.addressAr.value)) {
-      errors.addressAr.textContent = "❗ العنوان بالعربية فقط";
-      valid = false;
-    } else {
-      errors.addressAr.textContent = "";
-    }
+      try {
+        const response = await fetch("https://agreement-generator-kfsp.onrender.com/update-customer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(updatedCustomer)
+        });
 
-    // تحقق من العنوان الإنجليزي
-    if (fields.addressEn.value && !/^[A-Za-z0-9\s]+$/.test(fields.addressEn.value)) {
-      errors.addressEn.textContent = "❗ العنوان بالإنجليزية فقط";
-      valid = false;
-    } else {
-      errors.addressEn.textContent = "";
-    }
+        const result = await response.json();
 
-    // تحقق من الرقم الضريبي
-    if (fields.vat.value.length !== 15 || !/^\d{15}$/.test(fields.vat.value)) {
-      errors.vat.textContent = "❗ الرقم الضريبي يجب أن يتكون من 15 رقمًا";
-      valid = false;
-    } else {
-      errors.vat.textContent = "";
-    }
+        if (result.status === "success") {
+          alert("✅ تم تحديث بيانات العميل بنجاح");
+          window.location.href = "customers-list.html";
+        } else {
+          alert("❌ حدث خطأ أثناء الحفظ: " + result.message);
+        }
 
-    saveBtn.disabled = !valid;
-  }
+      } catch (error) {
+        console.error(error);
+        alert("❌ فشل الاتصال بالسيرفر.");
+      }
+    });
 
-  saveBtn.addEventListener("click", () => {
-    const index = customers.findIndex(c => c.id === id);
-    if (index === -1) return alert("❌ عميل غير موجود");
-
-    customers[index] = {
-      ...customers[index],
-      nameAr: fields.nameAr.value,
-      nameEn: fields.nameEn.value,
-      country: fields.country.value,
-      phone: fields.phone.value,
-      email: fields.email.value,
-      addressAr: fields.addressAr.value,
-      addressEn: fields.addressEn.value,
-      vat: fields.vat.value
-    };
-
-    localStorage.setItem("customersList", JSON.stringify(customers));
-    alert("✅ تم حفظ التعديلات بنجاح");
-    window.location.href = "customers-list.html";
-  });
-
-  Object.values(fields).forEach(input => {
-    input.addEventListener("input", validateFields);
-  });
-
-  loadCustomerData();
-  validateFields();
-</script>
-
+    loadCustomerData();
+  </script>
 </body>
 </html>

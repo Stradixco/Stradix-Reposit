@@ -8,13 +8,48 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 
+
+
   <!-- ✅ Header and sidebar -->
   <link rel="stylesheet" href="../background-header/Header-style.css" />
   <script src="../background-header/load-header.js" defer></script>
   <link rel="stylesheet" href="sidebar-style.css" />
   <script src="load-sidebar.js" defer></script>
 
+
+
   <style>
+  .company-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .company-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: none;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .active-btn {
+    box-shadow: 0 0 10px 3px rgba(0,0,0,0.3);
+  }
+
+  .mamzar-bg {
+    background-color: #dff5d2 !important;
+  }
+
+  .tradix-bg {
+    background-color: #d2e8f5 !important;
+  }
+
+
     :root {
       --primary: #1e3a8a;
       --secondary: #0f172a;
@@ -349,6 +384,7 @@ select::-webkit-scrollbar-track {
       color: #cbd5e1;
     }
     
+
     /* حقل مكان تقديم الخدمة  */
     .service-place-row {
   display: flex;
@@ -408,8 +444,6 @@ h2 {
   margin-top: 0; /* إزالة أي مسافة علوية لجدول الاسعار */
 }
 
-
-
 .payment-duration-row {
   display: flex;
   align-items: center;
@@ -442,10 +476,49 @@ h2 {
   margin: 0 5px;
 }
 
+/* ✨ تفعيل الزر الحالي */
+.company-btn.active-btn {
+  box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.6);
+  transform: scale(1.05);
+}
+
+/* ✨ ألوان خلفيات الصفحات */
+body.tradix-bg {
+  background: linear-gradient(135deg, #0f172a, #1e3a8a, #0f172a);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+body.mamzar-bg {
+  background: linear-gradient(135deg, #0f3d1e, #215d3a, #0f3d1e);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+/* تصميم عام لزراير اختيار الشركة */
+
+  /* تجاوز التصميم العام للأزرار داخل الزرارين فقط */
+  #tradixBtn {
+    background: hsl(214, 65%, 25%) !important;
+    color: white !important;
+  }
+
+  #mamzarBtn {
+    background: oklab(53.205999999999996% -0.14215 0.10958) !important;
+    color: white !important;
+  }
+
+  .company-btn.active-btn {
+    box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+  }
+
   </style>
 </head>
 <body>
 
+
+  
   <div id="header"></div>
   <div id="sidebar-container"></div>
 
@@ -454,15 +527,21 @@ h2 {
     <h2 style="text-align: center;">📝 Service Agreement Creation</h2>
 
 
-    <div style="text-align: left;">
-      <label for="client">: Customer</label>
-      <select id="client" onchange="fillClientInfo()">
-      <div style="text-align: left;">
-        <option value="">-- Chose --</option>
-        <option value="شركة الابتكار البحرية">شركة الابتكار البحرية</option>
-        <option value="client2">شركة أخرى</option>
-      </select>
+<div id="companySelector" style="display: flex; justify-content: center; gap: 25px; margin-bottom: 20px;">
+  <button id="mamzarBtn" class="company-btn">Mamzar Est</button>
+  <button id="tradixBtn" class="company-btn active-btn">Tradix Co</button>
 </div>
+
+<div style="text-align: left;"> 
+  <label for="client">: Customer</label> 
+  <select id="client" onchange="fillClientInfo()" style="padding: 6px; border-radius: 5px;">
+    <option value="">-- اختر عميل --</option>
+  </select>
+</div>
+<div id="client-info" style="margin-top: 10px; font-weight: bold;"></div>
+      
+</div>
+
       <div id="client-info"></div>
 
     <div class="form-inline-group" style="justify-content: left;">
@@ -521,6 +600,135 @@ h2 {
       r.cells[5].textContent = index + 1; // العمود الأخير هو رقم الصف
     });
   }
+</script>
+<script>
+  // جلب العملاء من localStorage وملء الدروب داون
+  function populateClientDropdown() {
+    const clients = JSON.parse(localStorage.getItem("customersList") || "[]");
+    const clientSelect = document.getElementById("client");
+
+    clients.forEach(client => {
+      const option = document.createElement("option");
+      option.value = client.id; // نخزن ID كـ value
+      option.textContent = client.nameAr; // نعرض الاسم العربي
+      clientSelect.appendChild(option);
+    });
+  }
+
+  // عند اختيار عميل، نملأ باقي البيانات تلقائيًا في الحقول المخفية أو المتغيرات
+  function fillClientInfo() {
+    const clientId = document.getElementById("client").value;
+    const clients = JSON.parse(localStorage.getItem("customersList") || "[]");
+    const selectedClient = clients.find(c => c.id === clientId);
+    
+    if (selectedClient) {
+      // هنا يتم ربط بيانات العميل بالمتغيرات في ملف الوورد
+      window.selectedClientData = {
+client_name_ar: window.selectedClientData.client_name_ar,
+client_name_en: window.selectedClientData.client_name_en,
+client_address_ar: window.selectedClientData.client_address_ar,
+client_address_en: window.selectedClientData.client_address_en,
+client_cr: window.selectedClientData.client_cr,
+client_vat: window.selectedClientData.client_vat,
+client_id: window.selectedClientData.client_id
+      };
+    }
+  }
+
+
+let clientsData = [];
+
+async function loadClients() {
+  try {
+    const response = await fetch("https://agreement-generator-kfsp.onrender.com/customers.json");
+    clientsData = await response.json();
+
+    const dropdown = document.getElementById("client");
+    dropdown.innerHTML = `<option value="">-- اختر عميل --</option>`; // Reset
+
+    clientsData.forEach((client, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent = client.client_name_ar;
+      dropdown.appendChild(option);
+    });
+
+  } catch (error) {
+    console.error("❌ فشل تحميل العملاء:", error);
+  }
+}
+
+function fillClientInfo() {
+  const selectedIndex = document.getElementById("client").value;
+  const infoDiv = document.getElementById("client-info");
+
+  if (selectedIndex === "") {
+    infoDiv.innerHTML = '<p>🔹 لم يتم اختيار عميل.</p>';
+    window.selectedClientData = null;
+    return;
+  }
+
+  const selectedClient = clientsData[selectedIndex];
+  window.selectedClientData = selectedClient; // 🟡 سيتم استخدامه لاحقًا في إنشاء الاتفاقية
+
+  infoDiv.innerHTML = `
+    <p>📄 CR: ${selectedClient.client_cr}</p>
+    <p>📍 Address (AR): ${selectedClient.client_address_ar}</p>
+    <p>🌍 Address (EN): ${selectedClient.client_address_en}</p>
+    <p>🧾 VAT: ${selectedClient.client_vat}</p>
+  `;
+}
+
+// تحميل العملاء بمجرد تحميل الصفحة
+window.addEventListener("DOMContentLoaded", loadClients);
+
+  
+  // استدعاء أولي لتعبئة القائمة عند تحميل الصفحة
+  window.addEventListener("DOMContentLoaded", populateClientDropdown);
+</script>
+
+<script>
+  async function loadCustomers() {
+    try {
+      const response = await fetch('./customers.json');
+      const customers = await response.json();
+
+      const clientSelect = document.getElementById("client");
+      clientSelect.innerHTML = '<option value="">-- اختر العميل --</option>';
+
+      customers.forEach((customer, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = customer.client_name_ar;
+        clientSelect.appendChild(option);
+      });
+
+      // تخزين بيانات العملاء للرجوع لها لاحقًا
+      window.customersData = customers;
+
+    } catch (error) {
+      console.error("فشل تحميل ملف العملاء:", error);
+    }
+  }
+
+  function fillClientInfo() {
+    const selectedIndex = document.getElementById("client").value;
+    if (selectedIndex === "") return;
+
+    const selectedCustomer = window.customersData[selectedIndex];
+    window.selectedClientData = {
+client_name_ar: window.selectedClientData.client_name_ar,
+client_name_en: window.selectedClientData.client_name_en,
+client_address_ar: window.selectedClientData.client_address_ar,
+client_address_en: window.selectedClientData.client_address_en,
+client_cr: window.selectedClientData.client_cr,
+client_vat: window.selectedClientData.client_vat,
+client_id: window.selectedClientData.client_id
+      
+    };
+  }
+
+  window.onload = loadCustomers;
 </script>
 
 <!-- مكان تقديم الخدمة -->
@@ -615,17 +823,38 @@ h2 {
 const tbody = document.querySelector('#items-table tbody');
 
 function fillClientInfo() {
-  const client = document.getElementById('client').value;
-  const infoDiv = document.getElementById('client-info');
-  if (client === 'client1') {
-    infoDiv.innerHTML = `
-      <p>📄 السجل التجاري: 2050180563</p>
-      <p>📍 العنوان: الدمام، شارع الأمير سعود الفيصل</p>
-    `;
-  } else {
-    infoDiv.innerHTML = '<p>🔹 الرجاء إدخال البيانات يدوياً.</p>';
+  const selectedIndex = document.getElementById("client").value;
+  const infoDiv = document.getElementById("client-info");
+
+  if (selectedIndex === "") {
+    infoDiv.innerHTML = '<p>🔹 الرجاء اختيار عميل.</p>';
+    return;
   }
+
+  const selectedCustomer = window.customersData[selectedIndex];
+  window.selectedClientData = {
+    client_name_ar: selectedCustomer.client_name_ar,
+    client_name_en: selectedCustomer.client_name_en,
+    client_address_ar: selectedCustomer.client_address_ar,
+    client_address_en: selectedCustomer.client_address_en,
+    client_cr: selectedCustomer.client_cr
+  };
+
+  infoDiv.innerHTML = `
+    <p>📄 <strong>السجل التجاري:</strong> ${selectedCustomer.client_cr}</p>
+    <p>📍 <strong>العنوان (عربي):</strong> ${selectedCustomer.client_address_ar}</p>
+    <p>🌍 <strong>العنوان (إنجليزي):</strong> ${selectedCustomer.client_address_en}</p>
+    <p>👤 <strong>الاسم (عربي):</strong> ${selectedCustomer.client_name_ar}</p>
+    <p>🗣️ <strong>الاسم (إنجليزي):</strong> ${selectedCustomer.client_name_en}</p>
+  `;
 }
+body: JSON.stringify({
+  selectedCompany: 'Mamzar', // أو 'Tradix'
+  agreement_date: "...",
+  client_name: "...",
+  // باقي البيانات...
+})
+
 
 function addItem() {
   const row = tbody.insertRow();
@@ -695,6 +924,123 @@ fetch("https://agreement-generator-kfsp.onrender.com/generate", {
   });
 }
 </script>
+<script>
+let selectedCompany = "tradix"; // الافتراضي Tradix
+let selectedTemplate = "agreement_templatev1.docx"; // ملف Tradix الافتراضي
 
+const tradixBtn = document.getElementById("tradixBtn");
+const mamzarBtn = document.getElementById("mamzarBtn");
+
+// حالة افتراضية
+document.body.classList.add("tradix-bg");
+
+// عند الضغط على Tradix
+tradixBtn.addEventListener("click", () => {
+  selectedCompany = "tradix";
+  selectedTemplate = "agreement_templatev1.docx";
+
+  // فعّل الزر
+  tradixBtn.classList.add("active-btn");
+  mamzarBtn.classList.remove("active-btn");
+
+  // غير الخلفية
+  document.body.classList.remove("mamzar-bg");
+  document.body.classList.add("tradix-bg");
+
+  // تنسيق الحقول
+  updateFieldColors("#ffffff", "#00cfff");
+});
+
+// عند الضغط على Mamzar
+mamzarBtn.addEventListener("click", () => {
+  selectedCompany = "mamzar";
+  selectedTemplate = "agreement_template.docx";
+
+  mamzarBtn.classList.add("active-btn");
+  tradixBtn.classList.remove("active-btn");
+
+  document.body.classList.remove("tradix-bg");
+  document.body.classList.add("mamzar-bg");
+
+  updateFieldColors("#fafff3", "#2ecc71");
+});
+
+
+  function saveAgreement(e) {
+    if (e) e.preventDefault();
+
+    const items = [...document.querySelectorAll('#items-table tbody tr')].map(row => ({
+      desc: row.cells[4].querySelector('input').value,
+      uom: row.cells[3].querySelector('input').value,
+      price: row.cells[2].querySelector('input').value,
+      note: row.cells[1].querySelector('input').value,
+    }));
+
+    let entity_name_ar, entity_name_en, entity_detail_ar, entity_detail_en;
+
+    if (selectedCompany === "mamzar") {
+      entity_name_ar = "مؤسسة ممزر للمقاولات العامة";
+      entity_name_en = "Mamzar for General Contracting Est";
+      entity_detail_ar = `مؤسسة ممزر للمقاولات العامة
+سجل تجاري: 2050073487
+العنوان: حي غرناطة ش طرفة بن العبد , الدمام , المملكة العربية السعودية`;
+      entity_detail_en = `Mamzar for General Contracting Est
+CR :2050073487
+Adress: Ghernata Dist, Turfa bin Alabd St, Dammam, KSA`;
+    } else {
+      entity_name_ar = "شركة اس ترديكسسا";
+      entity_name_en = "S TRADIXSA COMPANY";
+      entity_detail_ar = `شركة اس ترديكسسا
+تجاري عربي : 7052015091
+العنوان: حي قرطبة , شارع طارق بن زياد , الخبر , المملكة العربية السعودية`;
+      entity_detail_en = `S TRADIXSA COMPANY
+CR: 7052015091
+Adress: Al-Khubar Qurtuban Dist , Tariq bin Ziyad, King of Saudi Arabia`;
+    }
+
+    const data = {
+      selectedCompany,
+      selectedTemplate,
+      entity_name_ar,
+      entity_name_en,
+      entity_detail_ar,
+      entity_detail_en,
+      agreement_date: document.getElementById('agreement-date').value,
+      client_name: document.getElementById('client').value,
+      agreement_Place_ar: document.getElementById("agreement_Place_ar").value,
+      agreement_Place_en: document.getElementById("agreement_Place_en").value,
+      credit_term: document.getElementById('credit-term').value,
+      start_date: document.getElementById('start-date').value,
+      end_date: document.getElementById('end-date').value,
+      items_table: items,
+      extra_ar: document.getElementById('extra-ar').value,
+      extra_en: document.getElementById('extra-en').value
+      .window.selectedClientData, // بيانات العميل المختار
+      entity_detail_ar: currentEntityDetailsAr,
+      entity_detail_en: currentEntityDetailsEn,
+      entity_name_ar: currentEntityNameAr,
+      entity_name_en: currentEntityNameEn
+    };
+
+    fetch("https://agreement-generator-kfsp.onrender.com/generate", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    })
+    .then(res => {
+      if (res.ok) {
+        document.getElementById('save-btn').textContent = '✅ تم الحفظ';
+        document.getElementById('save-btn').classList.add('save-success');
+        document.getElementById('download-section').style.display = 'block';
+      } else {
+        alert("❌ خطأ في الحفظ.");
+      }
+    })
+    .catch(err => {
+      alert("⚠️ لم يتم الاتصال بالسيرفر.");
+      console.error(err);
+    });
+  }
+</script>
 </body>
 </html>

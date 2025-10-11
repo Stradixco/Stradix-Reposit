@@ -122,6 +122,9 @@
 <!-- السايد بار -->
 <div id="sidebar-container"></div>
 
+
+
+
 <div class="main">
   <h1>➕ إنشاء عميل جديد</h1>
 
@@ -143,7 +146,7 @@
     <div class="row">
       <div>
         <label for="vat">الرقم الضريبي *</label>
-        <input type="text" id="vat" maxlength="15">
+      <input type="text" id="client_vat" required />
         <div class="error" id="vatError">⚠️ يجب أن يكون الرقم 15 رقمًا.</div>
       </div>
       <div>
@@ -161,13 +164,13 @@
     <div class="row">
       <div>
         <label for="enName">الاسم بالإنجليزية *</label>
-        <input type="text" id="enName">
-        <div class="error" id="enNameError">⚠️ الاسم يجب أن يكون بالإنجليزية فقط.</div>
+      <input type="text" id="client_name_en" required />
+        <div class="error" id="client_name_enError">⚠️ الاسم يجب أن يكون بالإنجليزية فقط.</div>
       </div>
       <div>
         <label for="arName">الاسم بالعربية *</label>
-        <input type="text" id="arName">
-        <div class="error" id="arNameError">⚠️ الاسم يجب أن يكون بالعربية فقط.</div>
+      <input type="text" id="client_address_ar" required />
+        <div class="error" id="client_address_arError">⚠️ الاسم يجب أن يكون بالعربية فقط.</div>
       </div>
     </div>
 
@@ -177,26 +180,26 @@
         <input type="email" id="email">
       </div>
       <div>
-        <label for="phone">رقم الاتصال</label>
-        <input type="text" id="phone">
+        <label for="phone">CR Number</label>
+      <input type="text" id="client_cr" required />
       </div>
     </div>
 
     <div class="row">
       <div>
         <label for="address">العنوان (بالإنجليزية) *</label>
-        <input type="text" id="address">
-        <div class="error" id="addressError">⚠️ يجب إدخال العنوان بالإنجليزية فقط.</div>
+      <input type="text" id="client_name_en" required />
+        <div class="error" id="client_name_enError">⚠️ يجب إدخال العنوان بالإنجليزية فقط.</div>
       </div>
       <div>
         <label for="addressAr">العنوان (بالعربية) *</label>
-        <input type="text" id="addressAr">
-        <div class="error" id="addressArError">⚠️ يجب إدخال العنوان بالعربية فقط.</div>
+      <input type="text" id="client_address_ar" required />
+        <div class="error" id="aclient_address_arError">⚠️ يجب إدخال العنوان بالعربية فقط.</div>
       </div>
     </div>
 
     <div class="buttons">
-      <button type="button" id="createBtn">إنشاء</button>
+      <button type="submit">💾 حفظ</button>
       <button type="button" id="cancelBtn" onclick="window.location.href='customers-list.html'">إلغاء</button>
     </div>
   </form>
@@ -227,95 +230,33 @@
     return /^[\u0600-\u06FF\s]+$/.test(text);
   }
 
-  function isEnglish(text) {
-    return /^[A-Za-z\s]+$/.test(text);
-  }
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-  function validate() {
-    const enName = document.getElementById("enName");
-    const arName = document.getElementById("arName");
-    const address = document.getElementById("address");
-    const addressAr = document.getElementById("addressAr");
-    const vat = document.getElementById("vat");
-    const createBtn = document.getElementById("createBtn");
+      const clientData = {
+        client_name_ar: document.getElementById('client_name_ar').value,
+        client_name_en: document.getElementById('client_name_en').value,
+        client_address_ar: document.getElementById('client_address_ar').value,
+        client_address_en: document.getElementById('client_address_en').value,
+        client_cr: document.getElementById('client_cr').value,
+        client_vat: document.getElementById('client_vat').value,
+        client_id: document.getElementById('client_id').value || Date.now()
+      };
 
-    let valid = true;
+      try {
+        await fetch('https://agreement-generator-kfsp.onrender.com/save-client', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(clientData)
+        });
 
-    // Reset errors
-    document.querySelectorAll(".error").forEach(e => e.style.display = "none");
-
-    if (!isEnglish(enName.value.trim())) {
-      document.getElementById("enNameError").style.display = "block";
-      valid = false;
-    }
-
-    if (!isArabic(arName.value.trim())) {
-      document.getElementById("arNameError").style.display = "block";
-      valid = false;
-    }
-
-    if (!isEnglish(address.value.trim())) {
-      document.getElementById("addressError").style.display = "block";
-      valid = false;
-    }
-
-    if (!isArabic(addressAr.value.trim())) {
-      document.getElementById("addressArError").style.display = "block";
-      valid = false;
-    }
-
-    if (!/^\d{15}$/.test(vat.value.trim())) {
-      document.getElementById("vatError").style.display = "block";
-      valid = false;
-    }
-
-    if (valid) {
-      createBtn.classList.add("active");
-    } else {
-      createBtn.classList.remove("active");
-    }
-  }
-
-  document.querySelectorAll("input, select").forEach(input => {
-    input.addEventListener("input", validate);
-  });
-
-  document.getElementById("createBtn").addEventListener("click", () => {
-    const enName = document.getElementById("enName").value.trim();
-    const arName = document.getElementById("arName").value.trim();
-    const address = document.getElementById("address").value.trim();
-    const addressAr = document.getElementById("addressAr").value.trim();
-    const vat = document.getElementById("vat").value.trim();
-    const country = document.getElementById("country").value;
-    const email = document.getElementById("email").value;
-    const phone = document.getElementById("phone").value;
-    const type = document.getElementById("type").value;
-
-    const newCustomer = {
-      id: generatedCustomerId,
-      nameEn: enName,
-      nameAr: arName,
-      addressEn: address,
-      addressAr: addressAr,
-      vat,
-      country,
-      email,
-      phone,
-      type
-    };
-
-    const list = JSON.parse(localStorage.getItem("customersList") || "[]");
-    list.push(newCustomer);
-    localStorage.setItem("customersList", JSON.stringify(list));
-
-    alert("✅ تم إنشاء العميل بنجاح");
-    window.location.href = "customers-list.html";
-  }
-
-  
-  
-  );
-</script>
-
+        successMsg.style.display = 'block';
+        form.reset();
+      } catch (error) {
+        alert('❌ حدث خطأ أثناء الحفظ. الرجاء المحاولة لاحقًا.');
+        console.error(error);
+      }
+    });
+  </script>
 </body>
 </html>
