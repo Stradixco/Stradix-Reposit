@@ -1,0 +1,37 @@
+[
+  {
+    "client_name_ar": "شركة الابتكار البحرية",
+    "client_name_en": "Al Ibtkar Marine Co. LLC",
+    "client_address_ar": "الدمام ش الامير سعود الفيصل المملكة العربية السعودية",
+    "client_address_en": "Dammam, Prince Saud Alfisal St KSA",
+    "client_cr": "2050180563",
+    "client_vat": "311988008800003",
+    "client_id": "CUST-11001"
+
+
+  },
+  {
+    "client_name_ar": "مؤسسة ممزر للمقاولات العامة",
+    "client_name_en": "Mamzar for General Contracting Est",
+    "client_address_ar": " الدمام حي غرناطة ش طرفة بن العبد المملكة العربية السعودية",
+    "client_address_en": "Dammam Ghirnata Dist, Turfa bin Alabd, KSA",
+    "client_cr": "2050073487",
+    "client_vat": "300949914100003",
+    "client_id": "CUST-11002"
+
+
+    
+    
+  },
+    {
+    "client_name_ar": "شركة اس ترديكسسا",
+    "client_name_en": "S Tradixsa LLC",
+    "client_address_ar": " الخبر حي قرطبة ش طارق بن زياد المملكة العربية السعودية",
+    "client_address_en": "Al-Khubar Qurtuban Dist , Tariq bin Ziyad, , KSA",
+    "client_cr": "7052015091",
+    "client_vat": "000000000000000",
+    "client_id": "CUST-11003"
+
+  }
+
+]
