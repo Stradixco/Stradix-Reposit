@@ -527,359 +527,180 @@ body.mamzar-bg {
     <h2 style="text-align: center;">📝 Service Agreement Creation</h2>
 
 
-<div id="companySelector" style="display: flex; justify-content: center; gap: 25px; margin-bottom: 20px;">
-  <button id="mamzarBtn" class="company-btn">Mamzar Est</button>
-  <button id="tradixBtn" class="company-btn active-btn">Tradix Co</button>
-</div>
+      <div class="company-switcher">
+        <button id="mamzarBtn" class="company-btn">Mamzar</button>
+        <button id="tradixBtn" class="company-btn active-btn">Tradix</button>
+      </div>
 
-<div style="text-align: left;"> 
-  <label for="client">: Customer</label> 
-  <select id="client" onchange="fillClientInfo()" style="padding: 6px; border-radius: 5px;">
-    <option value="">-- اختر عميل --</option>
-  </select>
-</div>
-<div id="client-info" style="margin-top: 10px; font-weight: bold;"></div>
-      
-</div>
+      <label for="client" style="margin-top: 25px;">: اختر العميل</label>
+      <select id="client" onchange="fillClientInfo()">
+        <option value="">-- اختر عميل --</option>
+      </select>
+      <div id="client-info" style="margin-top: 10px; font-weight: bold;"></div>
 
-      <div id="client-info"></div>
+      <label for="agreement-date">تاريخ الاتفاقية:</label>
+      <input type="date" id="agreement-date" />
 
-    <div class="form-inline-group" style="justify-content: left;">
-            <input type="date" id="agreement-date" name="agreement-date">
+      <h3>جدول البنود</h3>
+      <table id="items-table">
+        <thead>
+          <tr>
+            <th>حذف</th>
+            <th>ملاحظات</th>
+            <th>السعر</th>
+            <th>الوحدة</th>
+            <th>الوصف</th>
+            <th>رقم</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
 
-      <label for="agreement-date">:Agreement Date</label>
+      <button onclick="addRow()">➕ إضافة بند</button>
+
+      <h3>مكان تقديم الخدمة</h3>
+      <label>بالعربي:</label>
+      <textarea id="agreement_Place_ar" dir="rtl"></textarea>
+
+      <label>بالإنجليزي:</label>
+      <textarea id="agreement_Place_en" dir="ltr"></textarea>
+
+      <h3>شروط الدفع</h3>
+      <label for="credit-term">Credit Term:</label>
+      <select id="credit-term">
+        <option>15 Days</option>
+        <option>30 Days</option>
+        <option>45 Days</option>
+        <option>60 Days</option>
+      </select>
+
+      <h3>مدة الاتفاقية</h3>
+      <label>من:</label>
+      <input type="date" id="start-date" />
+      <label>إلى:</label>
+      <input type="date" id="end-date" />
+
+      <h3>شروط إضافية</h3>
+      <label>بالعربية:</label>
+      <textarea id="extra-ar" dir="rtl"></textarea>
+
+      <label>بالإنجليزية:</label>
+      <textarea id="extra-en" dir="ltr"></textarea>
+
+      <button id="save-btn" onclick="saveAgreement(event)">💾 حفظ الاتفاقية</button>
+
+      <div id="download-section">
+        <a id="download-link" class="download-btn word-btn" download>📄 تحميل Word</a>
+        <a id="download-pdf-link" class="download-btn pdf-btn" download>📄 تحميل PDF</a>
+      </div>
     </div>
-
-<h2 style="text-align: left;">Service Price Table</h2>
-
-<table id="items-table">
-  <thead>
-    <tr>
-      <th>Delete</th>
-      <th>Note</th>
-      <th>Price</th>
-      <th>UOM</th>
-      <th>Description</th>
-      <th>S/N</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- الصفوف ستُضاف هنا بواسطة JavaScript -->
-  </tbody>
-</table>
-
-<!-- زر الإضافة -->
-<button onclick="addRow()">➕ Add Item</button>
-
-<!-- ✅ سكربت جافاسكربت - ضعه في أسفل الصفحة -->
+  </div>
 <script>
-  function addRow() {
-    const table = document.getElementById("items-table").getElementsByTagName("tbody")[0];
-    const rowCount = table.rows.length;
-    const row = table.insertRow();
-
-    row.innerHTML = `
-      <td>
-        <button class="delete-btn" onclick="deleteRow(this)">❌</button>
-      </td>
-      <td><input type="text" class="item-note" style="text-align: left;" /></td>
-      <td><input type="number" class="item-price" style="text-align: left;" /></td>
-      <td><input type="text" class="item-uom" style="text-align: left;" /></td>
-      <td><input type="text" class="item-desc" style="text-align: left;" /></td>
-      <td>${rowCount + 1}</td>
-    `;
-  }
-
-  function deleteRow(btn) {
-    const row = btn.closest("tr");
-    row.remove();
-
-    // إعادة ترقيم الصفوف
-    const rows = document.querySelectorAll("#items-table tbody tr");
-    rows.forEach((r, index) => {
-      r.cells[5].textContent = index + 1; // العمود الأخير هو رقم الصف
-    });
-  }
-</script>
-<script>
-  // جلب العملاء من localStorage وملء الدروب داون
-  function populateClientDropdown() {
-    const clients = JSON.parse(localStorage.getItem("customersList") || "[]");
-    const clientSelect = document.getElementById("client");
-
-    clients.forEach(client => {
-      const option = document.createElement("option");
-      option.value = client.id; // نخزن ID كـ value
-      option.textContent = client.nameAr; // نعرض الاسم العربي
-      clientSelect.appendChild(option);
-    });
-  }
-
-  // عند اختيار عميل، نملأ باقي البيانات تلقائيًا في الحقول المخفية أو المتغيرات
-  function fillClientInfo() {
-    const clientId = document.getElementById("client").value;
-    const clients = JSON.parse(localStorage.getItem("customersList") || "[]");
-    const selectedClient = clients.find(c => c.id === clientId);
-    
-    if (selectedClient) {
-      // هنا يتم ربط بيانات العميل بالمتغيرات في ملف الوورد
-      window.selectedClientData = {
-client_name_ar: window.selectedClientData.client_name_ar,
-client_name_en: window.selectedClientData.client_name_en,
-client_address_ar: window.selectedClientData.client_address_ar,
-client_address_en: window.selectedClientData.client_address_en,
-client_cr: window.selectedClientData.client_cr,
-client_vat: window.selectedClientData.client_vat,
-client_id: window.selectedClientData.client_id
-      };
-    }
-  }
-
-
+let selectedCompany = "tradix"; // القيمة الابتدائية
+let selectedTemplate = "agreement_templatev1.docx";
 let clientsData = [];
 
-async function loadClients() {
-  try {
-    const response = await fetch("https://agreement-generator-kfsp.onrender.com/customers.json");
-    clientsData = await response.json();
-
-    const dropdown = document.getElementById("client");
-    dropdown.innerHTML = `<option value="">-- اختر عميل --</option>`; // Reset
-
-    clientsData.forEach((client, index) => {
-      const option = document.createElement("option");
-      option.value = index;
-      option.textContent = client.client_name_ar;
-      dropdown.appendChild(option);
+document.addEventListener("DOMContentLoaded", () => {
+  // ✅ تحميل العملاء من السيرفر
+  fetch("https://agreement-generator-kfsp.onrender.com/customers.json")
+    .then(res => res.json())
+    .then(data => {
+      clientsData = data;
+      const clientSelect = document.getElementById("client");
+      clientSelect.innerHTML = `<option value="">-- اختر عميل --</option>`;
+      data.forEach((client, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = client.client_name_ar;
+        clientSelect.appendChild(option);
+      });
     });
 
-  } catch (error) {
-    console.error("❌ فشل تحميل العملاء:", error);
+  // ✅ زر تغيير إلى Tradix
+  document.getElementById("tradixBtn").addEventListener("click", () => {
+    selectedCompany = "tradix";
+    selectedTemplate = "agreement_templatev1.docx";
+    toggleCompanyUI("tradix");
+  });
+
+  // ✅ زر تغيير إلى Mamzar
+  document.getElementById("mamzarBtn").addEventListener("click", () => {
+    selectedCompany = "mamzar";
+    selectedTemplate = "agreement_template.docx";
+    toggleCompanyUI("mamzar");
+  });
+});
+
+// ✅ تغيير مظهر الصفحة حسب الشركة
+function toggleCompanyUI(company) {
+  document.getElementById("tradixBtn").classList.remove("active-btn");
+  document.getElementById("mamzarBtn").classList.remove("active-btn");
+
+  if (company === "tradix") {
+    document.getElementById("tradixBtn").classList.add("active-btn");
+    document.body.classList.remove("mamzar-bg");
+    document.body.classList.add("tradix-bg");
+  } else {
+    document.getElementById("mamzarBtn").classList.add("active-btn");
+    document.body.classList.remove("tradix-bg");
+    document.body.classList.add("mamzar-bg");
   }
 }
 
+// ✅ عند اختيار عميل
 function fillClientInfo() {
-  const selectedIndex = document.getElementById("client").value;
+  const index = document.getElementById("client").value;
   const infoDiv = document.getElementById("client-info");
 
-  if (selectedIndex === "") {
-    infoDiv.innerHTML = '<p>🔹 لم يتم اختيار عميل.</p>';
+  if (index === "") {
+    infoDiv.innerHTML = "<p>🔹 لم يتم اختيار عميل.</p>";
     window.selectedClientData = null;
     return;
   }
 
-  const selectedClient = clientsData[selectedIndex];
-  window.selectedClientData = selectedClient; // 🟡 سيتم استخدامه لاحقًا في إنشاء الاتفاقية
+  const client = clientsData[index];
+  window.selectedClientData = client;
 
   infoDiv.innerHTML = `
-    <p>📄 CR: ${selectedClient.client_cr}</p>
-    <p>📍 Address (AR): ${selectedClient.client_address_ar}</p>
-    <p>🌍 Address (EN): ${selectedClient.client_address_en}</p>
-    <p>🧾 VAT: ${selectedClient.client_vat}</p>
+    <p>📄 السجل التجاري: ${client.client_cr}</p>
+    <p>📍 العنوان (عربي): ${client.client_address_ar}</p>
+    <p>🌍 العنوان (إنجليزي): ${client.client_address_en}</p>
+    <p>👤 الاسم (عربي): ${client.client_name_ar}</p>
+    <p>🗣️ الاسم (إنجليزي): ${client.client_name_en}</p>
   `;
 }
 
-// تحميل العملاء بمجرد تحميل الصفحة
-window.addEventListener("DOMContentLoaded", loadClients);
-
-  
-  // استدعاء أولي لتعبئة القائمة عند تحميل الصفحة
-  window.addEventListener("DOMContentLoaded", populateClientDropdown);
-</script>
-
-<script>
-  async function loadCustomers() {
-    try {
-      const response = await fetch('./customers.json');
-      const customers = await response.json();
-
-      const clientSelect = document.getElementById("client");
-      clientSelect.innerHTML = '<option value="">-- اختر العميل --</option>';
-
-      customers.forEach((customer, index) => {
-        const option = document.createElement("option");
-        option.value = index;
-        option.textContent = customer.client_name_ar;
-        clientSelect.appendChild(option);
-      });
-
-      // تخزين بيانات العملاء للرجوع لها لاحقًا
-      window.customersData = customers;
-
-    } catch (error) {
-      console.error("فشل تحميل ملف العملاء:", error);
-    }
-  }
-
-  function fillClientInfo() {
-    const selectedIndex = document.getElementById("client").value;
-    if (selectedIndex === "") return;
-
-    const selectedCustomer = window.customersData[selectedIndex];
-    window.selectedClientData = {
-client_name_ar: window.selectedClientData.client_name_ar,
-client_name_en: window.selectedClientData.client_name_en,
-client_address_ar: window.selectedClientData.client_address_ar,
-client_address_en: window.selectedClientData.client_address_en,
-client_cr: window.selectedClientData.client_cr,
-client_vat: window.selectedClientData.client_vat,
-client_id: window.selectedClientData.client_id
-      
-    };
-  }
-
-  window.onload = loadCustomers;
-</script>
-
-<!-- مكان تقديم الخدمة -->
-<div class="service-place-row">
-  
-  <div class="service-place-box">
-    <label for="agreement_place_ar" style="display: block; text-align: left;">
-      📍 Arabic Service Place
-    </label>
-    <textarea name="agreement_Place_ar" id="agreement_Place_ar" style="text-align: right;" dir="rtl"></textarea>
-  </div>
-
-  <div class="service-place-box">
-    <label for="agreement_place_en" style="display: block; text-align: left;">
-      📍 English Service Place
-    </label>
-    <textarea name="agreement_Place_en" id="agreement_Place_en" style="text-align: left;" dir="ltr"></textarea>
-  </div>
-
-</div>
-
-
-<div class="payment-duration-row">
-<!-- شروط الدفع والمدة في صف واحد - تصميم احترافي ومحاذاة لليسار -->
-<div class="form-inline-group" style="justify-content: left;">
-  <!-- شروط الدفع -->
-  <div style="display: flex; align-items: center; gap: 10px;">
-    <select id="credit-term" style="width: 150px;">
-      <option>15 Days</option>
-      <option>30 Days</option>
-      <option>45 Days</option>
-      <option>60 Days</option>
-      <option>90 Days</option>
-    </select>
-        <label for="credit-term" style="margin: 0;">:Credit Terms</label>
-
-  </div>
-
-  <!-- المسافة بين المجموعتين -->
-  <div style="width: 40px;"></div>
-
-  <!-- المدة من وإلى -->
-  <div style="display: flex; align-items: center; gap: 30px;">
-    <input type="date" id="end-date" />
-        <label for="end-date" style="margin: 0;">To</label>
-         <input type="date" id="start-date" />
-        <label for="start-date" style="margin: 0;">From</label>
-        <label style="margin: 0;">:Agreement duration</label>
-
-  </div>
-</div>
-
-
-    </div>
-
-<h3 style="text-align: left;">Additional Terms</h3>
-
-<div class="two-cols">
-  <!-- Arabic Item  -->
-  <div>
-    <label style="text-align: left; display: block;">:Arabic Item </label>
-    <textarea id="extra-ar" rows="2" dir="rtl" style="text-align: right;"></textarea>
-  </div>
-
-  <!-- English Item -->
-  <div>
-    <label style="text-align: left; display: block;">:English Item</label>
-    <textarea id="extra-en" rows="2" dir="ltr" style="text-align: left;"></textarea>
-  </div>
-</div>
-
-      <button id="save-btn" type="button" onclick="saveAgreement(event)">
-        💾 Save Agreement
-      </button>
-
-<!-- ✅ أزرار التحميل (Word + PDF) -->
-<div id="download-section" style="display: none; text-align: center; margin-top: 30px;">
-  <a id="download-link" href="#" class="download-btn word-btn" download style="margin-right: 15px;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Microsoft_Office_Word_%282019%E2%80%93present%29.svg" 
-         alt="Word" 
-         style="width: 24px; vertical-align: middle; margin-right: 8px;">
-    Word Download (Word)
-  </a>
-
-  <a id="download-pdf-link" href="#" class="download-btn pdf-btn" download>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF" style="width: 24px; vertical-align: middle; margin-right: 8px;">
-    PDF Download (PDF)
-  </a>
-</div>
-
-<script>
-const tbody = document.querySelector('#items-table tbody');
-
-function fillClientInfo() {
-  const selectedIndex = document.getElementById("client").value;
-  const infoDiv = document.getElementById("client-info");
-
-  if (selectedIndex === "") {
-    infoDiv.innerHTML = '<p>🔹 الرجاء اختيار عميل.</p>';
-    return;
-  }
-
-  const selectedCustomer = window.customersData[selectedIndex];
-  window.selectedClientData = {
-    client_name_ar: selectedCustomer.client_name_ar,
-    client_name_en: selectedCustomer.client_name_en,
-    client_address_ar: selectedCustomer.client_address_ar,
-    client_address_en: selectedCustomer.client_address_en,
-    client_cr: selectedCustomer.client_cr
-  };
-
-  infoDiv.innerHTML = `
-    <p>📄 <strong>السجل التجاري:</strong> ${selectedCustomer.client_cr}</p>
-    <p>📍 <strong>العنوان (عربي):</strong> ${selectedCustomer.client_address_ar}</p>
-    <p>🌍 <strong>العنوان (إنجليزي):</strong> ${selectedCustomer.client_address_en}</p>
-    <p>👤 <strong>الاسم (عربي):</strong> ${selectedCustomer.client_name_ar}</p>
-    <p>🗣️ <strong>الاسم (إنجليزي):</strong> ${selectedCustomer.client_name_en}</p>
-  `;
-}
-body: JSON.stringify({
-  selectedCompany: 'Mamzar', // أو 'Tradix'
-  agreement_date: "...",
-  client_name: "...",
-  // باقي البيانات...
-})
-
-
-function addItem() {
+// ✅ إضافة صف بند جديد
+function addRow() {
+  const tbody = document.querySelector('#items-table tbody');
+  const rowCount = tbody.rows.length;
   const row = tbody.insertRow();
+
   row.innerHTML = `
-    <td></td>
-    <td><input type="text" /></td>
-    <td><input type="text" /></td>
-    <td><input type="number" /></td>
-    <td><input type="text" /></td>
-    <td><button onclick="removeRow(this)">❌</button></td>
+    <td><button class="delete-btn" onclick="deleteRow(this)">❌</button></td>
+    <td><input type="text" class="item-note" /></td>
+    <td><input type="number" class="item-price" /></td>
+    <td><input type="text" class="item-uom" /></td>
+    <td><input type="text" class="item-desc" /></td>
+    <td>${rowCount + 1}</td>
   `;
+}
+
+// ✅ حذف صف
+function deleteRow(btn) {
+  btn.closest("tr").remove();
   reorderRows();
 }
 
-function removeRow(btn) {
-  btn.closest('tr').remove();
-  reorderRows();
-}
-
+// ✅ إعادة ترقيم الصفوف
 function reorderRows() {
-  [...tbody.rows].forEach((row, index) => {
-    row.cells[0].textContent = index + 1;
+  const rows = document.querySelectorAll("#items-table tbody tr");
+  rows.forEach((r, i) => {
+    r.cells[5].textContent = i + 1;
   });
 }
 
+// ✅ حفظ الاتفاقية
 function saveAgreement(e) {
   if (e) e.preventDefault();
 
@@ -890,128 +711,17 @@ function saveAgreement(e) {
     note: row.cells[1].querySelector('input').value,
   }));
 
-  const data = {
-    agreement_date: document.getElementById('agreement-date').value,
-    client_name: document.getElementById('client').value,
-    agreement_Place_ar: document.getElementById("agreement_Place_ar").value,
-    agreement_Place_en: document.getElementById("agreement_Place_en").value,
-    credit_term: document.getElementById('credit-term').value,
-    start_date: document.getElementById('start-date').value,
-    end_date: document.getElementById('end-date').value,
-    items_table: items,
-    extra_ar: document.getElementById('extra-ar').value,
-    extra_en: document.getElementById('extra-en').value
-  };
-
-  const selectedClientData = clientsData[parseInt(data.client_name)];
-  if (!selectedClientData) {
-    alert("⚠️ لم يتم تحديد عميل صالح.");
-    return;
-  }
-
-  data.client_name_ar = selectedClientData.client_name_ar;
-  data.client_name_en = selectedClientData.client_name_en;
-  data.client_address_ar = selectedClientData.client_address_ar;
-  data.client_address_en = selectedClientData.client_address_en;
-  data.client_cr = selectedClientData.client_cr;
-  data.client_vat = selectedClientData.client_vat;
-  data.client_id = selectedClientData.client_id;
-  data.selectedCompany = selectedCompany;
-
-  fetch("https://agreement-generator-kfsp.onrender.com/generate", {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-  })
-  .then(res => {
-    if (res.ok) {
-      document.getElementById('save-btn').textContent = '✅ تم الحفظ';
-      document.getElementById('save-btn').classList.add('save-success');
-      document.getElementById('download-section').style.display = 'block';
-
-      // ✅ تحديث روابط التحميل
-      document.getElementById('download-link').href = `https://agreement-generator-kfsp.onrender.com/download?company=${selectedCompany}`;
-      document.getElementById('download-pdf-link').href = `https://agreement-generator-kfsp.onrender.com/download-pdf?company=${selectedCompany}`;
-    } else {
-      alert("❌ خطأ في الحفظ.");
-    }
-  })
-  .catch(err => {
-    alert("⚠️ لم يتم الاتصال بالسيرفر.");
-    console.error(err);
-  });
-}
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  let selectedCompany = "tradix";
-  let selectedTemplate = "agreement_templatev1.docx";
-
-  const tradixBtn = document.getElementById("tradixBtn");
-  const mamzarBtn = document.getElementById("mamzarBtn");
-
-  // حالة افتراضية
-  document.body.classList.add("tradix-bg");
-
-  // عند الضغط على Tradix
-  tradixBtn.addEventListener("click", () => {
-    selectedCompany = "tradix";
-    selectedTemplate = "agreement_templatev1.docx";
-
-    tradixBtn.classList.add("active-btn");
-    mamzarBtn.classList.remove("active-btn");
-
-    document.body.classList.remove("mamzar-bg");
-    document.body.classList.add("tradix-bg");
-
-    updateFieldColors("#ffffff", "#00cfff");
-  });
-
-  // عند الضغط على Mamzar
-  mamzarBtn.addEventListener("click", () => {
-    selectedCompany = "mamzar";
-    selectedTemplate = "agreement_template.docx";
-
-    mamzarBtn.classList.add("active-btn");
-    tradixBtn.classList.remove("active-btn");
-
-    document.body.classList.remove("tradix-bg");
-    document.body.classList.add("mamzar-bg");
-
-    updateFieldColors("#fafff3", "#2ecc71");
-  });
-
-  // تعريف دالة لتغيير ألوان الحقول عند تغيير الشركة
-  function updateFieldColors(textColor, borderColor) {
-    const fields = document.querySelectorAll("input, textarea, select");
-    fields.forEach(field => {
-      field.style.color = textColor;
-      field.style.borderColor = borderColor;
-    });
-  }
-
-  // 🟡 تخزين المتغيرات في الـ window لتكون متاحة في saveAgreement
-  window.selectedCompany = selectedCompany;
-  window.selectedTemplate = selectedTemplate;
-});
-
-  // استخراج بيانات العميل
   const clientIndex = document.getElementById('client').value;
-  const selectedClientData = clientsData[parseInt(clientIndex)];
+  const client = clientsData[clientIndex];
 
-  if (!selectedClientData) {
-    alert("⚠️ لم يتم اختيار عميل.");
+  if (!client) {
+    alert("⚠️ اختر عميلًا صالحًا.");
     return;
   }
 
-  // بناء البيانات المرسلة
   const data = {
     selectedCompany,
     selectedTemplate,
-    entity_name_ar,
-    entity_name_en,
-    entity_detail_ar,
-    entity_detail_en,
     agreement_date: document.getElementById('agreement-date').value,
     agreement_Place_ar: document.getElementById("agreement_Place_ar").value,
     agreement_Place_en: document.getElementById("agreement_Place_en").value,
@@ -1022,69 +732,35 @@ document.addEventListener("DOMContentLoaded", () => {
     extra_ar: document.getElementById('extra-ar').value,
     extra_en: document.getElementById('extra-en').value,
 
-    // بيانات العميل
-    client_name_ar: selectedClientData.client_name_ar,
-    client_name_en: selectedClientData.client_name_en,
-    client_address_ar: selectedClientData.client_address_ar,
-    client_address_en: selectedClientData.client_address_en,
-    client_cr: selectedClientData.client_cr,
-    client_vat: selectedClientData.client_vat,
-    client_id: selectedClientData.client_id
+    client_name_ar: client.client_name_ar,
+    client_name_en: client.client_name_en,
+    client_address_ar: client.client_address_ar,
+    client_address_en: client.client_address_en,
+    client_cr: client.client_cr,
+    client_vat: client.client_vat,
+    client_id: client.client_id
   };
 
-  // إرسال البيانات إلى السيرفر
   fetch("https://agreement-generator-kfsp.onrender.com/generate", {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data)
   })
-.then(res => {
-  if (res.ok) {
-    document.getElementById('save-btn').textContent = '✅ تم الحفظ';
-    document.getElementById('save-btn').classList.add('save-success');
-    document.getElementById('download-section').style.display = 'block';
+  .then(res => {
+    if (res.ok) {
+      document.getElementById("save-btn").textContent = "✅ تم الحفظ";
+      document.getElementById("save-btn").classList.add("save-success");
+      document.getElementById("download-section").style.display = "block";
 
-    // ✅ تحديث روابط التحميل بناءً على الشركة
-    document.getElementById('download-link').href = `https://agreement-generator-kfsp.onrender.com/download?company=${selectedCompany}`;
-    document.getElementById('download-pdf-link').href = `https://agreement-generator-kfsp.onrender.com/download-pdf?company=${selectedCompany}`;
-  } else {
-    alert("❌ خطأ في الحفظ.");
-  }
-})
+      document.getElementById("download-link").href = `https://agreement-generator-kfsp.onrender.com/download?company=${selectedCompany}`;
+      document.getElementById("download-pdf-link").href = `https://agreement-generator-kfsp.onrender.com/download-pdf?company=${selectedCompany}`;
+    } else {
+      alert("❌ فشل الحفظ.");
+    }
+  })
   .catch(err => {
-    alert("⚠️ لم يتم الاتصال بالسيرفر.");
     console.error(err);
+    alert("⚠️ تعذر الاتصال بالخادم.");
   });
 }
 </script>
-
-
-<script>
-  // متغير لتخزين الشركة المحددة
-  let selectedCompany = "tradix"; // القيمة الافتراضية
-
-  // كود لتبديل الشركات عند الضغط على الأزرار
-  document.getElementById("tradix-btn").addEventListener("click", function() {
-    selectedCompany = "tradix";
-    this.classList.add("active");
-    document.getElementById("mamzar-btn").classList.remove("active");
-    console.log("✅ تم اختيار شركة تراديكس");
-  });
-
-  document.getElementById("mamzar-btn").addEventListener("click", function() {
-    selectedCompany = "mamzar";
-    this.classList.add("active");
-    document.getElementById("tradix-btn").classList.remove("active");
-    console.log("✅ تم اختيار شركة ممزر");
-  });
-</script>
-
-    
-</body>
-</html>
-
-
-
-
-
-
