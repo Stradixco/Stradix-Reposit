@@ -1058,15 +1058,19 @@ Adress: Al-Khubar Qurtuban Dist , Tariq bin Ziyad, King of Saudi Arabia`;
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data)
   })
-  .then(res => {
-    if (res.ok) {
-      document.getElementById('save-btn').textContent = '✅ تم الحفظ';
-      document.getElementById('save-btn').classList.add('save-success');
-      document.getElementById('download-section').style.display = 'block';
-    } else {
-      alert("❌ خطأ في الحفظ.");
-    }
-  })
+.then(res => {
+  if (res.ok) {
+    document.getElementById('save-btn').textContent = '✅ تم الحفظ';
+    document.getElementById('save-btn').classList.add('save-success');
+    document.getElementById('download-section').style.display = 'block';
+
+    // ✅ تحديث روابط التحميل بناءً على الشركة
+    document.getElementById('download-link').href = `https://agreement-generator-kfsp.onrender.com/download?company=${selectedCompany}`;
+    document.getElementById('download-pdf-link').href = `https://agreement-generator-kfsp.onrender.com/download-pdf?company=${selectedCompany}`;
+  } else {
+    alert("❌ خطأ في الحفظ.");
+  }
+})
   .catch(err => {
     alert("⚠️ لم يتم الاتصال بالسيرفر.");
     console.error(err);
@@ -1075,4 +1079,5 @@ Adress: Al-Khubar Qurtuban Dist , Tariq bin Ziyad, King of Saudi Arabia`;
 </script>
 </body>
 </html>
+
 
