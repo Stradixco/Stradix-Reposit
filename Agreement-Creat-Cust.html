@@ -527,12 +527,13 @@ body.mamzar-bg {
     <h2 style="text-align: center;">📝 Service Agreement Creation</h2>
 
 
-<div id="companySelector" style="display: flex; justify-content: center; gap: 25px; margin-bottom: 20px;">
-  <button id="mamzarBtn" class="company-btn">Mamzar Est</button>
-  <button id="tradixBtn" class="company-btn active-btn">Tradix Co</button>
-</div>
+      <div class="company-switcher">
+        <button id="mamzarBtn" class="company-btn">Mamzar</button>
+        <button id="tradixBtn" class="company-btn active-btn">Tradix</button>
+      </div>
 
-<div style="text-align: left;"> 
+      
+      <div style="text-align: left;"> 
   <label for="client">: Customer</label> 
   <select id="client" onchange="fillClientInfo()" style="padding: 6px; border-radius: 5px;">
     <option value="">-- اختر عميل --</option>
@@ -819,6 +820,8 @@ client_id: window.selectedClientData.client_id
   </a>
 </div>
 
+
+
 <script>
 const tbody = document.querySelector('#items-table tbody');
 
@@ -946,42 +949,36 @@ function saveAgreement(e) {
 let selectedCompany = "tradix"; // الافتراضي Tradix
 let selectedTemplate = "agreement_templatev1.docx"; // ملف Tradix الافتراضي
 
-const tradixBtn = document.getElementById("tradixBtn");
-const mamzarBtn = document.getElementById("mamzarBtn");
+  // ✅ زر تغيير إلى Tradix
+  document.getElementById("tradixBtn").addEventListener("click", () => {
+    selectedCompany = "tradix";
+    selectedTemplate = "agreement_templatev1.docx";
+    toggleCompanyUI("tradix");
+  });
 
-// حالة افتراضية
-document.body.classList.add("tradix-bg");
-
-// عند الضغط على Tradix
-tradixBtn.addEventListener("click", () => {
-  selectedCompany = "tradix";
-  selectedTemplate = "agreement_templatev1.docx";
-
-  // فعّل الزر
-  tradixBtn.classList.add("active-btn");
-  mamzarBtn.classList.remove("active-btn");
-
-  // غير الخلفية
-  document.body.classList.remove("mamzar-bg");
-  document.body.classList.add("tradix-bg");
-
-  // تنسيق الحقول
-  updateFieldColors("#ffffff", "#00cfff");
+  // ✅ زر تغيير إلى Mamzar
+  document.getElementById("mamzarBtn").addEventListener("click", () => {
+    selectedCompany = "mamzar";
+    selectedTemplate = "agreement_template.docx";
+    toggleCompanyUI("mamzar");
+  });
 });
 
-// عند الضغط على Mamzar
-mamzarBtn.addEventListener("click", () => {
-  selectedCompany = "mamzar";
-  selectedTemplate = "agreement_template.docx";
+// ✅ تغيير مظهر الصفحة حسب الشركة
+function toggleCompanyUI(company) {
+  document.getElementById("tradixBtn").classList.remove("active-btn");
+  document.getElementById("mamzarBtn").classList.remove("active-btn");
 
-  mamzarBtn.classList.add("active-btn");
-  tradixBtn.classList.remove("active-btn");
-
-  document.body.classList.remove("tradix-bg");
-  document.body.classList.add("mamzar-bg");
-
-  updateFieldColors("#fafff3", "#2ecc71");
-});
+  if (company === "tradix") {
+    document.getElementById("tradixBtn").classList.add("active-btn");
+    document.body.classList.remove("mamzar-bg");
+    document.body.classList.add("tradix-bg");
+  } else {
+    document.getElementById("mamzarBtn").classList.add("active-btn");
+    document.body.classList.remove("tradix-bg");
+    document.body.classList.add("mamzar-bg");
+  }
+}
 
 
   // استخراج بيانات العميل
@@ -1023,31 +1020,31 @@ mamzarBtn.addEventListener("click", () => {
 
   // إرسال البيانات إلى السيرفر
   fetch("https://agreement-generator-kfsp.onrender.com/generate", {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data)
   })
-.then(res => {
-  if (res.ok) {
-    document.getElementById('save-btn').textContent = '✅ تم الحفظ';
-    document.getElementById('save-btn').classList.add('save-success');
-    document.getElementById('download-section').style.display = 'block';
+  .then(res => {
+    if (res.ok) {
+      document.getElementById("save-btn").textContent = "✅ تم الحفظ";
+      document.getElementById("save-btn").classList.add("save-success");
+      document.getElementById("download-section").style.display = "block";
 
-    // ✅ تحديث روابط التحميل بناءً على الشركة
-    document.getElementById('download-link').href = `https://agreement-generator-kfsp.onrender.com/download?company=${selectedCompany}`;
-    document.getElementById('download-pdf-link').href = `https://agreement-generator-kfsp.onrender.com/download-pdf?company=${selectedCompany}`;
-  } else {
-    alert("❌ خطأ في الحفظ.");
-  }
-})
+      document.getElementById("download-link").href = `https://agreement-generator-kfsp.onrender.com/download?company=${selectedCompany}`;
+      document.getElementById("download-pdf-link").href = `https://agreement-generator-kfsp.onrender.com/download-pdf?company=${selectedCompany}`;
+    } else {
+      alert("❌ فشل الحفظ.");
+    }
+  })
   .catch(err => {
-    alert("⚠️ لم يتم الاتصال بالسيرفر.");
     console.error(err);
+    alert("⚠️ تعذر الاتصال بالخادم.");
   });
 }
 </script>
 </body>
 </html>
+
 
 
 
