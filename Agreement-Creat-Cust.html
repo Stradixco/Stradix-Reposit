@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -803,18 +802,18 @@ client_id: window.selectedClientData.client_id
 
       <button id="save-btn" type="button" onclick="saveAgreement(event)">
         💾 Save Agreement
-
+      </button>
 
 <!-- ✅ أزرار التحميل (Word + PDF) -->
 <div id="download-section" style="display: none; text-align: center; margin-top: 30px;">
-  <a id="download-link" href="#" class="download-btn word-btn" download style="margin-right: 15px;">
+  <a href="https://agreement-generator-kfsp.onrender.com/download" class="download-btn word-btn" download style="margin-right: 15px;">
     <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Microsoft_Office_Word_%282019%E2%80%93present%29.svg" 
          alt="Word" 
          style="width: 24px; vertical-align: middle; margin-right: 8px;">
     Word Download (Word)
   </a>
 
-  <a id="download-pdf-link" href="#" class="download-btn pdf-btn" download>
+  <a href="https://agreement-generator-kfsp.onrender.com/download-pdf" class="download-btn pdf-btn" download>
     <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF" style="width: 24px; vertical-align: middle; margin-right: 8px;">
     PDF Download (PDF)
   </a>
@@ -904,22 +903,6 @@ function saveAgreement(e) {
     extra_en: document.getElementById('extra-en').value
   };
 
-    const selectedClientData = clientsData[parseInt(data.client_name)];
-  if (!selectedClientData) {
-    alert("⚠️ لم يتم تحديد عميل صالح.");
-    return;
-  }
-
-   data.client_name_ar = selectedClientData.client_name_ar;
-  data.client_name_en = selectedClientData.client_name_en;
-  data.client_address_ar = selectedClientData.client_address_ar;
-  data.client_address_en = selectedClientData.client_address_en;
-  data.client_cr = selectedClientData.client_cr;
-  data.client_vat = selectedClientData.client_vat;
-  data.client_id = selectedClientData.client_id;
-  data.selectedCompany = selectedCompany;
-
-
 // تعديل طلب POST لإرسال البيانات إلى السيرفر الفعلي
 fetch("https://agreement-generator-kfsp.onrender.com/generate", {
     method: 'POST',
@@ -931,11 +914,6 @@ fetch("https://agreement-generator-kfsp.onrender.com/generate", {
       document.getElementById('save-btn').textContent = '✅ تم الحفظ';
       document.getElementById('save-btn').classList.add('save-success');
       document.getElementById('download-section').style.display = 'block';
-
-            // ✅ تحديث روابط التحميل
-      document.getElementById('download-link').href = `https://agreement-generator-kfsp.onrender.com/download?company=${selectedCompany}`;
-      document.getElementById('download-pdf-link').href = `https://agreement-generator-kfsp.onrender.com/download-pdf?company=${selectedCompany}`;
-
     } else {
       alert("❌ خطأ في الحفظ.");
     }
@@ -1020,18 +998,6 @@ CR: 7052015091
 Adress: Al-Khubar Qurtuban Dist , Tariq bin Ziyad, King of Saudi Arabia`;
     }
 
-
-  // استخراج بيانات العميل
-  const clientIndex = document.getElementById('client').value;
-  const selectedClientData = clientsData[parseInt(clientIndex)];
-
-  if (!selectedClientData) {
-    alert("⚠️ لم يتم اختيار عميل.");
-    return;
-  }
-
-  // بناء البيانات المرسلة
-
     const data = {
       selectedCompany,
       selectedTemplate,
@@ -1056,8 +1022,6 @@ Adress: Al-Khubar Qurtuban Dist , Tariq bin Ziyad, King of Saudi Arabia`;
       entity_name_en: currentEntityNameEn
     };
 
-      // إرسال البيانات إلى السيرفر
-
     fetch("https://agreement-generator-kfsp.onrender.com/generate", {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -1068,10 +1032,6 @@ Adress: Al-Khubar Qurtuban Dist , Tariq bin Ziyad, King of Saudi Arabia`;
         document.getElementById('save-btn').textContent = '✅ تم الحفظ';
         document.getElementById('save-btn').classList.add('save-success');
         document.getElementById('download-section').style.display = 'block';
-
-       document.getElementById("download-link").href = `https://agreement-generator-kfsp.onrender.com/download?company=${selectedCompany}`;
-      document.getElementById("download-pdf-link").href = `https://agreement-generator-kfsp.onrender.com/download-pdf?company=${selectedCompany}`;
-
       } else {
         alert("❌ خطأ في الحفظ.");
       }
