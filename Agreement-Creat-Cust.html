@@ -806,16 +806,16 @@ client_id: window.selectedClientData.client_id
 
 <!-- ✅ أزرار التحميل (Word + PDF) -->
 <div id="download-section" style="display: none; text-align: center; margin-top: 30px;">
-  <a href="https://agreement-generator-kfsp.onrender.com/download" class="download-btn word-btn" download style="margin-right: 15px;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Microsoft_Office_Word_%282019%E2%80%93present%29.svg" 
-         alt="Word" 
-         style="width: 24px; vertical-align: middle; margin-right: 8px;">
+<a id="download-link" href="#" class="download-btn word-btn" download style="margin-right: 15px;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Microsoft_Office_Word_%282019%E2%80%93present%29.svg"
+       alt="Word"
+       style="width: 24px; vertical-align: middle; margin-right: 8px;">
     Word Download (Word)
   </a>
 
-  <a href="https://agreement-generator-kfsp.onrender.com/download-pdf" class="download-btn pdf-btn" download>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF" style="width: 24px; vertical-align: middle; margin-right: 8px;">
-    PDF Download (PDF)
+<a id="download-pdf-link" href="#" class="download-btn pdf-btn" download>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF" style="width: 24px; vertical-align: middle; margin-right: 8px;">
+  PDF Download (PDF)
   </a>
 </div>
 
@@ -880,50 +880,6 @@ function reorderRows() {
   });
 }
 
-function saveAgreement(e) {
-  if (e) e.preventDefault();
-
-  const items = [...document.querySelectorAll('#items-table tbody tr')].map(row => ({
-    desc: row.cells[4].querySelector('input').value,
-    uom: row.cells[3].querySelector('input').value,
-    price: row.cells[2].querySelector('input').value,
-    note: row.cells[1].querySelector('input').value,
-  }));
-
-  const data = {
-    agreement_date: document.getElementById('agreement-date').value,
-    client_name: document.getElementById('client').value,
-    agreement_Place_ar: document.getElementById("agreement_Place_ar").value,
-    agreement_Place_en: document.getElementById("agreement_Place_en").value,
-    credit_term: document.getElementById('credit-term').value,
-    start_date: document.getElementById('start-date').value,
-    end_date: document.getElementById('end-date').value,
-    items_table: items,
-    extra_ar: document.getElementById('extra-ar').value,
-    extra_en: document.getElementById('extra-en').value
-  };
-
-// تعديل طلب POST لإرسال البيانات إلى السيرفر الفعلي
-fetch("https://agreement-generator-kfsp.onrender.com/generate", {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-})
-  .then(res => {
-    if (res.ok) {
-      document.getElementById('save-btn').textContent = '✅ تم الحفظ';
-      document.getElementById('save-btn').classList.add('save-success');
-      document.getElementById('download-section').style.display = 'block';
-    } else {
-      alert("❌ خطأ في الحفظ.");
-    }
-  })
-  .catch(err => {
-    alert("⚠️ لم يتم الاتصال بالسيرفر.");
-    console.error(err);
-  });
-}
-</script>
 <script>
 let selectedCompany = "tradix"; // الافتراضي Tradix
 let selectedTemplate = "agreement_templatev1.docx"; // ملف Tradix الافتراضي
@@ -939,15 +895,12 @@ tradixBtn.addEventListener("click", () => {
   selectedCompany = "tradix";
   selectedTemplate = "agreement_templatev1.docx";
 
-  // فعّل الزر
   tradixBtn.classList.add("active-btn");
   mamzarBtn.classList.remove("active-btn");
 
-  // غير الخلفية
   document.body.classList.remove("mamzar-bg");
   document.body.classList.add("tradix-bg");
 
-  // تنسيق الحقول
   updateFieldColors("#ffffff", "#00cfff");
 });
 
@@ -964,7 +917,6 @@ mamzarBtn.addEventListener("click", () => {
 
   updateFieldColors("#fafff3", "#2ecc71");
 });
-
 
 function saveAgreement(e) {
   if (e) e.preventDefault();
@@ -1048,6 +1000,13 @@ Adress: Al-Khubar Qurtuban Dist , Tariq bin Ziyad, King of Saudi Arabia`;
       document.getElementById('save-btn').textContent = '✅ تم الحفظ';
       document.getElementById('save-btn').classList.add('save-success');
       document.getElementById('download-section').style.display = 'block';
+
+      // ✅ تحديث روابط التحميل
+      document.getElementById('download-link').href =
+        `https://agreement-generator-kfsp.onrender.com/download?company=${selectedCompany}`;
+
+      document.getElementById('download-pdf-link').href =
+        `https://agreement-generator-kfsp.onrender.com/download-pdf?company=${selectedCompany}`;
     } else {
       alert("❌ خطأ في الحفظ.");
     }
@@ -1060,4 +1019,5 @@ Adress: Al-Khubar Qurtuban Dist , Tariq bin Ziyad, King of Saudi Arabia`;
 </script>
 </body>
 </html>
+
 
