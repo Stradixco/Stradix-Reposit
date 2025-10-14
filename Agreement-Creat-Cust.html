@@ -1057,8 +1057,32 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 }
 </script>
+
+
+<script>
+  // متغير لتخزين الشركة المحددة
+  let selectedCompany = "tradix"; // القيمة الافتراضية
+
+  // كود لتبديل الشركات عند الضغط على الأزرار
+  document.getElementById("tradix-btn").addEventListener("click", function() {
+    selectedCompany = "tradix";
+    this.classList.add("active");
+    document.getElementById("mamzar-btn").classList.remove("active");
+    console.log("✅ تم اختيار شركة تراديكس");
+  });
+
+  document.getElementById("mamzar-btn").addEventListener("click", function() {
+    selectedCompany = "mamzar";
+    this.classList.add("active");
+    document.getElementById("tradix-btn").classList.remove("active");
+    console.log("✅ تم اختيار شركة ممزر");
+  });
+</script>
+
+    
 </body>
 </html>
+
 
 
 
