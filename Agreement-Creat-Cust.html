@@ -943,46 +943,57 @@ function saveAgreement(e) {
 }
 </script>
 <script>
-let selectedCompany = "tradix"; // الافتراضي Tradix
-let selectedTemplate = "agreement_templatev1.docx"; // ملف Tradix الافتراضي
+document.addEventListener("DOMContentLoaded", () => {
+  let selectedCompany = "tradix";
+  let selectedTemplate = "agreement_templatev1.docx";
 
-const tradixBtn = document.getElementById("tradixBtn");
-const mamzarBtn = document.getElementById("mamzarBtn");
+  const tradixBtn = document.getElementById("tradixBtn");
+  const mamzarBtn = document.getElementById("mamzarBtn");
 
-// حالة افتراضية
-document.body.classList.add("tradix-bg");
-
-// عند الضغط على Tradix
-tradixBtn.addEventListener("click", () => {
-  selectedCompany = "tradix";
-  selectedTemplate = "agreement_templatev1.docx";
-
-  // فعّل الزر
-  tradixBtn.classList.add("active-btn");
-  mamzarBtn.classList.remove("active-btn");
-
-  // غير الخلفية
-  document.body.classList.remove("mamzar-bg");
+  // حالة افتراضية
   document.body.classList.add("tradix-bg");
 
-  // تنسيق الحقول
-  updateFieldColors("#ffffff", "#00cfff");
+  // عند الضغط على Tradix
+  tradixBtn.addEventListener("click", () => {
+    selectedCompany = "tradix";
+    selectedTemplate = "agreement_templatev1.docx";
+
+    tradixBtn.classList.add("active-btn");
+    mamzarBtn.classList.remove("active-btn");
+
+    document.body.classList.remove("mamzar-bg");
+    document.body.classList.add("tradix-bg");
+
+    updateFieldColors("#ffffff", "#00cfff");
+  });
+
+  // عند الضغط على Mamzar
+  mamzarBtn.addEventListener("click", () => {
+    selectedCompany = "mamzar";
+    selectedTemplate = "agreement_template.docx";
+
+    mamzarBtn.classList.add("active-btn");
+    tradixBtn.classList.remove("active-btn");
+
+    document.body.classList.remove("tradix-bg");
+    document.body.classList.add("mamzar-bg");
+
+    updateFieldColors("#fafff3", "#2ecc71");
+  });
+
+  // تعريف دالة لتغيير ألوان الحقول عند تغيير الشركة
+  function updateFieldColors(textColor, borderColor) {
+    const fields = document.querySelectorAll("input, textarea, select");
+    fields.forEach(field => {
+      field.style.color = textColor;
+      field.style.borderColor = borderColor;
+    });
+  }
+
+  // 🟡 تخزين المتغيرات في الـ window لتكون متاحة في saveAgreement
+  window.selectedCompany = selectedCompany;
+  window.selectedTemplate = selectedTemplate;
 });
-
-// عند الضغط على Mamzar
-mamzarBtn.addEventListener("click", () => {
-  selectedCompany = "mamzar";
-  selectedTemplate = "agreement_template.docx";
-
-  mamzarBtn.classList.add("active-btn");
-  tradixBtn.classList.remove("active-btn");
-
-  document.body.classList.remove("tradix-bg");
-  document.body.classList.add("mamzar-bg");
-
-  updateFieldColors("#fafff3", "#2ecc71");
-});
-
 
   // استخراج بيانات العميل
   const clientIndex = document.getElementById('client').value;
@@ -1048,6 +1059,7 @@ mamzarBtn.addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
 
 
