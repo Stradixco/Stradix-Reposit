@@ -800,9 +800,9 @@ client_id: window.selectedClientData.client_id
   </div>
 </div>
 
-      <button id="save-btn" type="button" onclick="saveAgreement(event)">
-        💾 Save Agreement
-      </button>
+<button id="save-btn" type="button" onclick="saveAgreement(event)">
+  💾 Save Agreement
+</button>
 
 <!-- ✅ أزرار التحميل (Word + PDF) -->
 <div id="download-section" style="display: none; text-align: center; margin-top: 30px;">
@@ -966,81 +966,98 @@ mamzarBtn.addEventListener("click", () => {
 });
 
 
-  function saveAgreement(e) {
-    if (e) e.preventDefault();
+function saveAgreement(e) {
+  if (e) e.preventDefault();
 
-    const items = [...document.querySelectorAll('#items-table tbody tr')].map(row => ({
-      desc: row.cells[4].querySelector('input').value,
-      uom: row.cells[3].querySelector('input').value,
-      price: row.cells[2].querySelector('input').value,
-      note: row.cells[1].querySelector('input').value,
-    }));
+  // استخراج عناصر الجدول
+  const items = [...document.querySelectorAll('#items-table tbody tr')].map(row => ({
+    desc: row.cells[4].querySelector('input').value,
+    uom: row.cells[3].querySelector('input').value,
+    price: row.cells[2].querySelector('input').value,
+    note: row.cells[1].querySelector('input').value,
+  }));
 
-    let entity_name_ar, entity_name_en, entity_detail_ar, entity_detail_en;
+  // بيانات الشركة حسب الاختيار
+  let entity_name_ar, entity_name_en, entity_detail_ar, entity_detail_en;
 
-    if (selectedCompany === "mamzar") {
-      entity_name_ar = "مؤسسة ممزر للمقاولات العامة";
-      entity_name_en = "Mamzar for General Contracting Est";
-      entity_detail_ar = `مؤسسة ممزر للمقاولات العامة
+  if (selectedCompany === "mamzar") {
+    entity_name_ar = "مؤسسة ممزر للمقاولات العامة";
+    entity_name_en = "Mamzar for General Contracting Est";
+    entity_detail_ar = `مؤسسة ممزر للمقاولات العامة
 سجل تجاري: 2050073487
 العنوان: حي غرناطة ش طرفة بن العبد , الدمام , المملكة العربية السعودية`;
-      entity_detail_en = `Mamzar for General Contracting Est
+    entity_detail_en = `Mamzar for General Contracting Est
 CR :2050073487
 Adress: Ghernata Dist, Turfa bin Alabd St, Dammam, KSA`;
-    } else {
-      entity_name_ar = "شركة اس ترديكسسا";
-      entity_name_en = "S TRADIXSA COMPANY";
-      entity_detail_ar = `شركة اس ترديكسسا
+  } else {
+    entity_name_ar = "شركة اس ترديكسسا";
+    entity_name_en = "S TRADIXSA COMPANY";
+    entity_detail_ar = `شركة اس ترديكسسا
 تجاري عربي : 7052015091
 العنوان: حي قرطبة , شارع طارق بن زياد , الخبر , المملكة العربية السعودية`;
-      entity_detail_en = `S TRADIXSA COMPANY
+    entity_detail_en = `S TRADIXSA COMPANY
 CR: 7052015091
 Adress: Al-Khubar Qurtuban Dist , Tariq bin Ziyad, King of Saudi Arabia`;
-    }
-
-    const data = {
-      selectedCompany,
-      selectedTemplate,
-      entity_name_ar,
-      entity_name_en,
-      entity_detail_ar,
-      entity_detail_en,
-      agreement_date: document.getElementById('agreement-date').value,
-      client_name: document.getElementById('client').value,
-      agreement_Place_ar: document.getElementById("agreement_Place_ar").value,
-      agreement_Place_en: document.getElementById("agreement_Place_en").value,
-      credit_term: document.getElementById('credit-term').value,
-      start_date: document.getElementById('start-date').value,
-      end_date: document.getElementById('end-date').value,
-      items_table: items,
-      extra_ar: document.getElementById('extra-ar').value,
-      extra_en: document.getElementById('extra-en').value
-      .window.selectedClientData, // بيانات العميل المختار
-      entity_detail_ar: currentEntityDetailsAr,
-      entity_detail_en: currentEntityDetailsEn,
-      entity_name_ar: currentEntityNameAr,
-      entity_name_en: currentEntityNameEn
-    };
-
-    fetch("https://agreement-generator-kfsp.onrender.com/generate", {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data)
-    })
-    .then(res => {
-      if (res.ok) {
-        document.getElementById('save-btn').textContent = '✅ تم الحفظ';
-        document.getElementById('save-btn').classList.add('save-success');
-        document.getElementById('download-section').style.display = 'block';
-      } else {
-        alert("❌ خطأ في الحفظ.");
-      }
-    })
-    .catch(err => {
-      alert("⚠️ لم يتم الاتصال بالسيرفر.");
-      console.error(err);
-    });
   }
+
+  // استخراج بيانات العميل
+  const clientIndex = document.getElementById('client').value;
+  const selectedClientData = clientsData[parseInt(clientIndex)];
+
+  if (!selectedClientData) {
+    alert("⚠️ لم يتم اختيار عميل.");
+    return;
+  }
+
+  // بناء البيانات المرسلة
+  const data = {
+    selectedCompany,
+    selectedTemplate,
+    entity_name_ar,
+    entity_name_en,
+    entity_detail_ar,
+    entity_detail_en,
+    agreement_date: document.getElementById('agreement-date').value,
+    agreement_Place_ar: document.getElementById("agreement_Place_ar").value,
+    agreement_Place_en: document.getElementById("agreement_Place_en").value,
+    credit_term: document.getElementById('credit-term').value,
+    start_date: document.getElementById('start-date').value,
+    end_date: document.getElementById('end-date').value,
+    items_table: items,
+    extra_ar: document.getElementById('extra-ar').value,
+    extra_en: document.getElementById('extra-en').value,
+
+    // بيانات العميل
+    client_name_ar: selectedClientData.client_name_ar,
+    client_name_en: selectedClientData.client_name_en,
+    client_address_ar: selectedClientData.client_address_ar,
+    client_address_en: selectedClientData.client_address_en,
+    client_cr: selectedClientData.client_cr,
+    client_vat: selectedClientData.client_vat,
+    client_id: selectedClientData.client_id
+  };
+
+  // إرسال البيانات إلى السيرفر
+  fetch("https://agreement-generator-kfsp.onrender.com/generate", {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  })
+  .then(res => {
+    if (res.ok) {
+      document.getElementById('save-btn').textContent = '✅ تم الحفظ';
+      document.getElementById('save-btn').classList.add('save-success');
+      document.getElementById('download-section').style.display = 'block';
+    } else {
+      alert("❌ خطأ في الحفظ.");
+    }
+  })
+  .catch(err => {
+    alert("⚠️ لم يتم الاتصال بالسيرفر.");
+    console.error(err);
+  });
+}
 </script>
 </body>
 </html>
+
