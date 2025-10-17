@@ -680,6 +680,7 @@ function fillClientInfo() {
   window.selectedClientData = selectedClient; // 🟡 سيتم استخدامه لاحقًا في إنشاء الاتفاقية
 
   infoDiv.innerHTML = `
+    <p>🗣️ <strong>الاسم (إنجليزي):</strong> ${selectedCustomer.client_name_en}</p>
     <p>📄 CR: ${selectedClient.client_cr}</p>
     <p>📍 Address (AR): ${selectedClient.client_address_ar}</p>
     <p>🌍 Address (EN): ${selectedClient.client_address_en}</p>
@@ -831,31 +832,6 @@ client_id: window.selectedClientData.client_id
 <script>
 const tbody = document.querySelector('#items-table tbody');
 
-function fillClientInfo() {
-  const selectedIndex = document.getElementById("client").value;
-  const infoDiv = document.getElementById("client-info");
-
-  if (selectedIndex === "") {
-    infoDiv.innerHTML = '<p>🔹 الرجاء اختيار عميل.</p>';
-    return;
-  }
-
-  const selectedCustomer = window.customersData[selectedIndex];
-  window.selectedClientData = {
-    client_name_ar: selectedCustomer.client_name_ar,
-    client_name_en: selectedCustomer.client_name_en,
-    client_address_ar: selectedCustomer.client_address_ar,
-    client_address_en: selectedCustomer.client_address_en,
-    client_cr: selectedCustomer.client_cr
-  };
-
-  infoDiv.innerHTML = `
-    <p>📄 <strong>السجل التجاري:</strong> ${selectedCustomer.client_cr}</p>
-    <p>📍 <strong>العنوان (عربي):</strong> ${selectedCustomer.client_address_ar}</p>
-    <p>🌍 <strong>العنوان (إنجليزي):</strong> ${selectedCustomer.client_address_en}</p>
-    <p>👤 <strong>الاسم (عربي):</strong> ${selectedCustomer.client_name_ar}</p>
-    <p>🗣️ <strong>الاسم (إنجليزي):</strong> ${selectedCustomer.client_name_en}</p>
-  `;
 }
 body: JSON.stringify({
   selectedCompany: 'mamzar', // أو 'Tradix'
