@@ -582,22 +582,13 @@ body.mamzar-bg {
       <td>
         <button class="delete-btn" onclick="deleteRow(this)">❌</button>
       </td>
-      <td>
-        <textarea class="item-note" style="text-align: left; resize: both; width: 100%; min-height: 40px;" tabindex="4"></textarea>
-      </td>
-      <td>
-        <input type="number" class="item-price" style="text-align: left;" tabindex="3" />
-      </td>
-      <td>
-        <input type="text" class="item-uom" style="text-align: left;" tabindex="2" />
-      </td>
-      <td>
-       <input type="text" class="item-desc" style="text-align: left;" tabindex="1" />
-      </td>
+      <td><input type="text" class="item-note" style="text-align: left;" /></td>
+      <td><input type="number" class="item-price" style="text-align: left;" /></td>
+      <td><input type="text" class="item-uom" style="text-align: left;" /></td>
+      <td><input type="text" class="item-desc" style="text-align: left;" /></td>
       <td>${rowCount + 1}</td>
-    `;  
+    `;
   }
-
   function deleteRow(btn) {
     const row = btn.closest("tr");
     row.remove();
@@ -1068,6 +1059,7 @@ document.getElementById('download-pdf-link').href =
 </script>
 </body>
 </html>
+
 
 
 
