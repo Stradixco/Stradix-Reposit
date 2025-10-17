@@ -167,55 +167,59 @@
 <script src="sidebar/load-sidebar.js"></script>
 
 <script>
-  async function loadCustomers() {
-    try {
-      const res = await fetch("customers.json");
-      const data = await res.json();
-      const tbody = document.getElementById("customerTableBody");
-      tbody.innerHTML = "";
+async function loadCustomers() {
+  try {
+    const res = await fetch("https://agreement-generator-kfsp.onrender.com/customers.json");
+    const data = await res.json();
+    const tbody = document.getElementById("customerTableBody");
+    tbody.innerHTML = "";
 
-      data.forEach((customer, index) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${customer.client_id || "-"}</td>
-          <td>${customer.client_name_en || "-"}</td>
-          <td>${customer.client_cr || "-"}</td>
-          <td>${customer.client_address_en || "-"}</td>
-          <td>${customer.client_vat || "-"}</td>
-          <td><button class="btn edit-btn" onclick="editCustomer(${index})">✏️</button></td>
-          <td><button class="btn delete-btn" onclick="deleteCustomer(${index})">🗑️</button></td>
-        `;
-        tbody.appendChild(row);
-      });
-    } catch (error) {
-      console.error("فشل تحميل العملاء:", error);
-    }
+    data.forEach((customer, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${customer.client_id || "-"}</td>
+        <td>${customer.client_name_en || "-"}</td>
+        <td>${customer.client_cr || "-"}</td>
+        <td>${customer.client_address_en || "-"}</td>
+        <td>${customer.client_vat || "-"}</td>
+        <td><button class="btn edit-btn" onclick="editCustomer('${customer.client_id}')">✏️</button></td>
+        <td><button class="btn delete-btn" onclick="deleteCustomer('${customer.client_id}')">🗑️</button></td>
+      `;
+      tbody.appendChild(row);
+    });
+  } catch (error) {
+    console.error("فشل تحميل العملاء:", error);
   }
+}
 
-  function editCustomer(index) {
-    localStorage.setItem("editCustomerIndex", index);
-    window.location.href = "Customer-Edit.html";
-  }
+function editCustomer(clientId) {
+  window.location.href = `Customer-Edit.html?client_id=${clientId}`;
+}
 
-  async function deleteCustomer(index) {
-    if (!confirm("هل تريد حذف هذا العميل؟")) return;
 
-    const res = await fetch("customers.json");
-    const customers = await res.json();
-    customers.splice(index, 1);
 
-    // إرسال التحديث إلى السيرفر عبر API
-    await fetch("https://agreement-generator-kfsp.onrender.com/update-customers", {
+
+async function deleteCustomer(clientId) {
+  if (!confirm("هل تريد حذف هذا العميل؟")) return;
+
+  try {
+    const res = await fetch("https://agreement-generator-kfsp.onrender.com/delete-customer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(customers),
+      body: JSON.stringify({ client_id: clientId })
     });
 
-    alert("✅ تم الحذف");
-    loadCustomers();
+    if (res.ok) {
+      alert("✅ تم حذف العميل بنجاح");
+      loadCustomers();
+    } else {
+      alert("❌ فشل في حذف العميل");
+    }
+  } catch (error) {
+    console.error("❌ خطأ أثناء الحذف:", error);
+    alert("❌ حدث خطأ في الاتصال بالسيرفر");
   }
-
-  loadCustomers();
+}
 </script>
 
 </body>

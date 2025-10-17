@@ -144,31 +144,32 @@
   </div>
 
   <script>
-    const id = localStorage.getItem("editCustomerId");
+const urlParams = new URLSearchParams(window.location.search);
+const clientId = urlParams.get("client_id");
 
-    async function loadCustomerData() {
-      try {
-        const res = await fetch("https://agreement-generator-kfsp.onrender.com/customers");
-        const customers = await res.json();
-        const customer = customers.find(c => c.client_id === id);
+async function loadCustomerData() {
+  try {
+    const res = await fetch("https://agreement-generator-kfsp.onrender.com/customers.json");
+    const customers = await res.json();
+    const customer = customers.find(c => c.client_id === clientId);
 
-        if (!customer) return alert("❌ لم يتم العثور على العميل");
+    if (!customer) return alert("❌ لم يتم العثور على العميل");
 
-        document.getElementById("customerId").value = customer.client_id;
-        document.getElementById("nameAr").value = customer.client_name_ar;
-        document.getElementById("nameEn").value = customer.client_name_en;
-        document.getElementById("country").value = customer.country || "";
-        document.getElementById("phone").value = customer.phone || "";
-        document.getElementById("email").value = customer.email || "";
-        document.getElementById("addressAr").value = customer.client_address_ar;
-        document.getElementById("addressEn").value = customer.client_address_en;
-        document.getElementById("vat").value = customer.client_vat;
+    document.getElementById("customerId").value = customer.client_id;
+    document.getElementById("nameAr").value = customer.client_name_ar;
+    document.getElementById("nameEn").value = customer.client_name_en;
+    document.getElementById("country").value = customer.country || "";
+    document.getElementById("phone").value = customer.phone || "";
+    document.getElementById("email").value = customer.email || "";
+    document.getElementById("addressAr").value = customer.client_address_ar;
+    document.getElementById("addressEn").value = customer.client_address_en;
+    document.getElementById("vat").value = customer.client_vat;
 
-      } catch (err) {
-        console.error(err);
-        alert("حدث خطأ أثناء تحميل البيانات.");
-      }
-    }
+  } catch (err) {
+    console.error(err);
+    alert("❌ حدث خطأ أثناء تحميل البيانات.");
+  }
+}
 
     document.getElementById("saveBtn").addEventListener("click", async () => {
       const updatedCustomer = {
