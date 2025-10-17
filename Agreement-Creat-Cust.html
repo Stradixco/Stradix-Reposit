@@ -578,16 +578,16 @@ body.mamzar-bg {
     const rowCount = table.rows.length;
     const row = table.insertRow();
 
-row.innerHTML = `
-  <td>
-    <button class="delete-btn" onclick="deleteRow(this)">❌</button>
-  </td>
-  <td><input type="text" class="item_note" tabindex="4" style="text-align: left;" /></td>
-  <td><input type="number" class="item_price" tabindex="3" style="text-align: left;" /></td>
-  <td><input type="text" class="item_uom" tabindex="2" style="text-align: left;" /></td>
-  <td><input type="text" class="item_desc" tabindex="1" style="text-align: left;" /></td>
-  <td>${rowCount + 1}</td>
-`;
+    row.innerHTML = `
+      <td>
+        <button class="delete-btn" onclick="deleteRow(this)">❌</button>
+      </td>
+      <td><input type="text" class="item-note" style="text-align: left;" tabindex="4" /></td>
+      <td><input type="number" class="item-price" style="text-align: left;" tabindex="3" /></td>
+      <td><input type="text" class="item-uom" style="text-align: left;" tabindex="2" /></td>
+      <td><input type="text" class="item-desc" style="text-align: left;" tabindex="1" /></td>
+      <td>${rowCount + 1}</td>
+    `;
   }
 
   function deleteRow(btn) {
@@ -1112,6 +1112,7 @@ document.getElementById('download-pdf-link').href =
 </script>
 </body>
 </html>
+
 
 
 
