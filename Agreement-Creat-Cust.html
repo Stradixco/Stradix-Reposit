@@ -623,26 +623,6 @@ body.mamzar-bg {
     });
   }
 
-  // عند اختيار عميل، نملأ باقي البيانات تلقائيًا في الحقول المخفية أو المتغيرات
-  function fillClientInfo() {
-    const clientId = document.getElementById("client").value;
-    const clients = JSON.parse(localStorage.getItem("customersList") || "[]");
-    const selectedClient = clients.find(c => c.id === clientId);
-    
-    if (selectedClient) {
-      // هنا يتم ربط بيانات العميل بالمتغيرات في ملف الوورد
-      window.selectedClientData = {
-client_name_ar: window.selectedClientData.client_name_ar,
-client_name_en: window.selectedClientData.client_name_en,
-client_address_ar: window.selectedClientData.client_address_ar,
-client_address_en: window.selectedClientData.client_address_en,
-client_cr: window.selectedClientData.client_cr,
-client_vat: window.selectedClientData.client_vat,
-client_id: window.selectedClientData.client_id
-      };
-    }
-  }
-
 
 let clientsData = [];
 
@@ -671,20 +651,27 @@ function fillClientInfo() {
   const infoDiv = document.getElementById("client-info");
 
   if (selectedIndex === "") {
-    infoDiv.innerHTML = '<p>🔹 لم يتم اختيار عميل.</p>';
-    window.selectedClientData = null;
+    infoDiv.innerHTML = '<p>🔹 الرجاء اختيار عميل.</p>';
     return;
   }
 
-  const selectedClient = clientsData[selectedIndex];
-  window.selectedClientData = selectedClient; // 🟡 سيتم استخدامه لاحقًا في إنشاء الاتفاقية
+  const selectedCustomer = window.customersData[selectedIndex];
+  window.selectedClientData = {
+    client_name_ar: selectedCustomer.client_name_ar,
+    client_name_en: selectedCustomer.client_name_en,
+    client_address_ar: selectedCustomer.client_address_ar,
+    client_address_en: selectedCustomer.client_address_en,
+    client_cr: selectedCustomer.client_cr,
+    client_vat: selectedCustomer.client_vat,
+    client_id: selectedCustomer.client_id
+  };
 
   infoDiv.innerHTML = `
+    <p>📄 <strong>السجل التجاري:</strong> ${selectedCustomer.client_cr}</p>
+    <p>📍 <strong>العنوان (عربي):</strong> ${selectedCustomer.client_address_ar}</p>
+    <p>🌍 <strong>العنوان (إنجليزي):</strong> ${selectedCustomer.client_address_en}</p>
+    <p>👤 <strong>الاسم (عربي):</strong> ${selectedCustomer.client_name_ar}</p>
     <p>🗣️ <strong>الاسم (إنجليزي):</strong> ${selectedCustomer.client_name_en}</p>
-    <p>📄 CR: ${selectedClient.client_cr}</p>
-    <p>📍 Address (AR): ${selectedClient.client_address_ar}</p>
-    <p>🌍 Address (EN): ${selectedClient.client_address_en}</p>
-    <p>🧾 VAT: ${selectedClient.client_vat}</p>
   `;
 }
 
@@ -720,22 +707,6 @@ window.addEventListener("DOMContentLoaded", loadClients);
     }
   }
 
-  function fillClientInfo() {
-    const selectedIndex = document.getElementById("client").value;
-    if (selectedIndex === "") return;
-
-    const selectedCustomer = window.customersData[selectedIndex];
-    window.selectedClientData = {
-client_name_ar: window.selectedClientData.client_name_ar,
-client_name_en: window.selectedClientData.client_name_en,
-client_address_ar: window.selectedClientData.client_address_ar,
-client_address_en: window.selectedClientData.client_address_en,
-client_cr: window.selectedClientData.client_cr,
-client_vat: window.selectedClientData.client_vat,
-client_id: window.selectedClientData.client_id
-      
-    };
-  }
 
   window.onload = loadCustomers;
 </script>
@@ -1097,6 +1068,7 @@ document.getElementById('download-pdf-link').href =
 </script>
 </body>
 </html>
+
 
 
 
