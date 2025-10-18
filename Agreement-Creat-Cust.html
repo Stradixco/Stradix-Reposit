@@ -794,7 +794,7 @@ window.addEventListener("DOMContentLoaded", loadClients);
 <script>
 const tbody = document.querySelector('#items-table tbody');
 
-}
+
 body: JSON.stringify({
   selectedCompany: 'mamzar', // أو 'Tradix'
   agreement_date: "...",
@@ -827,12 +827,14 @@ function reorderRows() {
   });
 }
 
-<script>
+ window.addEventListener("DOMContentLoaded", () => {
+ 
 let selectedCompany = "tradix"; // الافتراضي Tradix
 let selectedTemplate = "agreement_templatev1.docx"; // ملف Tradix الافتراضي
 
 const tradixBtn = document.getElementById("tradixBtn");
 const mamzarBtn = document.getElementById("mamzarBtn");
+});
 
 // حالة افتراضية
 document.body.classList.add("tradix-bg");
