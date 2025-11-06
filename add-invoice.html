@@ -47,7 +47,7 @@
       background:
         radial-gradient(1200px 800px at 10% -10%, #0f2a6b33 0%, transparent 60%),
         radial-gradient(1200px 800px at 110% 110%, #7c3aed22 0%, transparent 60%),
-        linear-gradient(160deg, #0A0F1C, #0C1B2A);
+        linear-gradient(160deg, hwb(125 35% 36%), hsl(134, 59%, 13%));
       color: #E7ECF7;
       min-height: 100vh;
       padding: 30px 16px;
@@ -110,8 +110,8 @@
       width: 100%;
       padding: 10px 12px;
       border-radius: 12px;
-      border: 1px solid #2b3550;
-      background: #0f172a;
+      border: 1px solid hsl(99, 85%, 8%);
+      background: hsl(112, 86%, 14%);
       color: #e7ecf7;
       font-size: 14px;
       transition: border 0.2s, box-shadow 0.2s;
@@ -313,8 +313,8 @@
   <div style="display:flex; flex-direction:row-reverse; gap:6px;">
     <!-- الجزء الثابت INV- -->
     <input type="text" value="-INV" readonly 
-           style="width:400px; text-align:center; background:#1a2540; color:#cfe3ff; 
-                  border-radius:14px; border:1px solid #2b3550; padding:12px 0; font-weight:bold;">
+           style="width:400px; text-align:center; background:lab(15.73% -21.44 19.48); color:#cfe3ff; 
+                  border-radius:14px; border:1px solid #142508; padding:12px 0; font-weight:bold;">
 
                       <!-- خانة إدخال الأرقام -->
     <input id="invoiceDigits" class="input" type="text" maxlength="6" placeholder="100123"

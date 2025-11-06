@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مولد الفاتورة الضريبية مع QR</title>
+
+  <!-- ✅ Header and sidebar -->
+  <link rel="stylesheet" href="../background-header/Header-style.css" />
+  <script src="../background-header/load-header.js" defer></script>
+  <link rel="stylesheet" href="sidebar-style.css" />
+  <script src="load-sidebar.js" defer></script>
+
+  <!-- المحتوى -->
+<style>
+  .workspace {
+    margin-top: 80px; /* عشان المحتوى ميغطيش الهيدر */
+  }
+</style>
+    
+    <!-- باقي المحتوى -->
+  </div>
+
+</head>
+
+<body>
+
+</head>
+<body>
+
+  <!-- ✅ الهيدر -->
+  <div id="header"></div>
+
+  <!-- ✅ السايد بار -->
+  <div id="sidebar-container"></div>
+
+
+
+</script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background:
+        radial-gradient(1200px 800px at 10% -10%, #0f2a6b33 0%, transparent 60%),
+        radial-gradient(1200px 800px at 110% 110%, #7c3aed22 0%, transparent 60%),
+        linear-gradient(160deg, #0C1B2A, #0C1B2A);
+      color: #E7ECF7;
+      min-height: 100vh;
+      padding: 30px 16px;
+    }
+
+    .workspace {
+      max-width: 1000px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.06));
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+    }
+
+    .header {
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #e7ecf7, #bcd2ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .vat, .header small {
+      display: block;
+      font-size: 13px;
+      color: #cfe3ff;
+      opacity: .85;
+    }
+
+    .hint {
+      font-size: 13px;
+      color: #c7d4ef;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(96,165,250,.12), rgba(124,58,237,.10));
+      border: 1px dashed rgba(124,58,237,.35);
+      margin: 12px 0 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 14px;
+      margin-bottom: 4px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #2b3550;
+      background: #0f172a;
+      color: #e7ecf7;
+      font-size: 14px;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(124,58,237,.25);
+      outline: none;
+    }
+
+    .row {
+      display: grid;
+      gap: 12px;
+    }
+
+    .two {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .subcalc {
+      grid-template-columns: 1fr auto;
+      align-items: flex-end;
+    }
+
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5 0%, #22d3ee 50%, #60a5fa 100%);
+      color: white;
+      background-size: 200% 200%;
+      box-shadow: 0 0 30px rgba(124, 58, 237,.45), 0 0 60px rgba(96,165,250,.25);
+    }
+
+    .btn-primary:hover {
+      background-position: 100% 0;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #1a2540;
+      color: #dbe6ff;
+      border: 1px solid #2b3550;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #a4c2ff;
+    }
+
+    .status.ok { color: #10B981 }
+    .status.error { color: #EF4444 }
+
+    footer {
+      margin-top: 20px;
+      font-size: 12px;
+      text-align: center;
+      color: #96a9cc;
+    }
+
+    .out {
+      margin-top: 20px;
+      display: none;
+      grid-template-columns: 1fr 240px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .qr-preview {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: hsl(225, 20%, 96%);
+      border-radius: 12px;
+      border: 2px solid #24304f;
+      padding: 6px;
+      position: relative;
+      animation: glowPulse 3s ease-in-out infinite;
+      overflow: visible;
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 6px 16px rgba(0,0,0,.25),0 0 20px rgba(124,58,237,.35),0 0 35px rgba(96,165,250,.35); }
+      50% { box-shadow: 0 14px 36px rgba(0,0,0,.5),0 0 55px rgba(124,58,237,.7),0 0 95px rgba(96,165,250,.7); }
+      100% { box-shadow: 0 6px 16px rgba(0,0,0,.25),0 0 20px rgba(124,58,237,.35),0 0 35px rgba(96,165,250,.35); }
+    }
+
+    .qr-orbit-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-orbit {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: qrSpin 12s linear infinite;
+    }
+
+    .qr-orbit.o1 { width: 220px; height: 220px; }
+    .qr-orbit.o2 { width: 240px; height: 240px; animation-duration: 8s; }
+    .qr-orbit.o3 { width: 200px; height: 200px; animation-duration: 5s; }
+
+    .qr-electron {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #60a5fa 60%, #7c3aed);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateX(100px);
+      box-shadow: 0 0 14px rgba(96,165,250,.85);
+    }
+
+    .qr-orbit.o2 .qr-electron { transform: translate(-50%, -50%) translateX(90px); background: radial-gradient(circle at 30% 30%, #fff, #22d3ee 60%, #7c3aed); }
+    .qr-orbit.o3 .qr-electron { transform: translate(-50%, -50%) translateX(80px); background: radial-gradient(circle at 30% 30%, #fff, #7c3aed 60%, #60a5fa); }
+
+    @keyframes qrSpin {
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    .action-button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.action-button:hover {
+  background-color: #2563eb;
+}
+
+  </style>
+</head>
+<body>
+
+
+ <!-- ✅ محتوى الصفحة -->
+  <div class="main">
+    <div class="workspace" style="margin-top: 60px;">
+<h3 style="margin-bottom: 20px; color: hsl(0, 0%, 100%);">صفحة الفاتورة</h3>
+      <div class="card">
+        <div class="header">
+          <h1>STRADIX Company LLC</h1>
+          <span class="vat">VAT: 314294141600003</span>
+          <small>شركة إس تراديكس</small>
+        </div>
+
+
+
+    <div class="hint">بورتال تراديكس لإنشاء الفواتير الضريبية وفق متطلبات ZATAC.</div>
+
+    <label for="seller">اسم البائع</label>
+    <input id="seller" type="text" value="STRADIX Company LLC شركة إس تراديكس" readonly>
+
+    <label for="vat">الرقم الضريبي للبائع</label>
+    <input id="vat" type="text" value="314294141600003" readonly>
+
+    <label for="ts">تاريخ ووقت الفاتورة</label>
+    <div class="row subcalc">
+      <input id="ts" type="text" placeholder="مثال: 2025-09-18T12:30:00+03:00">
+      <button class="btn btn-secondary" onclick="fillNowLocal()">الآن بتوقيت جهازك</button>
+    </div>
+
+<label for="invoiceDigits">رقم الفاتورة</label>
+<div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; margin-top:6px;">
+  <div style="display:flex; flex-direction:row-reverse; gap:6px;">
+    <!-- الجزء الثابت INV- -->
+    <input type="text" value="-INV" readonly 
+           style="width:400px; text-align:center; background:#1a2540; color:#cfe3ff; 
+                  border-radius:14px; border:1px solid #2b3550; padding:12px 0; font-weight:bold;">
+
+                      <!-- خانة إدخال الأرقام -->
+    <input id="invoiceDigits" class="input" type="text" maxlength="6" placeholder="100123"
+           style="width:400px; text-align:center;" 
+           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+
+  </div>
+</div>
+
+
+    <label for="subtotal">القيمة قبل الضريبة</label>
+    <div class="row subcalc">
+      <input id="subtotal" type="text" placeholder="100.00">
+      <button class="btn btn-primary" onclick="calcVAT()">احتساب الضريبة</button>
+    </div>
+
+    <div class="row two">
+      <div>
+        <label for="vatamt">مبلغ الضريبة (15%)</label>
+        <input id="vatamt" type="text" readonly>
+      </div>
+      <div>
+        <label for="total">إجمالي الفاتورة شامل الضريبة</label>
+        <input id="total" type="text" readonly>
+      </div>
+    </div>
+
+<div class="btns">
+  <button class="btn btn-primary" onclick="generate()">توليد QR</button>
+  <button class="btn btn-secondary" onclick="clearAll()">مسح الحقول</button>
+
+<!-- 🔵 زر عرض الفاتورة -->
+<button id="viewInvoiceBtn" class="action-button" style="display: none; margin-top: 15px;" onclick="window.location.href='invoice-view.html'">
+  👁️ عرض الفاتورة
+</button>
+
+  <button id="download" class="btn btn-primary" style="display:none;" onclick="downloadQR()">تحميل QR</button>
+<button id="saveButton" class="btn btn-primary" style="display:none;" onclick="saveInvoiceToStorage()">💾 حفظ الفاتورة</button>
+<span id="saveStatus" style="margin-right: 10px; font-size: 13px;"></span>
+
+</div>
+
+
+    <div class="status" id="status"></div>
+
+    <div class="out" id="out">
+      <div>
+        <label for="b64">نص Base64</label>
+        <textarea id="b64" readonly></textarea>
+        <div class="btns" style="margin-top:8px;">
+          <button class="btn btn-secondary" type="button" onclick="copyB64()">نسخ Base64</button>
+        </div>
+      </div>
+
+      <div class="qr-preview">
+        <div class="qr-orbit-wrap">
+          <div class="qr-orbit o1"><div class="qr-electron"></div></div>
+          <div class="qr-orbit o2"><div class="qr-electron"></div></div>
+          <div class="qr-orbit o3"><div class="qr-electron"></div></div>
+        </div>
+        <div id="qrContainer"></div>
+      </div>
+    </div>
+
+    <footer>⚠️ هذا البورتال خاص بشركة إس تراديكس</footer>
+  </div>
+</div>
+
+<script>
+  function fillNowLocal() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const y = d.getFullYear(), m = pad(d.getMonth() + 1), day = pad(d.getDate());
+    const hh = pad(d.getHours()), mm = pad(d.getMinutes()), ss = pad(d.getSeconds());
+    const off = -d.getTimezoneOffset();
+    const sign = off >= 0 ? '+' : '-';
+    const oh = pad(Math.floor(Math.abs(off) / 60)), om = pad(Math.abs(off) % 60);
+    document.getElementById('ts').value = `${y}-${m}-${day}T${hh}:${mm}:${ss}${sign}${oh}:${om}`;
+  }
+
+  function parseNumber(val) {
+    return parseFloat((val || '').toString().replace(/,/g, '')) || 0;
+  }
+
+  function calcVAT() {
+    const subtotal = parseNumber(document.getElementById("subtotal").value);
+    const vat = subtotal * 0.15, total = subtotal + vat;
+    document.getElementById("vatamt").value = vat.toFixed(2);
+    document.getElementById("total").value = total.toFixed(2);
+  }
+
+function clearAll() {
+  ['ts','subtotal','vatamt','total','invoiceDigits','b64'].forEach(id=>{
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+
+  document.getElementById('qrContainer').innerHTML = '';
+  document.getElementById('out').style.display = 'none';
+  document.getElementById('status').textContent = '';
+
+  // ✅ إخفاء أزرار التحميل والحفظ
+  document.getElementById("download").style.display = 'none';
+  document.getElementById("saveButton").style.display = 'none';
+    // ✅ إخفاء زر عرض الفاتورة
+  document.getElementById("viewInvoiceBtn").style.display = "none";
+
+  // ✅ إعادة زر الحفظ لحالته الطبيعية
+  const saveBtn = document.getElementById("saveButton");
+  if (saveBtn) {
+    saveBtn.textContent = "💾 حفظ الفاتورة";
+    saveBtn.classList.remove("btn-success");  // لو كنت مغير لونه
+  }
+}
+  function tlv(tag, value) {
+    const enc = new TextEncoder();
+    const val = enc.encode(String(value ?? ''));
+    if (val.length > 255) throw new Error("قيمة طويلة");
+    return Uint8Array.from([tag, val.length, ...val]);
+  }
+
+</script>
+
+<script>
+  let qrGenerated = false;
+  let currentCanvas = null;
+
+  function generate() {
+    const seller = document.getElementById("seller").value.trim();
+    const vat = document.getElementById("vat").value.trim();
+    const ts = document.getElementById("ts").value.trim();
+    const total = document.getElementById("total").value.trim();
+    const vatamt = document.getElementById("vatamt").value.trim();
+    const invoiceDigits = document.getElementById("invoiceDigits").value.trim();
+
+    if (!/^[0-9]{6}$/.test(invoiceDigits)) {
+      showStatus("⚠️ رقم الفاتورة يجب أن يكون 6 أرقام", false);
+      return;
+    }
+    
+
+    try {
+      const tlvData = new Uint8Array([
+        ...tlv(1, seller),
+        ...tlv(2, vat),
+        ...tlv(3, ts),
+        ...tlv(4, Number(total).toFixed(2)),
+        ...tlv(5, Number(vatamt).toFixed(2))
+      ]);
+
+      const b64 = btoa(String.fromCharCode(...tlvData));
+      document.getElementById("b64").value = b64;
+
+      const cont = document.getElementById("qrContainer");
+      cont.innerHTML = '';
+      const qr = new QRCode(cont, {
+        text: b64,
+        width: 200,
+        height: 200,
+        correctLevel: QRCode.CorrectLevel.M,
+        margin: 0
+      });
+
+      setTimeout(() => {
+  currentCanvas = cont.querySelector('canvas');
+  const dl = document.getElementById("download");
+  if (currentCanvas && dl) {
+    dl.style.display = 'inline-block';
+  }
+}, 200);
+;
+
+      // ✅ Show result section + save button
+      document.getElementById('out').style.display = 'grid';
+      document.getElementById("saveButton").style.display = 'inline-block';
+      document.getElementById("saveStatus").textContent = "";
+      qrGenerated = true;
+  // ✅ إظهار زر عرض الفاتورة
+  document.getElementById("viewInvoiceBtn").style.display = "inline-block";
+
+      showStatus("✔ تم توليد QR", true);
+currentCanvas = document.querySelector("#qrContainer canvas");
+
+    } catch (e) {
+      showStatus("❌ خطأ: " + e.message, false);
+    }
+  }
+
+  function saveInvoiceToStorage() {
+    const saveBtn = document.getElementById("saveButton");
+    const statusEl = document.getElementById("saveStatus");
+
+    if (!qrGenerated) {
+      statusEl.textContent = "⚠️ برجاء توليد الـ QR أولاً ثم الحفظ";
+      statusEl.style.color = "#ef4444";
+      return;
+    }
+
+    // ✅ الحفظ الفعلي
+    // تقدر هنا تحفظ البيانات في LocalStorage أو ترسلها لسيرفر
+    // مثال:
+    // localStorage.setItem("invoiceData", JSON.stringify(invoice));
+
+    saveBtn.style.backgroundColor = "#10B981"; // أخضر
+    saveBtn.textContent = "✔ تم الحفظ";
+    statusEl.textContent = "";
+  }
+
+  
+
+function downloadQR() {
+  const invoiceDigits = document.getElementById("invoiceDigits").value.trim();
+
+  if (!/^[0-9]{6}$/.test(invoiceDigits)) {
+    showStatus("⚠️ رقم الفاتورة يجب أن يكون 6 أرقام", false);
+    return;
+  }
+
+  const canvas = document.querySelector("#qrContainer canvas");
+  if (!canvas) {
+    showStatus("❌ لا يوجد QR لتحميله", false);
+    return;
+  }
+
+  const a = document.createElement('a');
+  a.download = `INV-${invoiceDigits}_zatca_qr.png`;
+  a.href = canvas.toDataURL("image/png");
+  a.click();
+}
+
+    
+</script>
+
+<!-- سايد بار -->
+
+</div>
+<script src="sidebar/load-sidebar.js"></script>
+
+
+<script>
+  function saveInvoice() {
+    const invoice = {
+      number: document.getElementById("invoiceNumber").value,
+      clientName: document.getElementById("clientName").value,
+      vatNumber: document.getElementById("vatNumber").value,
+      date: document.getElementById("invoiceDate").value,
+      items: [
+        {
+          name: document.getElementById("itemName").value,
+          price: parseFloat(document.getElementById("itemPrice").value || 0),
+          qty: parseInt(document.getElementById("itemQty").value || 1)
+        }
+      ]
+    };
+
+    localStorage.setItem("currentInvoice", JSON.stringify(invoice));
+    window.location.href = "invoice-view.html";
+  }
+</script>
+
+</body>
+
+</html>
