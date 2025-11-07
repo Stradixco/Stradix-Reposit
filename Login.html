@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <title>Mamzar For General Contracting EST - Ultra Secure Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  
   <!-- خطوط فاخرة -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
@@ -382,5 +384,37 @@
 
 
 </script>
+
+
+
+<!-- مثال على نموذج تسجيل دخول بسيط -->
+<form onsubmit="handleLogin(event)">
+  <input type="text" id="username" placeholder="اسم المستخدم" required />
+  <input type="password" id="password" placeholder="كلمة المرور" required />
+  <button type="submit">تسجيل الدخول</button>
+</form>
+
+<script>
+  function handleLogin(e) {
+    e.preventDefault(); // يمنع إرسال النموذج
+
+    // الحصول على البيانات من الحقول
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    // تحقق بسيط (ممكن تعدله لاحقًا)
+    if (username === "admin" && password === "123456") {
+      // ✅ حفظ حالة تسجيل الدخول
+      localStorage.setItem("isLoggedIn", "true");
+
+      // ✅ توجيه المستخدم إلى لوحة التحكم
+      window.location.href = "dashboard.html";
+    } else {
+      alert("اسم المستخدم أو كلمة المرور غير صحيحة");
+    }
+  }
+</script>
+
+
 </body>
 </html>
