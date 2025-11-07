@@ -5,6 +5,14 @@
   <title>إنشاء اتفاقية</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "login.html"; // يرجع المستخدم لصفحة الدخول لو مش مسجل دخول
+  }
+</script>
+
+  
+  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 

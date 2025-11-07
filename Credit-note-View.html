@@ -2,6 +2,13 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
+
+  <script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "login.html"; // يرجع المستخدم لصفحة الدخول لو مش مسجل دخول
+  }
+</script>
+
   <title>Credit Note / إشعار دائن</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <style>

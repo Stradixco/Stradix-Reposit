@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>مولد الفاتورة الضريبية مع QR</title>
 
+  <script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "login.html"; // يرجع المستخدم لصفحة الدخول لو مش مسجل دخول
+  }
+</script>
+
+
   <!-- ✅ Header and sidebar -->
   <link rel="stylesheet" href="../background-header/Header-style.css" />
   <script src="../background-header/load-header.js" defer></script>
