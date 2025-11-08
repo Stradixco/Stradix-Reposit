@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>إدارة الموظفين والسيارات</title>
+
+
+  <!-- ✅ Header and sidebar -->
+  <link rel="stylesheet" href="../background-header/Header-style.css" />
+  <script src="../background-header/load-header.js" defer></script>
+
+  <link rel="stylesheet" href="sidebar-style.css" />
+  <script src="load-sidebar.js" defer></script>
+    
+
+
+  <style>
+        :root {
+      --primary: #ff9900;
+      --primary-dark: #cc7a00;
+      --danger: #dc3545;
+      --success: #28a745;
+      --info: #17a2b8;
+      --white: #ffffff;
+      --text: #ffffff;
+      --bg: #0f172a;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      background-size: 400% 400%;
+      padding: 20px;
+    }
+
+    
+
+h2 {
+  color: #fff;
+  border-bottom: 2px solid #ffffff33;
+  padding-bottom: 5px;
+  font-size: 17px; /* 👈 ده حجم الخط */
+}
+
+    #header, #sidebar-container {
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+      background-color: #1e3a5a;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px #00000055;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ffffff22;
+    }
+
+    th {
+      background-color: #294c6f;
+      color: #fff;
+    }
+
+    tr:hover {
+      background-color: #365b7e;
+    }
+
+    .edit-btn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .edit-btn:hover {
+      background-color: #218838;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #122b40;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00000077;
+      z-index: 1000;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .popup input,
+    .popup select {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #0e2235;
+      border: 1px solid #ffffff22;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .popup input::placeholder {
+      color: #cccccc88;
+      font-size: 14px;
+    }
+
+    .popup-buttons {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .popup-buttons button {
+      margin: 5px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .popup-buttons .save-btn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .popup-buttons .cancel-btn {
+      background-color: #17a2b8;
+      color: white;
+    }
+
+    .add-row {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .add-row button {
+      background-color: orange;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .add-row button:hover {
+      background-color: darkorange;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #00000099;
+      z-index: 999;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
+
+  .main {
+    margin-top: 100px;      /* يخلي المحتوى ينزل تحت الهيدر */
+    margin-right: 240px;    /* يبعد المحتوى عن السايد بار */
+    padding: 20px;
+  }
+</style>
+
+
+    
+  </style>
+</head>
+<body>
+
+  <!-- ✅ الهيدر والسايد بار -->
+  <div id="header"></div>
+
+  <div class="page-container">
+    <div id="sidebar-container"></div>
+
+    <div class="main">
+      <!-- ✅ المحتوى الكامل هنا -->
+
+  <h2>جدول إقامات الموظفين</h2>
+  <div class="add-row">
+    <button onclick="addRow('residency-table')">➕ إضافة صف</button>
+  </div>
+  <table id="residency-table">
+    <thead>
+      <tr>
+        <th>اسم الموظف</th>
+        <th>رقم الإقامة</th>
+        <th>تاريخ إصدار الإقامة</th>
+        <th>تاريخ انتهاء الإقامة</th>
+        <th>تعديل</th>
+        <th>مسح</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>جدول كروت التشغيل</h2>
+  <div class="add-row">
+    <button onclick="addRow('workcard-table')">➕ إضافة صف</button>
+  </div>
+  <table id="workcard-table">
+    <thead>
+      <tr>
+        <th>اسم السائق</th>
+        <th>رقم كارت التشغيل</th>
+        <th>تاريخ انتهاء الكارت</th>
+        <th>تعديل</th>
+        <th>مسح</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>جدول التصاريح الشخصية</h2>
+  <div class="add-row">
+    <button onclick="addRow('personalperm-table')">➕ إضافة صف</button>
+  </div>
+  <table id="personalperm-table">
+    <thead>
+      <tr>
+        <th>اسم السائق</th>
+        <th>تاريخ بداية التصريح</th>
+        <th>تاريخ انتهاء التصريح</th>
+        <th>تعديل</th>
+        <th>مسح</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>جدول تصاريح المواد</h2>
+  <div class="add-row">
+    <button onclick="addRow('materialperm-table')">➕ إضافة صف</button>
+  </div>
+  <table id="materialperm-table">
+    <thead>
+      <tr>
+        <th>اسم السائق</th>
+        <th>اسم الميناء</th>
+        <th>رقم السيارة</th>
+        <th>تاريخ بداية التصريح</th>
+        <th>تاريخ انتهاء التصريح</th>
+        <th>تعديل</th>
+        <th>مسح</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>بيانات السيارات</h2>
+  <div class="add-row">
+    <button onclick="addRow('cars-table')">➕ إضافة صف</button>
+  </div>
+  <table id="cars-table">
+    <thead>
+      <tr>
+        <th>رقم السيارة</th>
+        <th>انتهاء الرخصة</th>
+        <th>انتهاء التأمين</th>
+        <th>انتهاء كارت التشغيل</th>
+        <th>انتهاء الفحص</th>
+        <th>تعديل</th>
+        <th>مسح</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>تصاريح السيارات</h2>
+  <div class="add-row">
+    <button onclick="addRow('carperm-table')">➕ إضافة صف</button>
+  </div>
+  <table id="carperm-table">
+    <thead>
+      <tr>
+        <th>رقم السيارة</th>
+        <th>تاريخ بداية التصريح</th>
+        <th>تاريخ انتهاء التصريح</th>
+        <th>اسم الميناء</th>
+        <th>تعديل</th>
+        <th>مسح</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>كروت تشغيل السيارات</h2>
+  <div class="add-row">
+    <button onclick="addRow('car-workcard-table')">➕ إضافة صف</button>
+  </div>
+  <table id="car-workcard-table">
+    <thead>
+      <tr>
+        <th>رقم السيارة</th>
+        <th>رقم كارت التشغيل</th>
+        <th>تاريخ انتهاء كارت التشغيل</th>
+        <th>تعديل</th>
+        <th>مسح</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- ✅ نافذة التعديل (البوب أب) -->
+  <div class="overlay" id="overlay"></div>
+  <div class="popup" id="editPopup">
+    <h3 id="popupTitle">تعديل البيانات</h3>
+    <div id="popupInputs"></div>
+    <div class="popup-buttons">
+      <button class="save-btn" onclick="saveEdit()">حفظ</button>
+      <button class="cancel-btn" onclick="closePopup()">إلغاء</button>
+    </div>
+  </div>
+<script>
+  let currentEditRow = null;
+  let currentTableId = null;
+
+  const portOptions = [
+    "ميناء الدمام",
+    "ميناء الجبيل",
+    "ميناء رأس الخير",
+    "ميناء جدة",
+    "جهة أخرى"
+  ];
+
+  const carNumbers = [
+    "ب ب س 3080",
+    "ب ط ص 4439",
+    "ب ع ط 2596"
+  ];
+
+  function addRow(tableId) {
+    const table = document.getElementById(tableId).getElementsByTagName("tbody")[0];
+    const row = table.insertRow();
+
+    const numCols = document.querySelector(`#${tableId} thead tr`).children.length;
+    for (let i = 0; i < numCols - 2; i++) {
+      const cell = row.insertCell();
+      cell.textContent = "—";
+    }
+
+    const editCell = row.insertCell();
+    const deleteCell = row.insertCell();
+
+    const editBtn = document.createElement("button");
+    editBtn.className = "edit-btn";
+    editBtn.innerText = "✏️";
+    editBtn.onclick = () => openEditPopup(row, tableId);
+    editCell.appendChild(editBtn);
+
+    const delBtn = document.createElement("button");
+    delBtn.className = "delete-btn";
+    delBtn.innerText = "🗑️";
+    delBtn.onclick = () => row.remove();
+    deleteCell.appendChild(delBtn);
+  }
+
+  function openEditPopup(row, tableId) {
+    currentEditRow = row;
+    currentTableId = tableId;
+
+    const popup = document.getElementById("editPopup");
+    const overlay = document.getElementById("overlay");
+    const inputsDiv = document.getElementById("popupInputs");
+    const popupTitle = document.getElementById("popupTitle");
+
+    inputsDiv.innerHTML = "";
+
+    const headers = document.querySelector(`#${tableId} thead tr`).children;
+    const firstValue = row.cells[0].textContent.trim();
+    popupTitle.textContent = `تعديل البيانات – ${firstValue || "غير محدد"}`;
+
+for (let i = 0; i < row.cells.length - 2; i++) {
+  const colName = headers[i].innerText.trim();
+  let cellValue = row.cells[i].textContent.trim();
+  if (cellValue === "—") cellValue = ""; // ⬅️ هذا هو التعديل
+
+  let input;
+
+  if (colName.includes("تاريخ")) {
+    input = document.createElement("input");
+    input.type = "date";
+    input.value = parseDateValue(cellValue);
+  } else if (colName.includes("اسم الميناء")) {
+    input = document.createElement("select");
+    portOptions.forEach(port => {
+      const opt = document.createElement("option");
+      opt.value = opt.textContent = port;
+      input.appendChild(opt);
+    });
+    input.value = cellValue;
+  } else if (colName.includes("رقم السيارة")) {
+    input = document.createElement("select");
+    carNumbers.forEach(car => {
+      const opt = document.createElement("option");
+      opt.value = opt.textContent = car;
+      input.appendChild(opt);
+    });
+    input.value = cellValue;
+  } else {
+    input = document.createElement("input");
+    input.type = "text";
+    input.value = cellValue;
+  }
+
+  input.placeholder = `أدخل ${colName.toLowerCase()}`;
+  inputsDiv.appendChild(input);
+}
+
+    overlay.style.display = "block";
+    popup.style.display = "block";
+  }
+
+  function closePopup() {
+    document.getElementById("editPopup").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+  }
+
+  function saveEdit() {
+    const inputs = document.querySelectorAll("#popupInputs input, #popupInputs select");
+    inputs.forEach((input, i) => {
+      if (input.type === "date") {
+        currentEditRow.cells[i].textContent = formatDateValue(input.value);
+      } else {
+        currentEditRow.cells[i].textContent = input.value;
+      }
+    });
+    closePopup();
+  }
+// 🧠 تحديد العملية بناءً على الجدول
+if (currentTableId === "residency-table") {
+  const name = inputs[0].value.trim();
+  const iqama = inputs[1].value.trim();
+  const issueDate = inputs[2].value.trim();
+  const expiryDate = inputs[3].value.trim();
+
+  // لو تعديل
+  if (editingRow) {
+    sendToSheet_Update("Residence_Cards", editingRow.cells[0].textContent.trim(), [name, iqama, issueDate, expiryDate]);
+  } 
+  // لو إضافة جديدة
+  else {
+    sendToSheet_Add("Residence_Cards", [name, iqama, issueDate, expiryDate]);
+  }
+}
+
+  // Date format helpers
+  function formatDateValue(val) {
+    if (!val) return "";
+    const d = new Date(val);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  }
+
+  function parseDateValue(val) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(val)) return val;
+    const parts = val.split("-");
+    if (parts.length === 3) {
+      const [year, month, day] = parts;
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    }
+    return "";
+  }
+
+
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbx6TBqt4sjl_2hwB29Fv96KZ-bTkUCzTVSSvq-Cu8VXGvlyoxX50dp4-NobWeqIaVic/exec";
+
+// إضافة صف
+function sendToSheet_Add(sheet, rowData) {
+  fetch(SHEET_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "add",
+      sheet: sheet,
+      row: rowData
+    }),
+    headers: { "Content-Type": "application/json" }
+  }).then(res => res.text()).then(console.log);
+}
+
+// تعديل صف
+function sendToSheet_Update(sheet, originalKey, rowData) {
+  fetch(SHEET_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "update",
+      sheet: sheet,
+      originalKey: originalKey,
+      row: rowData
+    }),
+    headers: { "Content-Type": "application/json" }
+  }).then(res => res.text()).then(console.log);
+}
+
+// حذف صف
+function sendToSheet_Delete(sheet, key) {
+  fetch(SHEET_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "delete",
+      sheet: sheet,
+      key: key
+    }),
+    headers: { "Content-Type": "application/json" }
+  }).then(res => res.text()).then(console.log);
+}
+if (table.id === "residency-table") {
+  const name = rowToDelete.cells[0].textContent.trim();
+  sendToSheet_Delete("Residence_Cards", name);
+}
+
+</script>
+
+</script>
+</body>
+</html>
