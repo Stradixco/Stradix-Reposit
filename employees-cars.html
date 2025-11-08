@@ -487,53 +487,41 @@ if (currentTableId === "residency-table") {
   }
 
 
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbx6TBqt4sjl_2hwB29Fv96KZ-bTkUCzTVSSvq-Cu8VXGvlyoxX50dp4-NobWeqIaVic/exec";
+  const SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx6TBqt4sjl_2hwB29Fv96KZ-bTkUCzTVSSvq-Cu8VXGvlyoxX50dp4-NobWeqIaVic/exec";
 
-// إضافة صف
-function sendToSheet_Add(sheet, rowData) {
-  fetch(SHEET_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "add",
-      sheet: sheet,
-      row: rowData
-    }),
-    headers: { "Content-Type": "application/json" }
-  }).then(res => res.text()).then(console.log);
-}
+  // 🟦 تحميل بيانات جدول الإقامات عند فتح الصفحة
+  function loadResidencyTableFromSheet() {
+    fetch(`${SHEET_WEB_APP_URL}?sheet=Residence_Cards`)
+      .then(res => res.json())
+      .then(data => {
+        const tableBody = document.querySelector("#residency-table tbody");
+        tableBody.innerHTML = "";
 
-// تعديل صف
-function sendToSheet_Update(sheet, originalKey, rowData) {
-  fetch(SHEET_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "update",
-      sheet: sheet,
-      originalKey: originalKey,
-      row: rowData
-    }),
-    headers: { "Content-Type": "application/json" }
-  }).then(res => res.text()).then(console.log);
-}
+        // تجاهل أول صف لو فيه رؤوس أعمدة
+        data.slice(1).forEach(row => {
+          const newRow = tableBody.insertRow();
 
-// حذف صف
-function sendToSheet_Delete(sheet, key) {
-  fetch(SHEET_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "delete",
-      sheet: sheet,
-      key: key
-    }),
-    headers: { "Content-Type": "application/json" }
-  }).then(res => res.text()).then(console.log);
-}
-if (table.id === "residency-table") {
-  const name = rowToDelete.cells[0].textContent.trim();
-  sendToSheet_Delete("Residence_Cards", name);
-}
+          // إدخال البيانات
+          for (let i = 0; i < 4; i++) {
+            const cell = newRow.insertCell();
+            cell.textContent = row[i] || "";
+          }
 
-</script>
+          // زر تعديل
+          const editCell = newRow.insertCell();
+          editCell.innerHTML = `<button class="edit-btn">✏️</button>`;
+
+          // زر حذف
+          const deleteCell = newRow.insertCell();
+          deleteCell.innerHTML = `<button class="delete-btn">🗑️</button>`;
+        });
+      })
+      .catch(err => console.error("خطأ في تحميل البيانات:", err));
+  }
+
+  // ⬅️ تحميل البيانات عند فتح الصفحة
+  window.addEventListener("DOMContentLoaded", loadResidencyTableFromSheet);
+
 
 </script>
 </body>
