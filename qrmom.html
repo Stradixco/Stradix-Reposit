@@ -146,6 +146,7 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <script>
 let table = document.getElementById("momTable").querySelector("tbody");
 let editIndex = null;
@@ -180,30 +181,9 @@ function addRow() {
   `;
 }
 
-
 function deleteRow(btn) {
   btn.closest("tr").remove();
   [...table.rows].forEach((r, i) => r.cells[0].textContent = i + 1);
-}
-
-function editRow(btn) {
-  const tr = btn.closest("tr");
-  editIndex = [...table.rows].indexOf(tr);
-  document.getElementById("editDate").value = tr.cells[3].querySelector("input").value;
-  document.getElementById("editPlace").value = tr.cells[4].querySelector("select").value;
-  document.getElementById("editModal").style.display = "flex";
-}
-
-function closeModal() {
-  document.getElementById("editModal").style.display = "none";
-}
-
-function saveEdit() {
-  if (editIndex === null) return;
-  const tr = table.rows[editIndex];
-  tr.cells[3].querySelector("input").value = document.getElementById("editDate").value;
-  tr.cells[4].querySelector("select").value = document.getElementById("editPlace").value;
-  closeModal();
 }
 
 function generateQR(btn) {
@@ -212,20 +192,33 @@ function generateQR(btn) {
   const company = encodeURIComponent(row.cells[2].innerText);
   const date = row.querySelector('.meeting-date').value;
   const place = encodeURIComponent(row.querySelector('.meeting-place').value);
-  const beneficiary = encodeURIComponent(row.querySelector('.beneficiary').value);
-  const subject = encodeURIComponent(row.querySelector('.subject').value);
+  const beneficiary = encodeURIComponent(row.querySelector('.meeting-beneficiary').value);
+  const subject = encodeURIComponent(row.querySelector('.meeting-subject').value);
 
-  // إنشاء رابط التحقق
+  if (!code || !date || !place) {
+    alert("يرجى إدخال الكود والتاريخ والمكان قبل إنشاء QR.");
+    return;
+  }
+
+  // إنشاء رابط التحقق الصحيح
   const qrUrl = `https://www.s-tradix.com/verify.html?code=${code}&company=${company}&date=${date}&place=${place}&beneficiary=${beneficiary}&subject=${subject}`;
 
   // توليد صورة الكيو آر وتحميلها
   const qrDiv = document.createElement("div");
-  new QRCode(qrDiv, { text: verifyURL, width: 200, height: 200 });
-  const canvas = qrDiv.querySelector("canvas");
-  const a = document.createElement("a");
-  a.download = `${code}.png`;
-  a.href = canvas.toDataURL("image/png");
-  a.click();
+  new QRCode(qrDiv, { text: qrUrl, width: 200, height: 200 });
+
+  // تأخير بسيط حتى يتم إنشاء الـ Canvas
+  setTimeout(() => {
+    const canvas = qrDiv.querySelector("canvas");
+    if (canvas) {
+      const a = document.createElement("a");
+      a.download = `${code}.png`;
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+    } else {
+      alert("حدث خطأ أثناء توليد الكيو آر.");
+    }
+  }, 500);
 }
 </script>
 </body>
