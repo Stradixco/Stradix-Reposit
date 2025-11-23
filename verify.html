@@ -24,6 +24,22 @@
     text-align: center;
   }
 
+  /* دائرة التحميل */
+  .loader {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 6px solid rgba(16, 185, 129, 0.2);
+    border-top: 6px solid #10b981;
+    animation: spin 1.5s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* دائرة التحقق */
   .verified-icon {
     width: 100px;
     height: 100px;
@@ -31,10 +47,11 @@
     background: #10b981;
     color: white;
     border-radius: 50%;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     font-size: 60px;
+    box-shadow: 0 0 25px rgba(16,185,129,0.6);
   }
 
   h2 {
@@ -43,6 +60,7 @@
   }
 
   .details {
+    display: none;
     text-align: right;
     background: #ffffff;
     padding: 15px;
@@ -59,13 +77,28 @@
     border-top: 1px solid #e2e8f0;
     padding-top: 10px;
   }
+
+  .verified-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #059669;
+    margin-top: 10px;
+    display: none;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="verified-icon">✔</div>
-  <h2>تم التحقق من التوثيق</h2>
+  <div id="loader" class="loader"></div>
+  <div id="verifiedIcon" class="verified-icon">✔</div>
+  <h2 id="title">جاري التحقق من التوثيق...</h2>
+  <div class="verified-text" id="verifiedText">تم التحقق بنجاح</div>
   <div class="details" id="meetingDetails"></div>
   <div class="footer">
     🔒 هذا التأكيد صادر رسميًا من شركة إس تراديكس، ويُعد إثباتًا لصحة البيانات المعروضة.
@@ -75,19 +108,33 @@
 <script>
   // استخراج المتغيرات من عنوان الصفحة
   const params = new URLSearchParams(window.location.search);
-  const serial = params.get("serial") || "غير محدد";
   const code = params.get("code") || "";
   const company = decodeURIComponent(params.get("company") || "غير محدد");
   const date = params.get("date") || "غير محدد";
   const place = decodeURIComponent(params.get("place") || "غير محدد");
+  const beneficiary = decodeURIComponent(params.get("beneficiary") || "غير محدد");
+  const subject = decodeURIComponent(params.get("subject") || "غير محدد");
 
-  // عرض البيانات في الصفحة
-  document.getElementById("meetingDetails").innerHTML = `
-    <p><strong>اسم الشركة:</strong> ${company}</p>
-    <p><strong>تاريخ التوثيق:</strong> ${date}</p>
-    <p><strong>مكان التوثيق:</strong> ${place}</p>
-    <p><strong>رقم التوثيق:</strong> ${serial} / ${code}</p>
-  `;
+
+  // بعد ثانيتين - عرض علامة التحقق
+  setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("verifiedIcon").style.display = "flex";
+    document.getElementById("verifiedText").style.display = "block";
+    document.getElementById("title").textContent = "تم التحقق من التوثيق";
+    document.getElementById("meetingDetails").style.display = "block";
+
+    // عرض تفاصيل الاجتماع
+    document.getElementById("meetingDetails").innerHTML = `
+      <p><strong>اسم الشركة:</strong> ${company}</p>
+      <p><strong>تاريخ المستند:</strong> ${date}</p>
+      <p><strong>مكان التوثيق:</strong> ${place}</p>
+      <p><strong>رقم التوثيق:</strong> ${code}</p>
+      <p><strong>المستفيد:</strong> ${beneficiary}</p>
+      <p><strong>الموضوع:</strong> ${subject}</p>
+
+    `;
+  }, 2000);
 </script>
 
 </body>

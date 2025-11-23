@@ -107,20 +107,22 @@
 <div class="main-content">
   <div class="container">
   <h1>📘 محاضر اجتماعات مجلس الإدارة</h1>
-  <table id="momTable">
-    <thead>
-      <tr>
-        <th>م</th>
-        <th>كود المحضر</th>
-        <th>اسم الشركة</th>
-        <th>تاريخ الاجتماع</th>
-        <th>مكان الاجتماع</th>
-        <th>الإجراءات</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <button class="add-btn" onclick="addRow()">➕ إضافة محضر جديد</button>
+<table id="momTable" border="1" style="width:100%; text-align:center;">
+  <thead>
+    <tr>
+      <th>م</th>
+      <th>كود مختصر</th>
+      <th>اسم الشركة</th>
+      <th>تاريخ الاجتماع</th>
+      <th>مكان الاجتماع</th>
+      <th>المستفيد</th>
+      <th>الموضوع</th>
+      <th>الخيارات</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+<button onclick="addRow()">➕ إضافة صف جديد</button>
 </div>
 
 <!-- نافذة التعديل -->
@@ -149,30 +151,35 @@ let table = document.getElementById("momTable").querySelector("tbody");
 let editIndex = null;
 
 function addRow() {
-  let rowCount = table.rows.length + 1;
-  let tr = document.createElement("tr");
-  tr.innerHTML = `
-    <td>${rowCount}</td>
-    <td>KSA-STX-MOM-${rowCount}</td>
+  const table = document.getElementById("momTable").getElementsByTagName('tbody')[0];
+  const rowCount = table.rows.length;
+  const row = table.insertRow(rowCount);
+
+  row.innerHTML = `
+    <td>${rowCount + 1}</td>
+    <td><input type="text" class="code-input" placeholder="اكتب الكود هنا..." /></td>
     <td>شركة إس تراديكس - سجل تجاري 7052015091</td>
-    <td><input type="date" value="${new Date().toISOString().split('T')[0]}"></td>
+    <td><input type="date" class="meeting-date" /></td>
     <td>
-      <select>
-        <option>الدمام</option>
-        <option>الخبر</option>
-        <option>الرياض</option>
-        <option>جدة</option>
-        <option>القاهرة</option>
-        <option>الإسكندرية</option>
+      <select class="meeting-place">
+        <option value="">اختر المكان</option>
+        <option value="الدمام">الدمام</option>
+        <option value="الخبر">الخبر</option>
+        <option value="الرياض">الرياض</option>
+        <option value="جدة">جدة</option>
+        <option value="القاهرة">القاهرة</option>
+        <option value="الإسكندرية">الإسكندرية</option>
       </select>
     </td>
+    <td><input type="text" class="meeting-beneficiary" placeholder="اسم المستفيد" /></td>
+    <td><input type="text" class="meeting-subject" placeholder="موضوع الاجتماع" /></td>
     <td>
-      <button class="edit-btn" onclick="editRow(this)">✏️ تعديل</button>
-      <button class="del-btn" onclick="deleteRow(this)">🗑️ حذف</button>
-      <button class="qr-btn" onclick="generateQR(this)">🔗 QR</button>
-    </td>`;
-  table.appendChild(tr);
+      <button class="delete-btn" onclick="deleteRow(this)">🗑️</button>
+      <button class="qr-btn" onclick="generateQR(this)">📱 QR</button>
+    </td>
+  `;
 }
+
 
 function deleteRow(btn) {
   btn.closest("tr").remove();
@@ -200,15 +207,16 @@ function saveEdit() {
 }
 
 function generateQR(btn) {
-  const tr = btn.closest("tr");
-  const serial = tr.cells[0].textContent;
-  const code = tr.cells[1].textContent;
-  const company = tr.cells[2].textContent;
-  const date = tr.cells[3].querySelector("input").value;
-  const place = tr.cells[4].querySelector("select").value;
+  const row = btn.closest('tr');
+  const code = row.querySelector('.code-input').value.trim();
+  const company = encodeURIComponent(row.cells[2].innerText);
+  const date = row.querySelector('.meeting-date').value;
+  const place = encodeURIComponent(row.querySelector('.meeting-place').value);
+  const beneficiary = encodeURIComponent(row.querySelector('.beneficiary').value);
+  const subject = encodeURIComponent(row.querySelector('.subject').value);
 
   // إنشاء رابط التحقق
-  const verifyURL = `${window.location.origin}/verify.html?serial=${serial}&code=${code}&company=${encodeURIComponent(company)}&date=${date}&place=${encodeURIComponent(place)}`;
+  const qrUrl = `https://www.s-tradix.com/verify.html?code=${code}&company=${company}&date=${date}&place=${place}&beneficiary=${beneficiary}&subject=${subject}`;
 
   // توليد صورة الكيو آر وتحميلها
   const qrDiv = document.createElement("div");
