@@ -1567,3 +1567,57 @@ section, header {
 #contact-form label {
   margin-bottom: 0px; /* يمكنك تقليل هذه القيمة لتقليل المسافة */
 }
+
+.background-green {
+    background: #216f32 !important;
+}
+
+.background-red {
+    background: #D50000 !important;
+}
+
+.background-gray {
+    background: #5F6368 !important;
+}
+
+.logo-container{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    max-width:120px;
+    height:auto;
+}
+
+.certificates{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.certificates img{
+    height:60px;
+    width:auto;
+    object-fit:contain;
+}
+
+@media (max-width:768px){
+
+    .logo{
+        max-width:90px;
+    }
+
+    .certificates img{
+        height:33px;
+    }
+
+    .logo-container{
+        gap:8px;
+    }
+
+    .certificates{
+        gap:4px;
+    }
+}
