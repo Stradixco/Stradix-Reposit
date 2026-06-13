@@ -1583,7 +1583,7 @@ section, header {
 .logo-container{
     display:flex;
     align-items:center;
-    gap:15px;
+    gap:20px;
 }
 
 .logo{
@@ -1594,30 +1594,26 @@ section, header {
 .certificates{
     display:flex;
     align-items:center;
-    gap:8px;
+    gap:10px;
 }
 
 .certificates img{
-    height:100px;
+    height:130px;
     width:auto;
-    object-fit:contain;
+    display:block;
 }
-
 @media (max-width:768px){
 
     .logo{
-        max-width:100px;
+        max-width:120px;
     }
 
     .certificates img{
-        height:100px;
-    }
-
-    .logo-container{
-        gap:8px;
+        height:55px !important;
+        width:auto;
     }
 
     .certificates{
-        gap:4px;
+        gap:6px;
     }
 }
