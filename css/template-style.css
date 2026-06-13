@@ -1611,12 +1611,12 @@ section, header {
     }
 
     .certificates img{
-        width:50px;
-        height:90px;
+        width:60px;
+        height:60px;
         object-fit:contain;
     }
 
     .certificates{
-        gap:6px;
+        gap:9px;
     }
 }
