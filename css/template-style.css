@@ -1598,8 +1598,8 @@ section, header {
 }
 
 .certificates img{
-    width:90px;
-    height:90px;
+    width:70px;
+    height:70px;
     object-fit:contain;
     background:#fff;
 }
