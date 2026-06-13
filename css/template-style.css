@@ -1611,8 +1611,8 @@ section, header {
     }
 
     .certificates img{
-        width:60px;
-        height:60px;
+        width:40px;
+        height:50px;
         object-fit:contain;
     }
 
