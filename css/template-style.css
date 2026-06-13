@@ -1594,14 +1594,16 @@ section, header {
 .certificates{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:15px;
 }
 
 .certificates img{
-    height:130px;
-    width:auto;
-    display:block;
+    width:90px;
+    height:90px;
+    object-fit:contain;
+    background:#fff;
 }
+
 @media (max-width:768px){
 
     .logo{
@@ -1609,11 +1611,12 @@ section, header {
     }
 
     .certificates img{
-        height:55px !important;
-        width:auto;
+        width:55px;
+        height:55px;
+        object-fit:contain;
     }
 
     .certificates{
-        gap:6px;
+        gap:8px;
     }
 }
