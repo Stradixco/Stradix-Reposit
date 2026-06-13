@@ -1598,7 +1598,7 @@ section, header {
 }
 
 .certificates img{
-    height:80px;
+    height:100px;
     width:auto;
     object-fit:contain;
 }
@@ -1606,11 +1606,11 @@ section, header {
 @media (max-width:768px){
 
     .logo{
-        max-width:90px;
+        max-width:100px;
     }
 
     .certificates img{
-        height:80px;
+        height:100px;
     }
 
     .logo-container{
