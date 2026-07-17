@@ -2,7 +2,7 @@ The MIT License (MIT)
 
 
 
-Copyright (c) 2013-2017 Vision Design - graphic zoo
+Copyright (c) 2013-2017 Vision Design - Tradix
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
