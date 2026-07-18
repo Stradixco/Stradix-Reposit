@@ -1620,3 +1620,8 @@ section, header {
         gap:9px;
     }
 }
+.carousel-main .item{
+    min-height: 650px;   /*  حجم الصورة في الصفحة الرئيسية */
+    background-size: cover;
+    background-position: center center;
+}
