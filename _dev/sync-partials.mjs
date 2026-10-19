@@ -9,6 +9,8 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
 const PAGES = ["index.html", "services.html", "liquid-waste.html", "solid-waste.html", "fresh-food.html", "zora.html", "about-us.html", "gallery.html", "contact.html", "404.html"];
 const PARTIALS = ["head", "header", "footer"];
+// Pages with their own (Arabic) header/footer: only the shared <head> block is synced
+const HEAD_ONLY = new Set([]);
 
 const partials = Object.fromEntries(
   await Promise.all(PARTIALS.map(async (n) => [n, (await readFile(path.join(here, "partials", `${n}.html`), "utf8")).trim()]))
@@ -33,12 +35,13 @@ for (const page of PAGES) {
   const file = path.join(root, page);
   let html = await readFile(file, "utf8");
   const before = html;
-  for (const name of PARTIALS) {
+  for (const name of HEAD_ONLY.has(page) ? ["head"] : PARTIALS) {
     const re = new RegExp(`([ \\t]*)<!-- @${name} -->[\\s\\S]*?<!-- /@${name} -->`);
     if (!re.test(html)) throw new Error(`${page}: missing <!-- @${name} --> markers`);
     html = html.replace(re, (_, pad) => {
       let body = name === "head" ? partials[name] : markCurrent(partials[name], page);
       if (page === "404.html") body = rootAbsolute(body);
+      if (HEAD_ONLY.has(page)) body = body.replace(/\s*<meta property="og:locale(:alternate)?"[^>]*>/g, "");
       return `${pad}<!-- @${name} -->\n${indent(body, pad)}\n${pad}<!-- /@${name} -->`;
     });
   }
