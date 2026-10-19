@@ -17,7 +17,7 @@ const issues = [];
 const note = (m) => { issues.push(m); console.log("  ✗ " + m); };
 
 async function newPage(vp) {
-  const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, deviceScaleFactor: 1, reducedMotion: "reduce" });
+  const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, deviceScaleFactor: 1, reducedMotion: "no-preference" });
   // Never contact third parties during QA: block chat widget, stub Formspree.
   await ctx.route(/tidio/, (r) => r.abort());
   await ctx.route(/formspree\.io/, (r) => r.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' }));
@@ -36,12 +36,20 @@ for (const vp of VIEWPORTS) {
     await page.goto(`${base}/${p}`, { waitUntil: "networkidle" });
     // Scroll through so lazy images and reveal animations settle
     await page.evaluate(async () => {
-      for (let y = 0; y < document.body.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); }
-      window.scrollTo(0, 0);
+      for (let y = 0; y < document.documentElement.scrollHeight; y += 500) { window.scrollTo({ top: y, behavior: "instant" }); await new Promise((r) => setTimeout(r, 90)); }
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" });
     });
     await page.waitForLoadState("networkidle");
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     if (overflow > 1) note(`[${vp.name}] ${p}: horizontal overflow ${overflow}px`);
+    // With normal motion: every image in <main> must have been revealed and loaded after scrolling
+    await page.waitForTimeout(1200);
+    const unloaded = await page.evaluate(() => [...document.querySelectorAll("main img")]
+      .filter((i) => !i.closest("[hidden], dialog, .mega, .hero-slide:not(.is-active)") && !(i.complete && i.naturalWidth > 0))
+      .map((i) => i.getAttribute("src")));
+    if (unloaded.length) note(`[${vp.name}] ${p}: images never loaded → ${unloaded.join(", ")}`);
+    const hiddenReveals = await page.evaluate(() => [...document.querySelectorAll("[data-reveal]")].filter((el) => !el.classList.contains("is-visible")).length);
+    if (hiddenReveals) note(`[${vp.name}] ${p}: ${hiddenReveals} section(s) never revealed`);
     const broken = await page.evaluate(() => [...document.images].filter((i) => i.complete && i.naturalWidth === 0 && i.getAttribute("src")).map((i) => i.getAttribute("src")));
     if (broken.length) note(`[${vp.name}] ${p}: broken images ${broken.join(", ")}`);
     await page.screenshot({ path: path.join(outDir, `${vp.name}-${p.replace(".html", "")}.png`), fullPage: true });
@@ -66,7 +74,7 @@ for (const vp of VIEWPORTS) {
     if (!visible) note(`[${vp.name}] mobile nav did not open`);
     await page.screenshot({ path: path.join(outDir, `${vp.name}-menu.png`) });
     await page.keyboard.press("Escape");
-    await page.waitForTimeout(50);
+    await page.waitForTimeout(450);
     if (await page.locator("#mobile-nav").isVisible()) note(`[${vp.name}] mobile nav did not close on Escape`);
   }
 
@@ -86,8 +94,8 @@ for (const vp of VIEWPORTS) {
   await page.keyboard.press("Escape");
 
   // Contact form: validation then (stubbed) submission
-  await page.goto(`${base}/contact.html?service=marine`, { waitUntil: "networkidle" });
-  if ((await page.inputValue("#service")) !== "marine") note(`[${vp.name}] ?service= preselect failed`);
+  await page.goto(`${base}/contact.html?service=environmental`, { waitUntil: "networkidle" });
+  if ((await page.inputValue("#service")) !== "environmental") note(`[${vp.name}] ?service= preselect failed`);
   await page.click("#enquiry-form button[type=submit]");
   const errs = await page.locator(".field-error:not(:empty)").count();
   if (errs < 4) note(`[${vp.name}] expected 4 validation errors, got ${errs}`);

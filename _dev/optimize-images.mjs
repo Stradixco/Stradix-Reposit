@@ -30,7 +30,7 @@ const PHOTOS = [
   ["portfolio/thumb-05v1.jpg", "work-technician-training", [640, 1000]],
   ["portfolio/thumb-06v1.jpg", "work-construction-site", [640, 1000]],
   ["portfolio/thumb-07v1.jpg", "work-spare-parts-store", [640, 1000]],
-  ["portfolio/thumb-08v1.jpg", "work-marine-safety-store", [640, 1000]],
+  ["portfolio/thumb-08v1.jpg", "work-safety-store", [640, 1000]],
   ["portfolio/thumb-09v1.jpg", "work-sewer-cleaning-fleet", [640, 1000]],
   ["team-01v1.jpg", "team-ahmed-alkhaldi", [400]],
   ["team-02v1.jpg", "team-fahd-hamad", [400]],
@@ -47,6 +47,22 @@ const BADGES = [
   ["14001.jpg", "cert-iso-14001"],
   ["45001.jpg", "cert-iso-45001"],
 ];
+
+// Detail crops of the company's own environmental photos: [source, name, {left, top, width, height}]
+const CROPS = [
+  ["carousel-03v1.jpg", "env-waste-water", { left: 110, top: 300, width: 500, height: 330 }],
+  ["carousel-03v1.jpg", "env-sewer-cleaning", { left: 190, top: 425, width: 450, height: 300 }],
+  ["carousel-03v1.jpg", "env-liquid-waste", { left: 890, top: 330, width: 480, height: 320 }],
+  ["carousel-03v1.jpg", "env-recycling", { left: 1080, top: 640, width: 400, height: 265 }],
+  ["carousel-03v1.jpg", "env-waste-skip", { left: 770, top: 470, width: 420, height: 280 }],
+  ["carousel-03v1.jpg", "env-waste-management", { left: 60, top: 570, width: 520, height: 345 }],
+  ["carousel-02v2.jpg", "env-vacuum-truck", { left: 660, top: 400, width: 440, height: 290 }],
+  ["carousel-02v2.jpg", "env-response-crew", { left: 1220, top: 330, width: 430, height: 285 }],
+];
+
+async function crop([file, name, area]) {
+  await sharp(src(file)).extract(area).webp({ quality: 80, effort: 5 }).toFile(out(`${name}.webp`));
+}
 
 async function photo([file, name, widths]) {
   const meta = await sharp(src(file)).metadata();
@@ -67,6 +83,7 @@ async function photo([file, name, widths]) {
 async function main() {
   await mkdir(out(""), { recursive: true });
   await Promise.all(PHOTOS.map(photo));
+  await Promise.all(CROPS.map(crop));
 
   for (const [file, name] of BADGES) {
     await sharp(src(file)).resize({ width: 130 }).webp({ quality: 85 }).toFile(out(`${name}.webp`));

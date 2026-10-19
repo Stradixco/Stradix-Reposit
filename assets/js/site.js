@@ -97,12 +97,22 @@
     if (reduceMotion || !("IntersectionObserver" in window)) {
       revealEls.forEach((el) => el.classList.add("is-visible"));
     } else {
+      // A fully clipped element has no visible area, so IntersectionObserver would never
+      // report it: for "clip" reveals, observe the (unclipped) parent instead.
+      const targets = new Map();
       const io = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) { entry.target.classList.add("is-visible"); io.unobserve(entry.target); }
+          if (!entry.isIntersecting) return;
+          (targets.get(entry.target) || []).forEach((el) => el.classList.add("is-visible"));
+          io.unobserve(entry.target);
         });
-      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-      revealEls.forEach((el) => io.observe(el));
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0 });
+      revealEls.forEach((el) => {
+        const watch = el.dataset.reveal === "clip" && el.parentElement ? el.parentElement : el;
+        if (!targets.has(watch)) targets.set(watch, []);
+        targets.get(watch).push(el);
+        io.observe(watch);
+      });
     }
   }
 
