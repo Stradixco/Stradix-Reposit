@@ -1021,3 +1021,7 @@ body { background: var(--paper); }
 
 
 .footer-ar { width: 100%; margin-top: 4px; font-family: "IBM Plex Sans Arabic", var(--font-body); font-size: 0.82rem; line-height: 1.8; color: var(--muted-on-dark); text-align: right; }
+
+/* Open mobile menu: no backdrop-filter on any page (it would make the header the
+   containing block of the fixed menu and collapse it to the header height) */
+.site-header.is-open, body:not(.has-hero) .site-header.is-open, .site-header.is-solid.is-open { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: var(--paper-2); }
