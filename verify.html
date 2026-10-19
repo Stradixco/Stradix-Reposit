@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>تحقق من محضر الاجتماع | شركة إس تراديكس</title>
 <style>
@@ -117,11 +118,11 @@
   // استخراج المتغيرات من عنوان الصفحة
   const params = new URLSearchParams(window.location.search);
   const code = params.get("code") || "";
-  const company = decodeURIComponent(params.get("company") || "غير محدد");
+  const company = (params.get("company") || "غير محدد");
   const date = params.get("date") || "غير محدد";
-  const place = decodeURIComponent(params.get("place") || "غير محدد");
-  const beneficiary = decodeURIComponent(params.get("beneficiary") || "غير محدد");
-  const subject = decodeURIComponent(params.get("subject") || "غير محدد");
+  const place = (params.get("place") || "غير محدد");
+  const beneficiary = (params.get("beneficiary") || "غير محدد");
+  const subject = (params.get("subject") || "غير محدد");
 
 
   // بعد ثانيتين - عرض علامة التحقق
@@ -133,15 +134,17 @@
     document.getElementById("meetingDetails").style.display = "block";
 
     // عرض تفاصيل الاجتماع
-    document.getElementById("meetingDetails").innerHTML = `
-      <p><strong>اسم الشركة:</strong> ${company}</p>
-      <p><strong>تاريخ المستند:</strong> ${date}</p>
-      <p><strong>مكان التوثيق:</strong> ${place}</p>
-      <p><strong>رقم التوثيق:</strong> ${code}</p>
-      <p><strong>المستفيد:</strong> ${beneficiary}</p>
-      <p><strong>الموضوع:</strong> ${subject}</p>
-
-    `;
+    // Build details with textContent so URL parameters can never inject HTML/script (XSS fix)
+    const details = document.getElementById("meetingDetails");
+    details.replaceChildren();
+    [["اسم الشركة", company], ["تاريخ المستند", date], ["مكان التوثيق", place], ["رقم التوثيق", code], ["المستفيد", beneficiary], ["الموضوع", subject]]
+      .forEach(([label, value]) => {
+        const p = document.createElement("p");
+        const strong = document.createElement("strong");
+        strong.textContent = label + ":";
+        p.append(strong, " " + String(value).slice(0, 300));
+        details.append(p);
+      });
   }, 2000);
 </script>
 

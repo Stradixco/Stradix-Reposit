@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow" />
   <title>Mamzar For General Contracting EST - Ultra Secure Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- خطوط فاخرة -->
@@ -248,10 +249,10 @@
     <div class="brand-badge"></div>
     <div class="login-title">بوابة ممزر / Tradix</div>
     <div class="login-sub">دخول آمن لمولّد QR للفواتير الضريبية</div>
-    <input id="user" type="text" placeholder="اسم المستخدم">
-    <input id="pass" type="password" placeholder="كلمة المرور" onkeypress="if(event.key==='Enter'){checkLogin()}">
+    <input id="user" type="email" autocomplete="username" placeholder="البريد الإلكتروني">
+    <input id="pass" type="password" autocomplete="current-password" placeholder="كلمة المرور" onkeypress="if(event.key==='Enter'){checkLogin()}">
     <button class="glow-btn" onclick="checkLogin()">دخول</button>
-    <div id="msg">❌ اسم المستخدم أو كلمة المرور غير صحيحة</div>
+    <div id="msg">❌ البريد الإلكتروني أو كلمة المرور غير صحيحة</div>
   </div>
 </div>
 
@@ -364,23 +365,32 @@
 <!-- QR lib -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-<script>
-  /* ====== Login ====== */
-  function checkLogin(){
-  const u=document.getElementById('user').value.trim();
-  const p=document.getElementById('pass').value.trim();
-  const msg=document.getElementById('msg');
+<script type="module">
+  /* ====== Login (Firebase Authentication — no credentials in source) ====== */
+  import { auth } from "./portal/firebase-config.js";
+  import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-  if(u.toLowerCase()==="soliman" && p==="may4soli"){
-    msg.style.display='none';
-    window.location.href = "dashboard.html"; // ← هنا ننتقل للوحة التحكم
-  } else {
-    msg.style.display='block';
+  const params = new URLSearchParams(location.search);
+  const next = params.get("next");
+  // Only allow redirects to a local portal page (prevents open redirects)
+  const target = next && /^[A-Za-z0-9_-]+.html$/.test(next) && next !== "Login.html" ? next : "dashboard.html";
+
+  onAuthStateChanged(auth, (user) => { if (user) location.replace(target); });
+
+  async function checkLogin() {
+    const email = document.getElementById("user").value.trim();
+    const pass = document.getElementById("pass").value;
+    const msg = document.getElementById("msg");
+    msg.style.display = "none";
+    if (!email || !pass) { msg.style.display = "block"; return; }
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      location.replace(target);
+    } catch {
+      msg.style.display = "block";
+    }
   }
-}
-
-
-
+  window.checkLogin = checkLogin;
 </script>
 </body>
 </html>

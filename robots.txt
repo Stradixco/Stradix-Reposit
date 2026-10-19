@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+Disallow: /Login.html
+Disallow: /portal/
+Disallow: /dashboard.html
+Disallow: /invoices.html
+Disallow: /invoice-view.html
+Disallow: /add-invoice.html
+Disallow: /add-invoicestc.html
+Disallow: /Credit-note.html
+Disallow: /Credit-note-View.html
+Disallow: /customers-list.html
+Disallow: /Customer-Create.html
+Disallow: /Customer-Edit.html
+Disallow: /employees-cars.html
+Disallow: /reports.html
+Disallow: /setting.html
+Disallow: /qrmom.html
+Disallow: /sidebar.html
+Disallow: /Agreement-Creat-Cust.html
+Disallow: /customers.json
+
+Sitemap: https://www.s-tradix.com/sitemap.xml
