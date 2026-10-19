@@ -12,72 +12,10 @@
   <link rel="stylesheet" href="sidebar-style.css" />
   <script src="load-sidebar.js" defer></script>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background: linear-gradient(to bottom right, #0f172a, #1e293b);
-      color: #fff;
-    }
-
-    .main {
-      margin-right: 250px;
-      padding: 100px 40px 40px;
-    }
-
-    .under-construction {
-      background-color: #facc15;
-      color: #1e293b;
-      padding: 15px 20px;
-      font-size: 18px;
-      border-radius: 8px;
-      margin-bottom: 30px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #93c5fd;
-    }
-
-    .setting-buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-    }
-
-    .setting-button {
-      background-color: #1e40af;
-      color: #fef9c3;
-      padding: 20px;
-      border: none;
-      border-radius: 12px;
-      font-size: 18px;
-      cursor: not-allowed;
-      position: relative;
-      box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .setting-button:hover {
-      background-color: #2563eb;
-    }
-
-    .setting-button::after {
-      content: "🚧 تحت التطوير";
-      font-size: 14px;
-      color: #fcd34d;
-      position: absolute;
-      bottom: 10px;
-      left: 0;
-      right: 0;
-      text-align: center;
-    }
-  </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/portal.css?v=1">
 </head>
-<body>
+<body class="portal pg-settings">
 
   <!-- ✅ الهيدر -->
   <div id="header"></div>
@@ -87,11 +25,12 @@
 
   <!-- ✅ المحتوى الرئيسي -->
   <div class="main">
+  <div class="page-inner">
     <div class="under-construction">
       ⚠️ صفحة الإعدادات ما زالت تحت التطوير، بعض الوظائف ستكون متاحة قريباً.
     </div>
 
-    <h1 style="text-align: left;">General Setting 🛠️</h1>
+    <div class="page-head"><div><span class="eyebrow">الإعدادات</span><h1>General Setting</h1></div></div>
     <div class="setting-buttons">
       <button class="setting-button">🔐 تغيير الرقم السري</button>
       <button class="setting-button">🧑‍💼 صلاحيات المستخدم</button>
@@ -101,7 +40,7 @@
     </div>
 
     <!-- ✅ الإعدادات المتقدمة -->
-    <h1 style="text-align: left;" style="margin-top: 60px;">Advanced Setting ⚙️</h1>
+    <h2 class="settings-title">Advanced Setting</h2>
     <div class="setting-buttons">
       <button class="setting-button">🌐 إعدادات الربط الإلكتروني</button>
       <button class="setting-button">📦 النسخ الاحتياطي والاستعادة</button>
@@ -110,6 +49,7 @@
       <button class="setting-button">📤 تصدير البيانات</button>
       <button class="setting-button">🔄 مزامنة البيانات</button>
     </div>
+  </div>
   </div>
 </body>
 </html>

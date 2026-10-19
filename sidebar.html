@@ -1,107 +1,63 @@
 <meta name="robots" content="noindex, nofollow">
-<style>
-  .sidebar {
-    width: 220px;
-    background: #111827;
-    color: #fff;
-    padding: 20px;
-    height: 100vh;
-    position: fixed;
-    right: 0;
-    top: 0;
-    overflow-y: auto;
-    z-index: 999;
-  }
+<aside class="sidebar" aria-label="قائمة البوابة">
+  <a class="sb-brand" href="dashboard.html">
+    <img src="assets/img/brand-mark.webp" width="40" height="40" alt="">
+    <span>S-TRADIX<small>CLIENT PORTAL</small></span>
+  </a>
 
-  .sidebar h2 {
-    font-size: 18px;
-    margin-bottom: 30px;
-    color: #fbbf24; /* لون عنوان لوحة التحكم */
-  }
+  <nav class="sidebar-buttons">
+    <p class="sb-label">الرئيسية</p>
+    <a href="dashboard.html" class="sidebar-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>
+      Home
+    </a>
+    <a href="https://script.google.com/macros/s/AKfycbwZvu4UyAh-UJrzacgoCeonctSXdnZ-cYeuYyWOwJWB-cDV92Z47tnYlBNv9kJZXHz0/exec" class="sidebar-btn" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="11" r="2.2"/><path d="M5.5 16.5c.7-1.6 2-2.4 3.5-2.4s2.8.8 3.5 2.4M14.5 10h4M14.5 13.5h3"/></svg>
+      تصاريح وكروت تشغيل
+      <span class="ext" aria-hidden="true">↗</span>
+    </a>
 
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    margin-top: 40px; /* بداية الروابط من تحت شوي */
-  }
+    <p class="sb-label">العقود والتوثيق</p>
+    <a href="Agreement-Creat-Cust.html" class="sidebar-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+      Create Agreement
+    </a>
+    <a href="qrmom.html" class="sidebar-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>
+      MOM &amp; Agreement QR
+    </a>
 
-  .sidebar li {
-    margin-bottom: 18px; /* المسافة بين كل لينك */
-  }
+    <p class="sb-label">الفواتير</p>
+    <a href="add-invoice.html" class="sidebar-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M12 8v6M9 11h6"/></svg>
+      Mamzar Invoice
+    </a>
+    <a href="add-invoicestc.html" class="sidebar-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M12 8v6M9 11h6"/></svg>
+      Tradix Invoice
+    </a>
+    <a href="Credit-note.html" class="sidebar-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 11h6"/></svg>
+      Credit Note
+    </a>
+    <a href="invoices.html" class="sidebar-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      All Invoices
+    </a>
 
-  .sidebar a {
-    display: block;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: 0.3s;
-    font-size: 14px;
-  }
-  .sidebar-btn {
-  display: block;
-  background-color: hwb(170 7% 47%); /* برتقالي */
-  color: white;
-  text-decoration: none;
-  padding: 12px 20px;
-  margin-bottom: 10px;
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: 500;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
+    <p class="sb-label">العملاء</p>
+    <a href="customers-list.html" class="sidebar-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.8c1.6.8 2.6 2.6 3 5.2"/></svg>
+      Customers
+    </a>
+  </nav>
 
-.sidebar-btn:hover {
-  background-color: hsl(21, 67%, 71%); /* برتقالي غامق عند التحويم */
-  transform: translateX(4px);
-}
-
-.logout-btn {
-  background-color: #dc2626 !important; /* أحمر لتسجيل الخروج */
-}
-
-.logout-btn:hover {
-  background-color: hwb(25 56% 4%) !important;
-}
-  /* ألوان مخصصة لكل لينك */
-  .sidebar a.link-home      { color: #ffffff; } 
-  .sidebar a.link-Creat Agreement  { color: #ffffff; } 
-  .sidebar a.link-Mamzar Invoice       { color: #ffffff; } 
-  .sidebar a.link-Tradix Invoice       { color: #ffffff; } 
-  .sidebar a.link-invoices  { color: #ffffff; } 
-  .sidebar a.link-Credit    { color: #ffffff; } 
-  .sidebar a.link-reports   { color: #ffffff; } 
-  .sidebar a.link-clients   { color: #ffffff; } 
-  .sidebar a.link-settings  { color: #ffffff; } 
-  .sidebar a.link-logout    { color: #ffffff; } 
-
-  /* تأثير عند المرور */
-  .sidebar a:hover {
-    background-color: #2d4469;
-    transform: translateX(-4px);
-  }
-</style>
-
-<div class="sidebar" style="padding: 20px; text-align: left;">
-  <h2 style="font-size: 18px; color: #ffffff; margin-top: 70px; margin-bottom: 30px;">📌 TRADIX Dashboard</h2>
-  <div class="sidebar-buttons">
-    <a href="dashboard.html" class="sidebar-btn"> Home 🏠</a>
-<a href="https://script.google.com/macros/s/AKfycbwZvu4UyAh-UJrzacgoCeonctSXdnZ-cYeuYyWOwJWB-cDV92Z47tnYlBNv9kJZXHz0/exec" 
-   class="sidebar-btn" 
-   target="_blank" 
-   rel="noopener noreferrer">
-  📇 تصاريح وكروت تشغيل 🪪
-</a>
-    <a href="Agreement-Creat-Cust.html" class="sidebar-btn"> Creat Agreement ✍️</a>
-    <a href="add-invoice.html" class="sidebar-btn">✚ Mamzar Invoice 💵</a>
-    <a href="add-invoicestc.html" class="sidebar-btn">✚ Tradix Invoice 💶</a>
-    <a href="Credit-note.html" class="sidebar-btn">➖ Credit Note 🧾</a>
-    <a href="qrmom.html" class="sidebar-btn"> MOM & Agreement Qr 🎯 </a>
-    <a href="invoices.html" class="sidebar-btn"> All Invoices 📁</a>
-    <a href="customers-list.html" class="sidebar-btn"> Customers 👥</a>
-    <a href="Login.html" class="sidebar-btn logout-btn">🔓 Logout</a>
+  <div class="sb-foot">
+    <a href="Login.html" class="sidebar-btn logout-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 16l-4-4 4-4M6 12h10"/></svg>
+      Logout
+    </a>
+    <p class="sb-note">© S-TRADIX · بوابة داخلية آمنة</p>
   </div>
-</div>
-
+</aside>
+<div class="sb-scrim" data-sidebar-close></div>

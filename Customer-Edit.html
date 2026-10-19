@@ -12,81 +12,9 @@
   <script src="../background-header/load-header.js" defer></script>
   <link rel="stylesheet" href="sidebar-style.css" />
   <script src="load-sidebar.js" defer></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background-color: #0f172a;
-      color: #e2e8f0;
-      display: flex;
-      height: 100vh;
-    }
-
-    .main {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
-      margin-top: 80px;
-      margin-right: 250px;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 16px;
-      border: 1px solid #334155;
-      border-radius: 8px;
-      background-color: #1e293b;
-      color: white;
-    }
-
-    input[readonly] {
-      background-color: #334155;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-
-    .btn-save {
-      background-color: #10b981;
-      color: white;
-    }
-
-    .btn-back {
-      background-color: #6b7280;
-      color: white;
-    }
-
-    .error {
-      color: #f87171;
-      font-size: 14px;
-      margin-top: -10px;
-      margin-bottom: 10px;
-    }
-
-    
-  </style>
+  <link rel="stylesheet" href="assets/css/portal.css?v=1">
 </head>
-<body>
+<body class="portal pg-customer-form">
 
 <!-- Header & Sidebar -->
 <script src="./background-header/load-header.js" defer></script>
@@ -94,8 +22,17 @@
 <div id="sidebar-container"></div>
 
 
+  <div class="main">
+  <div class="page-inner narrow">
+  <div class="page-head">
+    <div>
+      <span class="eyebrow">العملاء</span>
+      <h1>تعديل بيانات العميل</h1>
+      <p>حدّث بيانات العميل ثم احفظ التعديلات.</p>
+    </div>
+    <a class="btn btn-secondary" href="customers-list.html">قائمة العملاء</a>
+  </div>
   <div class="form-container">
-    <h2>تعديل بيانات العميل</h2>
     
     <div class="form-group">
       <label for="customerId">رقم العميل</label>
@@ -142,8 +79,10 @@
       <input type="text" id="vat" />
     </div>
 
-    <button class="btn" id="saveBtn">💾 حفظ التعديلات</button>
+    <div class="buttons"><button class="btn btn-save" id="saveBtn">💾 حفظ التعديلات</button></div>
   </div>
+  </div>
+</div>
 
   <script>
 const urlParams = new URLSearchParams(window.location.search);

@@ -5,151 +5,96 @@
   <meta name="robots" content="noindex, nofollow">
   <script type="module" src="js/portal-guard.js"></script>
   <title>إنشاء إشعار دائن</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <!-- ✅ Header and sidebar -->
   <link rel="stylesheet" href="../background-header/Header-style.css" />
   <script src="../background-header/load-header.js" defer></script>
   <link rel="stylesheet" href="sidebar-style.css" />
   <script src="load-sidebar.js" defer></script>
-  <style>
-    body {
-      font-family: 'Cairo', sans-serif;
-      background: linear-gradient(160deg, #0A0F1C, #0C1B2A);
-      color: #E7ECF7;
-      margin: 0;
-    }
-
-    .main {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
-      margin-top: 80px;      /* 🟦 للهيدر */
-      margin-right: 250px;   /* 🟥 للسايد بار */
-    }
-
-    .workspace {
-      max-width: 800px;
-      margin: auto;
-      padding: 24px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
-    }
-
-    label {
-      display: block;
-      margin-top: 14px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: #0f172a;
-      color: #e7ecf7;
-      border: 1px solid #2b3550;
-      margin-top: 6px;
-    }
-
-    .btns {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 14px;
-      border: none;
-      transition: 0.2s;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #4f46e5, #22d3ee);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: #1a2540;
-      color: #dbe6ff;
-    }
-
-    .status {
-      margin-top: 12px;
-      font-size: 13px;
-    }
-
-    .status.ok { color: #10B981 }
-    .status.error { color: #EF4444 }
-
-    .qr-preview {
-      margin-top: 20px;
-    }
-  </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/portal.css?v=1">
 </head>
-<body>
+<body class="portal pg-credit co-mamzar">
 
 <div id="header"></div>
 <div id="sidebar-container"></div>
 
 <div class="main">
-  <div class="workspace">
-    <h2 style="margin-bottom: 20px;">إشعار دائن (Credit Note)</h2>
-
-    <label>اسم العميل</label>
-    <select id="client">
-      <option value="">اختر العميل</option>
-      <option value="Client A">Client A</option>
-      <option value="Client B">Client B</option>
-    </select>
-
-    <label>رقم الفاتورة المرتبطة</label>
-    <select id="invoice">
-      <option value="">اختر الفاتورة</option>
-      <option value="INV-001">INV-001</option>
-      <option value="INV-002">INV-002</option>
-    </select>
-
-    <label>سبب الإشعار</label>
-    <textarea id="reason" placeholder="سبب إصدار إشعار دائن..."></textarea>
-
-    <label>تاريخ الإشعار</label>
-    <input type="text" id="creditDate" placeholder="YYYY-MM-DDTHH:MM:SS+03:00">
-    <button class="btn btn-secondary" onclick="fillNow()">📅 التاريخ الآن</button>
-
-    <label>رقم الإشعار</label>
-    <input id="creditNoteDigits" type="text" placeholder="مثال: 100123" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-
-    <label>المبلغ قبل الضريبة (بالسالب)</label>
-    <input id="subtotal" type="text" placeholder="-100.00">
-
-    <div class="btns">
-      <button class="btn btn-primary" onclick="calcVAT()">احسب الضريبة</button>
+  <div class="page-inner narrow">
+    <div class="page-head">
+      <div>
+        <span class="eyebrow">الفواتير</span>
+        <h1>إشعار دائن (Credit Note)</h1>
+        <p>أصدر إشعارًا دائنًا مرتبطًا بفاتورة، واحسب الضريبة، وولّد رمز QR.</p>
+      </div>
+      <a class="btn btn-secondary" href="invoices.html">كل الفواتير</a>
     </div>
 
-    <label>مبلغ الضريبة (15%)</label>
-    <input id="vatamt" type="text" readonly>
+    <div class="workspace panel">
+      <div class="form-grid">
+        <div>
+          <label for="client">اسم العميل</label>
+          <select id="client">
+            <option value="">اختر العميل</option>
+            <option value="Client A">Client A</option>
+            <option value="Client B">Client B</option>
+          </select>
+        </div>
+        <div>
+          <label for="invoice">رقم الفاتورة المرتبطة</label>
+          <select id="invoice">
+            <option value="">اختر الفاتورة</option>
+            <option value="INV-001">INV-001</option>
+            <option value="INV-002">INV-002</option>
+          </select>
+        </div>
+        <div class="span-2">
+          <label for="reason">سبب الإشعار</label>
+          <textarea id="reason" placeholder="سبب إصدار إشعار دائن..."></textarea>
+        </div>
+        <div>
+          <label for="creditDate">تاريخ الإشعار</label>
+          <div class="input-action">
+            <input type="text" id="creditDate" placeholder="YYYY-MM-DDTHH:MM:SS+03:00">
+            <button class="btn btn-secondary" onclick="fillNow()">التاريخ الآن</button>
+          </div>
+        </div>
+        <div>
+          <label for="creditNoteDigits">رقم الإشعار</label>
+          <input id="creditNoteDigits" type="text" placeholder="مثال: 100123" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        </div>
+        <div class="span-2">
+          <label for="subtotal">المبلغ قبل الضريبة (بالسالب)</label>
+          <div class="input-action">
+            <input id="subtotal" type="text" placeholder="-100.00">
+            <button class="btn btn-primary" onclick="calcVAT()">احسب الضريبة</button>
+          </div>
+        </div>
+        <div>
+          <label for="vatamt">مبلغ الضريبة (15%)</label>
+          <input id="vatamt" type="text" readonly>
+        </div>
+        <div>
+          <label for="total">الإجمالي شامل الضريبة</label>
+          <input id="total" type="text" readonly>
+        </div>
+      </div>
 
-    <label>الإجمالي شامل الضريبة</label>
-    <input id="total" type="text" readonly>
+      <div class="btns">
+        <button class="btn btn-primary" onclick="generateQR()">توليد QR</button>
+        <button class="btn btn-secondary" onclick="clearAll()">مسح الحقول</button>
+        <button class="btn btn-primary" onclick="downloadQR()" id="download" style="display:none;">تحميل QR</button>
+        <button id="saveBtn" class="btn btn-primary" onclick="saveCreditNote()">💾 حفظ الإشعار</button>
+      </div>
+      <div class="status" id="status"></div>
 
-    <div class="btns">
-      <button class="btn btn-primary" onclick="generateQR()">🔄 توليد QR</button>
-      <button class="btn btn-secondary" onclick="clearAll()">🧹 مسح الحقول</button>
-      <button class="btn btn-primary" onclick="downloadQR()" id="download" style="display:none;">⬇️ تحميل QR</button>
-      <button id="saveBtn" class="btn btn-primary" onclick="saveCreditNote()">💾 حفظ الإشعار</button>
+      <div class="credit-out">
+        <div class="qr-preview" id="qrContainer"></div>
+        <div>
+          <label for="b64">نص Base64</label>
+          <textarea id="b64" readonly></textarea>
+        </div>
+      </div>
     </div>
-
-    <div class="status" id="status"></div>
-    <div class="qr-preview" id="qrContainer"></div>
-    <textarea id="b64" readonly style="margin-top:10px;"></textarea>
   </div>
 </div>
 

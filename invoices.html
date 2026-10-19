@@ -11,142 +11,53 @@
   <script src="../background-header/load-header.js" defer></script>
   <link rel="stylesheet" href="sidebar-style.css" />
   <script src="load-sidebar.js" defer></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background-color: #f4f4f4;
-    }
-
-    .main {
-      margin-right: 250px;
-      margin-top: 80px;
-      padding: 30px;
-    }
-
-    h1 {
-      margin-bottom: 20px;
-      color: #0d1a3d;
-    }
-    .top-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .top-controls input {
-      padding: 10px;
-      width: 300px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .top-controls .btns {
-      display: flex;
-      gap: 10px;
-    }
-
-    .top-controls button {
-      padding: 10px 15px;
-      background-color: #f45c02;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: white;
-    }
-
-    table th, table td {
-      border: 1px solid #ddd;
-      padding: 12px;
-      text-align: center;
-    }
-
-    table th {
-      background-color: #f0f0f0;
-      cursor: pointer;
-    }
-
-    table tbody tr:nth-child(even) {
-      background-color: #fafafa;
-    }
-
-    .pagination {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .pagination button {
-      margin: 0 5px;
-      padding: 8px 15px;
-      border: 1px solid #ccc;
-      background-color: white;
-      cursor: pointer;
-    }
-
-    .pagination button.active {
-      background-color: #f45c02;
-      color: white;
-    }
-
-    .action-button {
-      background-color: #0d1a3d;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .action-button:hover {
-      background-color: #1e2a5a;
-    }
-  </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/portal.css?v=1">
 </head>
-<body>
+<body class="portal pg-invoices">
 
   <!-- Header & Sidebar -->
   <div id="header"></div>
 <div id="sidebar-container"></div>
 
   <div class="main">
-<h1 style="text-align: left;">Invoice List 📁</h1>
-
-    <div class="top-controls">
-      <input type="text" id="searchInput" placeholder="🔍 Search by Invoice Number or Customer name..." />
-      <div class="btns">
-        <button onclick="goToAddInvoice()">➕ إنشاء فاتورة</button>
-        <button onclick="goToCreditNote()">+ Credit Note</button>
+    <div class="page-inner">
+      <div class="page-head">
+        <div>
+          <span class="eyebrow">الفواتير</span>
+          <h1>Invoice List</h1>
+          <p>ابحث وافرز واعرض كل الفواتير المحفوظة.</p>
+        </div>
+        <div class="page-actions btns">
+          <button class="btn-secondary" onclick="goToCreditNote()">+ Credit Note</button>
+          <button class="btn-primary" onclick="goToAddInvoice()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> إنشاء فاتورة</button>
+        </div>
       </div>
-    </div>
 
-    <table id="invoiceTable">
-      <thead>
-        <tr>
-          <th onclick="sortTable('invoiceNumber')">Invoice Number</th>
-          <th onclick="sortTable('clientName')">Customer Name</th>
-          <th onclick="sortTable('invoiceDate')">Invoice Date</th>
-          <th onclick="sortTable('totalAmount')">Total </th>
-          <th>To do</th>
-        </tr>
-      </thead>
-      <tbody id="invoiceBody">
-        <!-- سيتم ملء الصفوف من الجافاسكريبت -->
-      </tbody>
-    </table>
+      <div class="top-controls">
+        <input type="text" id="searchInput" placeholder="Search by Invoice Number or Customer name..." />
+      </div>
 
-    <div class="pagination" id="pagination">
-      <!-- أزرار الصفحات -->
+      <div class="table-wrap">
+        <table id="invoiceTable">
+          <thead>
+            <tr>
+              <th onclick="sortTable('invoiceNumber')">Invoice Number ⇅</th>
+              <th onclick="sortTable('clientName')">Customer Name ⇅</th>
+              <th onclick="sortTable('invoiceDate')">Invoice Date ⇅</th>
+              <th onclick="sortTable('totalAmount')">Total ⇅</th>
+              <th>To do</th>
+            </tr>
+          </thead>
+          <tbody id="invoiceBody">
+            <!-- سيتم ملء الصفوف من الجافاسكريبت -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination" id="pagination">
+        <!-- أزرار الصفحات -->
+      </div>
     </div>
   </div>
 

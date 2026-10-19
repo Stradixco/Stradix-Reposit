@@ -12,123 +12,9 @@
   <script src="../background-header/load-header.js" defer></script>
   <link rel="stylesheet" href="sidebar-style.css" />
   <script src="load-sidebar.js" defer></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background-color: #0f172a;
-      color: #e2e8f0;
-      display: flex;
-      height: 100vh;
-    }
-
-    .main {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
-      margin-top: 80px;
-      margin-right: 250px;
-    }
-
-    h1 {
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    input[type="text"] {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      background-color: #1e293b;
-      color: white;
-      width: 200px;
-    }
-
-    button {
-      padding: 10px 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .btn-create {
-      background-color: #3b82f6;
-      color: white;
-    }
-
-    .btn-delete {
-      background-color: #ef4444;
-      color: white;
-    }
-
-    .btn-export {
-      background-color: #10b981;
-      color: white;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: #1e293b;
-      border-radius: 14px;
-      overflow: hidden;
-    }
-
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #334155;
-      text-align: center;
-    }
-
-    th {
-      background-color: #0f172a;
-      color: #93c5fd;
-    }
-
-    tbody tr:hover {
-      background-color: #334155;
-    }
-
-    .edit-btn {
-      background-color: #f59e0b;
-      color: white;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .pagination {
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    .pagination button {
-      margin: 0 4px;
-      padding: 6px 10px;
-      background-color: #1e293b;
-      color: white;
-      border: 1px solid #334155;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .pagination button.active {
-      background-color: #3b82f6;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/portal.css?v=1">
 </head>
-<body>
+<body class="portal pg-customers">
 
 <!-- Header & Sidebar -->
 <script src="./background-header/load-header.js" defer></script>
@@ -136,34 +22,47 @@
 <div id="sidebar-container"></div>
 
 <div class="main">
-  <h1>📋 قائمة العملاء</h1>
+  <div class="page-inner">
+    <div class="page-head">
+      <div>
+        <span class="eyebrow">العملاء</span>
+        <h1>قائمة العملاء</h1>
+        <p>إدارة بيانات العملاء المستخدمة في الاتفاقيات والفواتير.</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn-export" onclick="exportToExcel()">تصدير Excel</button>
+        <button class="btn-create" onclick="window.location.href='Customer-Create.html'"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> إنشاء عميل</button>
+      </div>
+    </div>
 
-  <div class="controls">
-    <input type="text" id="searchByName" placeholder="🔍 ابحث بالاسم">
-    <input type="text" id="searchById" placeholder="🔍 ابحث برقم العميل">
-    <button class="btn-create" onclick="window.location.href='Customer-Create.html'">➕ إنشاء عميل</button>
-    <button class="btn-delete" onclick="deleteSelected()">🗑️ حذف</button>
-    <button class="btn-export" onclick="exportToExcel()">📤 تصدير Excel</button>
+    <div class="controls">
+      <div class="search-pair">
+        <input type="text" id="searchByName" placeholder="ابحث بالاسم">
+        <input type="text" id="searchById" placeholder="ابحث برقم العميل">
+      </div>
+      <button class="btn-delete" onclick="deleteSelected()">🗑️ حذف المحدد</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="customersTable">
+        <thead>
+          <tr>
+            <th>Client ID</th>
+            <th>Name</th>
+            <th>CR Number</th>
+            <th>Address</th>
+            <th>VAT #</th>
+            <th>تعديل</th>
+            <th>حذف</th>
+          </tr>
+        </thead>
+        <tbody id="customerTableBody">
+          <!-- سيتم ملء البيانات تلقائيًا -->
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination" id="pagination"></div>
   </div>
-
-  <table id="customersTable">
-    <thead>
-      <tr>
-        <th>Client ID</th>
-        <th>Name</th>
-        <th>CR Number</th>
-        <th>Address</th>
-        <th>VAT #</th>
-        <th>✏️ تعديل</th>
-        <th>🗑️ حذف</th>
-      </tr>
-    </thead>
-    <tbody id="customerTableBody">
-      <!-- سيتم ملء البيانات تلقائيًا -->
-    </tbody>
-  </table>
-
-  <div class="pagination" id="pagination"></div>
 </div>
 
 <script src="sidebar/load-sidebar.js"></script>

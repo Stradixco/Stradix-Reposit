@@ -14,18 +14,12 @@
   <script src="load-sidebar.js" defer></script>
 
   <!-- المحتوى -->
-<style>
-  .workspace {
-    margin-top: 80px; /* عشان المحتوى ميغطيش الهيدر */
-  }
-</style>
-    
-    <!-- باقي المحتوى -->
+<!-- باقي المحتوى -->
   </div>
-
+  <link rel="stylesheet" href="assets/css/portal.css?v=1">
 </head>
 
-<body>
+<body class="portal pg-generator co-mamzar">
 
 </head>
 <body>
@@ -39,254 +33,22 @@
 
 
 </script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0 }
-    body {
-      font-family: 'Cairo', sans-serif;
-      background:
-        radial-gradient(1200px 800px at 10% -10%, #0f2a6b33 0%, transparent 60%),
-        radial-gradient(1200px 800px at 110% 110%, #7c3aed22 0%, transparent 60%),
-        linear-gradient(160deg, hwb(125 35% 36%), hsl(134, 59%, 13%));
-      color: #E7ECF7;
-      min-height: 100vh;
-      padding: 30px 16px;
-    }
-
-    .workspace {
-      max-width: 1000px;
-      margin: auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.06));
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 18px 40px rgba(0,0,0,.35);
-    }
-
-    .header {
-      margin-bottom: 20px;
-    }
-
-    .header h1 {
-      font-size: 22px;
-      font-weight: 800;
-      background: linear-gradient(90deg, #e7ecf7, #bcd2ff);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .vat, .header small {
-      display: block;
-      font-size: 13px;
-      color: #cfe3ff;
-      opacity: .85;
-    }
-
-    .hint {
-      font-size: 13px;
-      color: #c7d4ef;
-      padding: 10px 12px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(96,165,250,.12), rgba(124,58,237,.10));
-      border: 1px dashed rgba(124,58,237,.35);
-      margin: 12px 0 20px;
-    }
-
-    label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-top: 14px;
-      margin-bottom: 4px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid hsl(99, 85%, 8%);
-      background: hsl(112, 86%, 14%);
-      color: #e7ecf7;
-      font-size: 14px;
-      transition: border 0.2s, box-shadow 0.2s;
-    }
-
-    input:focus, textarea:focus {
-      border-color: #4f46e5;
-      box-shadow: 0 0 0 3px rgba(124,58,237,.25);
-      outline: none;
-    }
-
-    .row {
-      display: grid;
-      gap: 12px;
-    }
-
-    .two {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .subcalc {
-      grid-template-columns: 1fr auto;
-      align-items: flex-end;
-    }
-
-    .btns {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .btn {
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      border: none;
-      transition: 0.2s;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #4f46e5 0%, #22d3ee 50%, #60a5fa 100%);
-      color: white;
-      background-size: 200% 200%;
-      box-shadow: 0 0 30px rgba(124, 58, 237,.45), 0 0 60px rgba(96,165,250,.25);
-    }
-
-    .btn-primary:hover {
-      background-position: 100% 0;
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: #1a2540;
-      color: #dbe6ff;
-      border: 1px solid #2b3550;
-    }
-
-    textarea {
-      height: 120px;
-      resize: vertical;
-    }
-
-    .status {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #a4c2ff;
-    }
-
-    .status.ok { color: #10B981 }
-    .status.error { color: #EF4444 }
-
-    footer {
-      margin-top: 20px;
-      font-size: 12px;
-      text-align: center;
-      color: #96a9cc;
-    }
-
-    .out {
-      margin-top: 20px;
-      display: none;
-      grid-template-columns: 1fr 240px;
-      gap: 20px;
-      align-items: start;
-    }
-
-    .qr-preview {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: hsl(225, 20%, 96%);
-      border-radius: 12px;
-      border: 2px solid #24304f;
-      padding: 6px;
-      position: relative;
-      animation: glowPulse 3s ease-in-out infinite;
-      overflow: visible;
-    }
-
-    @keyframes glowPulse {
-      0% { box-shadow: 0 6px 16px rgba(0,0,0,.25),0 0 20px rgba(124,58,237,.35),0 0 35px rgba(96,165,250,.35); }
-      50% { box-shadow: 0 14px 36px rgba(0,0,0,.5),0 0 55px rgba(124,58,237,.7),0 0 95px rgba(96,165,250,.7); }
-      100% { box-shadow: 0 6px 16px rgba(0,0,0,.25),0 0 20px rgba(124,58,237,.35),0 0 35px rgba(96,165,250,.35); }
-    }
-
-    .qr-orbit-wrap {
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .qr-orbit {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      animation: qrSpin 12s linear infinite;
-    }
-
-    .qr-orbit.o1 { width: 220px; height: 220px; }
-    .qr-orbit.o2 { width: 240px; height: 240px; animation-duration: 8s; }
-    .qr-orbit.o3 { width: 200px; height: 200px; animation-duration: 5s; }
-
-    .qr-electron {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #60a5fa 60%, #7c3aed);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) translateX(100px);
-      box-shadow: 0 0 14px rgba(96,165,250,.85);
-    }
-
-    .qr-orbit.o2 .qr-electron { transform: translate(-50%, -50%) translateX(90px); background: radial-gradient(circle at 30% 30%, #fff, #22d3ee 60%, #7c3aed); }
-    .qr-orbit.o3 .qr-electron { transform: translate(-50%, -50%) translateX(80px); background: radial-gradient(circle at 30% 30%, #fff, #7c3aed 60%, #60a5fa); }
-
-    @keyframes qrSpin {
-      to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-    
-    .action-button {
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.action-button:hover {
-  background-color: #2563eb;
-}
-
-  </style>
-</head>
+  </head>
 <body>
 
 
  <!-- ✅ محتوى الصفحة -->
   <div class="main">
-    <div class="workspace" style="margin-top: 60px;">
-<h3 style="margin-bottom: 20px; color: hsl(0, 0%, 100%);">صفحة الفاتورة</h3>
+    <div class="workspace page-inner">
+<div class="page-head">
+        <div>
+          <span class="eyebrow">فاتورة ضريبية · Mamzar</span>
+          <h1>صفحة الفاتورة</h1>
+          <p>أنشئ رمز QR للفاتورة الضريبية وفق متطلبات هيئة الزكاة والضريبة والجمارك.</p>
+        </div>
+        <a class="btn btn-secondary" href="invoices.html">كل الفواتير</a>
+      </div>
       <div class="card">
         <div class="header">
           <h1>Mamzar For General Contracting EST</h1>
@@ -311,21 +73,12 @@
     </div>
 
 <label for="invoiceDigits">رقم الفاتورة</label>
-<div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; margin-top:6px;">
-  <div style="display:flex; flex-direction:row-reverse; gap:6px;">
-    <!-- الجزء الثابت INV- -->
-    <input type="text" value="-INV" readonly 
-           style="width:400px; text-align:center; background:lab(15.73% -21.44 19.48); color:#cfe3ff; 
-                  border-radius:14px; border:1px solid #142508; padding:12px 0; font-weight:bold;">
-
-                      <!-- خانة إدخال الأرقام -->
-    <input id="invoiceDigits" class="input" type="text" maxlength="6" placeholder="100123"
-           style="width:400px; text-align:center;" 
+<div class="inv-number">
+      <span class="inv-prefix" aria-hidden="true">INV-</span>
+      <input id="invoiceDigits" class="input" type="text" maxlength="6" placeholder="100123"
+            
            oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-
-
-  </div>
-</div>
+    </div>
 
 
     <label for="subtotal">القيمة قبل الضريبة</label>
@@ -350,13 +103,13 @@
   <button class="btn btn-secondary" onclick="clearAll()">مسح الحقول</button>
 
 <!-- 🔵 زر عرض الفاتورة -->
-<button id="viewInvoiceBtn" class="action-button" style="display: none; margin-top: 15px;" onclick="window.location.href='invoice-view.html'">
+<button id="viewInvoiceBtn" class="action-button" style="display: none;" onclick="window.location.href='invoice-view.html'">
   👁️ عرض الفاتورة
 </button>
 
   <button id="download" class="btn btn-primary" style="display:none;" onclick="downloadQR()">تحميل QR</button>
 <button id="saveButton" class="btn btn-primary" style="display:none;" onclick="saveInvoiceToStorage()">💾 حفظ الفاتورة</button>
-<span id="saveStatus" style="margin-right: 10px; font-size: 13px;"></span>
+<span id="saveStatus" class="save-status"></span>
 
 </div>
 

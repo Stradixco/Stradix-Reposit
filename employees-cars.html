@@ -16,183 +16,11 @@
     
 
 
-  <style>
-        :root {
-      --primary: #ff9900;
-      --primary-dark: #cc7a00;
-      --danger: #dc3545;
-      --success: #28a745;
-      --info: #17a2b8;
-      --white: #ffffff;
-      --text: #ffffff;
-      --bg: #0f172a;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: white;
-      background-size: 400% 400%;
-      padding: 20px;
-    }
-
-    
-
-h2 {
-  color: #fff;
-  border-bottom: 2px solid #ffffff33;
-  padding-bottom: 5px;
-  font-size: 17px; /* 👈 ده حجم الخط */
-}
-
-    #header, #sidebar-container {
-      margin-bottom: 20px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 40px;
-      background-color: #1e3a5a;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 10px #00000055;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border-bottom: 1px solid #ffffff22;
-    }
-
-    th {
-      background-color: #294c6f;
-      color: #fff;
-    }
-
-    tr:hover {
-      background-color: #365b7e;
-    }
-
-    .edit-btn {
-      background-color: #28a745;
-      color: white;
-    }
-
-    .edit-btn:hover {
-      background-color: #218838;
-    }
-
-    .delete-btn {
-      background-color: #dc3545;
-      color: white;
-    }
-
-    .delete-btn:hover {
-      background-color: #c82333;
-    }
-
-    .popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #122b40;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px #00000077;
-      z-index: 1000;
-      width: 90%;
-      max-width: 500px;
-    }
-
-    .popup input,
-    .popup select {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      background: #0e2235;
-      border: 1px solid #ffffff22;
-      border-radius: 5px;
-      color: white;
-    }
-
-    .popup input::placeholder {
-      color: #cccccc88;
-      font-size: 14px;
-    }
-
-    .popup-buttons {
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    .popup-buttons button {
-      margin: 5px;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 4px;
-      font-weight: bold;
-    }
-
-    .popup-buttons .save-btn {
-      background-color: #28a745;
-      color: white;
-    }
-
-    .popup-buttons .cancel-btn {
-      background-color: #17a2b8;
-      color: white;
-    }
-
-    .add-row {
-      margin-bottom: 20px;
-      text-align: left;
-    }
-
-    .add-row button {
-      background-color: orange;
-      color: white;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .add-row button:hover {
-      background-color: darkorange;
-    }
-
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #00000099;
-      z-index: 999;
-    }
-
-    input[type="date"]::-webkit-calendar-picker-indicator {
-      filter: invert(1);
-    }
-
-  .main {
-    margin-top: 100px;      /* يخلي المحتوى ينزل تحت الهيدر */
-    margin-right: 240px;    /* يبعد المحتوى عن السايد بار */
-    padding: 20px;
-  }
-</style>
-
-
-    
   </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/portal.css?v=1">
 </head>
-<body>
+<body class="portal pg-employees">
 
   <!-- ✅ الهيدر والسايد بار -->
   <div id="header"></div>
@@ -201,12 +29,18 @@ h2 {
     <div id="sidebar-container"></div>
 
     <div class="main">
-      <!-- ✅ المحتوى الكامل هنا -->
+      <div class="page-inner">
+      <div class="page-head">
+        <div>
+          <span class="eyebrow">الموارد والأسطول</span>
+          <h1>إدارة الموظفين والسيارات</h1>
+          <p>الإقامات، كروت التشغيل، التصاريح وبيانات السيارات في مكان واحد.</p>
+        </div>
+      </div>
 
-  <h2>جدول إقامات الموظفين</h2>
-  <div class="add-row">
-    <button onclick="addRow('residency-table')">➕ إضافة صف</button>
-  </div>
+  <section class="panel panel-flush">
+    <div class="panel-title"><h2>جدول إقامات الموظفين</h2><div class="add-row"><button onclick="addRow('residency-table')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> إضافة صف</button></div></div>
+    <div class="table-wrap table-wrap--inset">
   <table id="residency-table">
     <thead>
       <tr>
@@ -220,11 +54,12 @@ h2 {
     </thead>
     <tbody></tbody>
   </table>
+    </div>
+  </section>
 
-  <h2>جدول كروت التشغيل</h2>
-  <div class="add-row">
-    <button onclick="addRow('workcard-table')">➕ إضافة صف</button>
-  </div>
+  <section class="panel panel-flush">
+    <div class="panel-title"><h2>جدول كروت التشغيل</h2><div class="add-row"><button onclick="addRow('workcard-table')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> إضافة صف</button></div></div>
+    <div class="table-wrap table-wrap--inset">
   <table id="workcard-table">
     <thead>
       <tr>
@@ -237,11 +72,12 @@ h2 {
     </thead>
     <tbody></tbody>
   </table>
+    </div>
+  </section>
 
-  <h2>جدول التصاريح الشخصية</h2>
-  <div class="add-row">
-    <button onclick="addRow('personalperm-table')">➕ إضافة صف</button>
-  </div>
+  <section class="panel panel-flush">
+    <div class="panel-title"><h2>جدول التصاريح الشخصية</h2><div class="add-row"><button onclick="addRow('personalperm-table')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> إضافة صف</button></div></div>
+    <div class="table-wrap table-wrap--inset">
   <table id="personalperm-table">
     <thead>
       <tr>
@@ -254,11 +90,12 @@ h2 {
     </thead>
     <tbody></tbody>
   </table>
+    </div>
+  </section>
 
-  <h2>جدول تصاريح المواد</h2>
-  <div class="add-row">
-    <button onclick="addRow('materialperm-table')">➕ إضافة صف</button>
-  </div>
+  <section class="panel panel-flush">
+    <div class="panel-title"><h2>جدول تصاريح المواد</h2><div class="add-row"><button onclick="addRow('materialperm-table')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> إضافة صف</button></div></div>
+    <div class="table-wrap table-wrap--inset">
   <table id="materialperm-table">
     <thead>
       <tr>
@@ -273,11 +110,12 @@ h2 {
     </thead>
     <tbody></tbody>
   </table>
+    </div>
+  </section>
 
-  <h2>بيانات السيارات</h2>
-  <div class="add-row">
-    <button onclick="addRow('cars-table')">➕ إضافة صف</button>
-  </div>
+  <section class="panel panel-flush">
+    <div class="panel-title"><h2>بيانات السيارات</h2><div class="add-row"><button onclick="addRow('cars-table')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> إضافة صف</button></div></div>
+    <div class="table-wrap table-wrap--inset">
   <table id="cars-table">
     <thead>
       <tr>
@@ -292,11 +130,12 @@ h2 {
     </thead>
     <tbody></tbody>
   </table>
+    </div>
+  </section>
 
-  <h2>تصاريح السيارات</h2>
-  <div class="add-row">
-    <button onclick="addRow('carperm-table')">➕ إضافة صف</button>
-  </div>
+  <section class="panel panel-flush">
+    <div class="panel-title"><h2>تصاريح السيارات</h2><div class="add-row"><button onclick="addRow('carperm-table')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> إضافة صف</button></div></div>
+    <div class="table-wrap table-wrap--inset">
   <table id="carperm-table">
     <thead>
       <tr>
@@ -310,11 +149,12 @@ h2 {
     </thead>
     <tbody></tbody>
   </table>
+    </div>
+  </section>
 
-  <h2>كروت تشغيل السيارات</h2>
-  <div class="add-row">
-    <button onclick="addRow('car-workcard-table')">➕ إضافة صف</button>
-  </div>
+  <section class="panel panel-flush">
+    <div class="panel-title"><h2>كروت تشغيل السيارات</h2><div class="add-row"><button onclick="addRow('car-workcard-table')"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> إضافة صف</button></div></div>
+    <div class="table-wrap table-wrap--inset">
   <table id="car-workcard-table">
     <thead>
       <tr>
@@ -327,7 +167,10 @@ h2 {
     </thead>
     <tbody></tbody>
   </table>
+    </div>
+  </section>
 
+  </div>
   <!-- ✅ نافذة التعديل (البوب أب) -->
   <div class="overlay" id="overlay"></div>
   <div class="popup" id="editPopup">

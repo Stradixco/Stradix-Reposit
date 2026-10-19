@@ -1,0 +1,100 @@
+/* S-TRADIX portal — printable documents (tax invoice view, credit note view).
+   Screen: a refined A4 sheet on a soft canvas. Print: clean white page. */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  --ink: #07162a;
+  --text: #0b1a2c;
+  --text-2: #33445a;
+  --muted: #66768a;
+  --line: #e4e8ee;
+  --soft: #f6f8fb;
+  --blue: #2468b4;
+  --signature: linear-gradient(90deg, #7ccdf6, #2f80d6 45%, #d2303e);
+}
+* { box-sizing: border-box; }
+body.portal-doc {
+  margin: 0; padding: 40px 16px; min-height: 100vh; color: var(--text);
+  font-family: "IBM Plex Sans Arabic", "Inter", "Segoe UI", Tahoma, sans-serif; line-height: 1.6;
+  background: radial-gradient(900px 400px at 50% -10%, rgba(47, 128, 214, 0.12), transparent 70%), #e9edf2;
+  -webkit-font-smoothing: antialiased;
+}
+body.doc-credit { font-family: "Inter", "IBM Plex Sans Arabic", "Segoe UI", sans-serif; direction: ltr; }
+
+/* Shared sheet */
+.invoice-container, .credit-box {
+  position: relative; margin: 0 auto; background: #fff; border-radius: 8px; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 40px 80px -40px rgba(7, 22, 42, 0.45);
+}
+.invoice-container::before, .credit-box::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 6px; background: var(--signature); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+/* ---------- Tax invoice ---------- */
+.invoice-container { width: 210mm; min-height: 297mm; padding: 48px 52px 110px; }
+.invoice-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; padding-bottom: 24px; margin-bottom: 8px; border-bottom: 1px solid var(--line); }
+.invoice-header .company-info { font-size: 13.5px; line-height: 1.75; color: var(--text-2); }
+.invoice-header .company-info h2 { margin: 0 0 4px; font-size: 20px; font-weight: 700; color: var(--ink); }
+.invoice-header .company-info small { font-size: 12.5px; color: var(--muted); }
+.invoice-title { flex: none; padding: 12px 18px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 18px; font-weight: 700; line-height: 1.35; text-align: center; letter-spacing: 0.02em; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.section-title { margin: 28px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: var(--blue); }
+.row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.col { width: calc(50% - 6px); padding: 12px 16px; border-radius: 10px; background: var(--soft); border: 1px solid #edf0f4; }
+.label { font-size: 12.5px; color: var(--muted); }
+.value { font-size: 16px; font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+.col:has(#invTotal) { background: var(--ink); border-color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.col:has(#invTotal) .label { color: #a7b6c8; }
+.col:has(#invTotal) .value { color: #fff; font-size: 20px; }
+.qr-code { margin-top: 20px; text-align: center; }
+.qr-code img { width: 168px; height: 168px; padding: 10px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.qr-code img:not([src]) { visibility: hidden; }
+.btn-print {
+  display: flex; align-items: center; gap: 8px; margin: 30px auto 0; padding: 0 26px; min-height: 48px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--ink); color: #fff; font: inherit; font-size: 15px; font-weight: 600; box-shadow: 0 14px 30px -14px rgba(7, 22, 42, 0.7); transition: transform 0.2s, background-color 0.2s;
+}
+.btn-print:hover { background: #173556; transform: translateY(-1px); }
+.invoice-container .footer { position: absolute; bottom: 36px; left: 52px; right: 52px; padding-top: 14px; border-top: 1px solid var(--line); text-align: center; font-size: 12px; color: #8a97a8; }
+
+/* ---------- Credit note ---------- */
+.credit-box { max-width: 900px; padding: 52px 56px 48px; font-size: 14px; color: var(--text-2); }
+.credit-box .header { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-bottom: 24px; margin-bottom: 28px; border-bottom: 1px solid var(--line); }
+.credit-box .header .logo { font-size: 20px; font-weight: 700; color: var(--ink); line-height: 1.4; }
+.credit-box .header .logo span { font-family: "IBM Plex Sans Arabic", sans-serif !important; font-weight: 500; }
+.credit-box .header .type { padding: 12px 18px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 18px; font-weight: 700; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.credit-box .header .type span { font-family: "IBM Plex Sans Arabic", sans-serif !important; }
+.credit-box .info { display: flex; justify-content: space-between; gap: 18px; font-size: 13.5px; line-height: 1.8; }
+.credit-box .info .section { width: 50%; padding: 16px 18px; border-radius: 12px; background: var(--soft); border: 1px solid #edf0f4; }
+.credit-box .info .title { margin-bottom: 6px; font-weight: 700; color: var(--blue); font-size: 12.5px; letter-spacing: 0.03em; }
+.credit-box table { width: 100%; margin-top: 28px; border-collapse: separate; border-spacing: 0; font-size: 13.5px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.credit-box thead { background: var(--ink); color: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.credit-box th { padding: 12px; font-weight: 600; font-size: 12.5px; text-align: center; }
+.credit-box th span { font-family: "IBM Plex Sans Arabic", sans-serif !important; color: #a7b6c8; }
+.credit-box td { padding: 12px; text-align: center; border-top: 1px solid var(--line); color: var(--text); }
+.credit-box tbody tr:nth-child(even) td { background: var(--soft); }
+.credit-box .totals { float: right; width: 340px; margin-top: 22px; }
+.credit-box .totals table { margin: 0; border: 0; border-radius: 0; }
+.credit-box .totals td { padding: 8px 0; text-align: left; border-top: 1px solid var(--line); background: none !important; }
+.credit-box .totals tr:first-child td { border-top: 0; }
+.credit-box .totals td:first-child { color: var(--muted); }
+.credit-box .totals td:last-child { text-align: right; font-weight: 600; }
+.credit-box .totals tr:last-child td { padding-top: 12px; font-size: 15px; color: var(--ink); }
+.credit-box .reason { margin-top: 36px; padding: 16px 18px; border-radius: 12px; border: 1px solid var(--line); line-height: 1.8; }
+.credit-box .signature { margin-top: 56px; text-align: right; color: var(--muted); }
+.credit-box .signature span { display: inline-block; width: 220px; margin-top: 36px; border-top: 1px solid var(--text); }
+.credit-box .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); text-align: center; font-size: 12.5px; color: #8a97a8; }
+
+@media (max-width: 900px) {
+  body.portal-doc { padding: 0; }
+  .invoice-container { width: auto; min-height: 0; padding: 32px 20px 120px; border-radius: 0; }
+  .credit-box { padding: 32px 20px; border-radius: 0; }
+  .col, .credit-box .info .section { width: 100%; }
+  .credit-box .info { flex-direction: column; }
+  .credit-box .totals { float: none; width: 100%; }
+  .credit-box table { display: block; overflow-x: auto; }
+}
+
+@media print {
+  body.portal-doc { background: #fff; padding: 0; }
+  .no-print { display: none !important; }
+  .invoice-container { box-shadow: none; margin: 0; padding: 20mm; width: auto; min-height: auto; border-radius: 0; }
+  .credit-box { box-shadow: none; border: 0; border-radius: 0; max-width: none; padding: 16mm; }
+  .invoice-container .footer { position: static; margin-top: 30px; }
+}

@@ -6,116 +6,14 @@
   <script type="module" src="js/portal-guard.js"></script>
   <title>إضافة عميل جديد</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <!-- ✅ Header and sidebar -->
   <link rel="stylesheet" href="../background-header/Header-style.css" />
   <script src="../background-header/load-header.js" defer></script>
   <link rel="stylesheet" href="sidebar-style.css" />
   <script src="load-sidebar.js" defer></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background-color: #0f172a;
-      color: #e2e8f0;
-      display: flex;
-      height: 100vh;
-    }
-
-    .main {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
-      margin-top: 80px;
-      margin-right: 250px;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-
-    form {
-      background-color: #1e293b;
-      border-radius: 14px;
-      padding: 24px;
-      max-width: 800px;
-    }
-
-    label {
-      display: block;
-      margin: 12px 0 6px;
-      font-weight: bold;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #334155;
-      background-color: #0f172a;
-      color: white;
-      font-size: 14px;
-    }
-
-    .readonly-box {
-      margin-bottom: 20px;
-      font-weight: bold;
-      background-color: #1e293b;
-      padding: 12px;
-      border-radius: 8px;
-    }
-
-    .row {
-      display: flex;
-      gap: 20px;
-    }
-
-    .row > div {
-      flex: 1;
-    }
-
-    .buttons {
-      margin-top: 24px;
-      display: flex;
-      gap: 20px;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 12px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    #createBtn {
-      background-color: #3b82f6;
-      color: white;
-      opacity: 0.6;
-      pointer-events: none;
-      transition: 0.3s;
-    }
-
-    #createBtn.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    #cancelBtn {
-      background-color: #ef4444;
-      color: white;
-    }
-
-    .error {
-      color: #f87171;
-      font-size: 13px;
-      margin-top: 4px;
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/portal.css?v=1">
 </head>
-<body>
+<body class="portal pg-customer-form">
 
 <!-- الهيدر -->
 <script src="./background-header/load-header.js" defer></script>
@@ -128,9 +26,17 @@
 
 
 <div class="main">
-  <h1>➕ إنشاء عميل جديد</h1>
+  <div class="page-inner narrow">
+  <div class="page-head">
+    <div>
+      <span class="eyebrow">العملاء</span>
+      <h1>إنشاء عميل جديد</h1>
+      <p>الحقول المعلّمة بـ * مطلوبة.</p>
+    </div>
+    <a class="btn btn-secondary" href="customers-list.html">قائمة العملاء</a>
+  </div>
 
-  <div class="readonly-box">
+  <div class="readonly-box id-chip">
     رقم العميل: <span id="customerIdDisplay">CUST-...</span>
   </div>
 
@@ -218,6 +124,7 @@
       <button type="button" id="cancelBtn" onclick="window.location.href='customers-list.html'">إلغاء</button>
     </div>
   </form>
+  </div>
 </div>
 
 <script src="sidebar/load-sidebar.js"></script>
