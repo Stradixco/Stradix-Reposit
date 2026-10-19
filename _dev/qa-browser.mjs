@@ -10,7 +10,7 @@ const base = process.argv[2] || "http://localhost:8080";
 const outDir = process.argv[3] || "qa-shots";
 await mkdir(outDir, { recursive: true });
 
-const PAGES = ["index.html", "services.html", "about-us.html", "gallery.html", "contact.html", "does-not-exist.html"];
+const PAGES = ["index.html", "services.html", "zora.html", "about-us.html", "gallery.html", "contact.html", "does-not-exist.html"];
 const VIEWPORTS = [{ name: "phone", width: 390, height: 844 }, { name: "tablet", width: 820, height: 1180 }, { name: "desktop", width: 1440, height: 900 }];
 const browser = await chromium.launch({ executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe", headless: true });
 const issues = [];
@@ -69,9 +69,12 @@ for (const vp of VIEWPORTS) {
     if (!closed) note(`[${vp.name}] mega menu did not close on Escape`);
   } else {
     await page.click(".menu-toggle");
-    await page.waitForTimeout(100);
+    await page.waitForTimeout(600);
     const visible = await page.locator("#mobile-nav").isVisible();
     if (!visible) note(`[${vp.name}] mobile nav did not open`);
+    // The open menu must cover the screen below the header (regression: it once collapsed to the header's height)
+    const cover = await page.evaluate(() => { const r = document.getElementById("mobile-nav").getBoundingClientRect(); return { h: r.height, need: innerHeight - 90, bg: getComputedStyle(document.getElementById("mobile-nav")).backgroundColor }; });
+    if (cover.h < cover.need) note(`[${vp.name}] mobile nav covers only ${Math.round(cover.h)}px of ${cover.need}px`);
     await page.screenshot({ path: path.join(outDir, `${vp.name}-menu.png`) });
     await page.keyboard.press("Escape");
     await page.waitForTimeout(450);

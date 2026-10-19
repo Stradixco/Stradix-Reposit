@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
-const PAGES = ["index.html", "services.html", "about-us.html", "gallery.html", "contact.html", "404.html"];
+const PAGES = ["index.html", "services.html", "zora.html", "about-us.html", "gallery.html", "contact.html", "404.html"];
 const PARTIALS = ["head", "header", "footer"];
 
 const partials = Object.fromEntries(

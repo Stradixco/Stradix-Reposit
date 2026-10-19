@@ -364,6 +364,19 @@
     });
   });
 
+  /* ---------- Silent product preview videos: play only while visible, never with reduced motion ---------- */
+  $$("video[data-autoplay]").forEach((video) => {
+    if (reduceMotion || !("IntersectionObserver" in window)) { video.controls = true; return; }
+    video.muted = true;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) video.play().catch(() => { video.controls = true; });
+        else video.pause();
+      });
+    }, { threshold: 0.25 });
+    io.observe(video);
+  });
+
   /* ---------- Footer year ---------- */
   $$("[data-year]").forEach((el) => { el.textContent = String(new Date().getFullYear()); });
 
