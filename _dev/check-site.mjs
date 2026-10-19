@@ -6,7 +6,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const PAGES = ["index.html", "services.html", "zora.html", "about-us.html", "gallery.html", "contact.html", "404.html"];
+const PAGES = ["index.html", "services.html", "liquid-waste.html", "solid-waste.html", "fresh-food.html", "zora.html", "about-us.html", "gallery.html", "contact.html", "404.html"];
 const problems = [];
 const exists = (p) => access(p).then(() => true, () => false);
 const cache = new Map();

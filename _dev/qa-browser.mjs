@@ -10,7 +10,7 @@ const base = process.argv[2] || "http://localhost:8080";
 const outDir = process.argv[3] || "qa-shots";
 await mkdir(outDir, { recursive: true });
 
-const PAGES = ["index.html", "services.html", "zora.html", "about-us.html", "gallery.html", "contact.html", "does-not-exist.html"];
+const PAGES = ["index.html", "services.html", "liquid-waste.html", "solid-waste.html", "fresh-food.html", "zora.html", "about-us.html", "gallery.html", "contact.html", "does-not-exist.html"];
 const VIEWPORTS = [{ name: "phone", width: 390, height: 844 }, { name: "tablet", width: 820, height: 1180 }, { name: "desktop", width: 1440, height: 900 }];
 const browser = await chromium.launch({ executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe", headless: true });
 const issues = [];
@@ -92,8 +92,11 @@ for (const vp of VIEWPORTS) {
   await page.waitForTimeout(300);
   await page.screenshot({ path: path.join(outDir, `${vp.name}-lightbox.png`) });
   await page.keyboard.press("ArrowRight");
-  const isVideo = await page.locator("#lightbox video").count();
-  if (!isVideo) note(`[${vp.name}] lightbox next item should be a video`);
+  if (!(await page.locator("#lightbox .lightbox-body > *").count())) note(`[${vp.name}] lightbox next item is empty`);
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(200);
+  await page.locator(".work-tile[data-video]").first().click();
+  if (!(await page.locator("#lightbox video").count())) note(`[${vp.name}] video tile did not open a video`);
   await page.keyboard.press("Escape");
 
   // Contact form: validation then (stubbed) submission
