@@ -645,3 +645,12 @@ body.nav-locked { overflow: hidden; }
   .service-grid--support > li:nth-child(1), .service-grid--support > li:nth-child(2) { grid-column: span 3; }
   .service-grid--support > li:first-child .service-card h3 { font-size: clamp(1.35rem, 1.1rem + 0.9vw, 1.9rem); }
 }
+
+/* ---------- Touch screens: comfortable tap targets (44px) ---------- */
+@media (pointer: coarse) {
+  .location .tel a, .contact-channel a, .contact-channel li a, .link-arrow { display: inline-flex; align-items: center; min-height: 44px; }
+  .location .tel { gap: 0; }
+  .hero-dot { height: 44px; }
+  .footer-col a { display: inline-flex; align-items: center; min-height: 40px; }
+  .footer-col ul { gap: 2px; }
+}
