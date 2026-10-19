@@ -43,4 +43,5 @@ function waves({ w = 1600, h = 900, lines = 34, colors = ["#14b8a6", "#2f80d6", 
 }
 await writeFile(path.join(root, "assets", "img", "waves-light.svg"), waves({}));
 await writeFile(path.join(root, "assets", "img", "waves-dark.svg"), waves({ colors: ["#2dd4bf", "#4fb1ec", "#a78bfa"], opacity: 0.32 }));
+await writeFile(path.join(root, "assets", "img", "waves-brand.svg"), waves({ colors: ["#4fb1ec", "#2f80d6", "#1d4f8f", "#d2303e"], opacity: 0.2 }));
 console.log("ZORA assets copied to assets/zora and wave backgrounds generated.");

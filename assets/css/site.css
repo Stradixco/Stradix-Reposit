@@ -869,3 +869,83 @@ body:not(.has-hero) .site-header .primary-nav > ul > li > a:hover, body:not(.has
 .btn-ghost--light { --btn-bd: rgba(7, 22, 42, 0.22); --btn-fg: var(--text-on-light); }
 .btn-ghost--light:hover { --btn-bg: rgba(7, 22, 42, 0.05); --btn-bd: rgba(7, 22, 42, 0.45); }
 @media (max-width: 700px) { .device { width: min(250px, 66vw); } .phones { min-height: 340px; } }
+
+/* ==========================================================================
+   BRAND TINT — the light canvas takes its colour from the S-TRADIX logo:
+   a soft steel blue, with faint light-blue and red glows. Cards stay white.
+   ========================================================================== */
+:root {
+  --paper: #e8eff8;      /* main light canvas — logo blue, very light */
+  --paper-2: #f1f5fb;    /* alternate light canvas */
+  --tint-edge: #dbe6f4;
+  --line-light: rgba(29, 79, 143, 0.14);
+  --glow-blue: rgba(79, 177, 236, 0.22);
+  --glow-red: rgba(210, 48, 62, 0.08);
+}
+body { background: var(--paper); }
+.section--light {
+  background:
+    radial-gradient(900px 420px at 0% 0%, var(--glow-blue), transparent 70%),
+    radial-gradient(700px 360px at 100% 100%, var(--glow-red), transparent 70%),
+    var(--paper);
+}
+.section--light-2 {
+  background:
+    radial-gradient(800px 380px at 100% 0%, rgba(79, 177, 236, 0.16), transparent 70%),
+    var(--paper-2);
+}
+.section--waves, .section--light.section--waves {
+  background: url("../img/waves-brand.svg") center / cover no-repeat,
+    radial-gradient(900px 420px at 0% 0%, var(--glow-blue), transparent 70%),
+    radial-gradient(700px 360px at 100% 100%, var(--glow-red), transparent 70%),
+    var(--paper);
+}
+.page-hero, .notfound {
+  background: url("../img/waves-brand.svg") center / cover no-repeat,
+    radial-gradient(900px 500px at 10% 0%, rgba(79, 177, 236, 0.30), transparent 70%),
+    radial-gradient(700px 400px at 100% 100%, var(--glow-red), transparent 70%),
+    linear-gradient(180deg, var(--tint-edge) 0%, var(--paper) 100%);
+}
+.zora-hero {
+  background: url("../img/waves-light.svg") center / cover no-repeat,
+    radial-gradient(900px 500px at 85% 20%, rgba(124, 58, 237, 0.10), transparent 70%),
+    radial-gradient(900px 500px at 0% 0%, rgba(79, 177, 236, 0.24), transparent 70%),
+    linear-gradient(180deg, var(--tint-edge), var(--paper));
+}
+.credentials, .ticker { background: var(--paper-2); }
+
+/* Header, mega menu and mobile menu pick up the same tint */
+.site-header.is-solid, body:not(.has-hero) .site-header { background: rgba(232, 239, 248, 0.88); }
+.site-header.is-open, .mobile-nav { background: var(--paper-2); }
+.mega { background: rgba(241, 245, 251, 0.98); }
+.primary-nav .mega-list a:hover { background: #fff; }
+.service-nav { background: rgba(241, 245, 251, 0.92); }
+
+/* White cards read as raised surfaces on the tinted canvas */
+.form-card, .env-card, .location, .pillar, .loop li, .roles li, .avail li, .gov li, .zora-mini li, .report-card { background: #fff; }
+.pillars { background: var(--line-light); border-color: var(--line-light); }
+.pillar:hover { background: #fbfdff; }
+.section--light .assurance li, .section--light-2 .assurance li { background: #fff; }
+.field input, .field select, .field textarea { background: #f7f9fd; }
+.map-frame, .map-consent { background-color: #dfe8f4; }
+
+/* Inner hero: keep the headline clear of the faded image */
+@media (min-width: 900px) {
+  .page-hero h1 { max-width: 13ch; }
+  .page-hero .lead { max-width: 50ch; }
+  .page-hero-media { width: 44%; }
+  .page-hero-media img { -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 40%, #000 80%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 40%, #000 80%); }
+}
+
+/* Dark surfaces keep light text (the light theme changed the inherited body colour) */
+.hero, .cta-band, .site-footer, .zora-dark, .mega-feature { color: var(--text-on-dark); }
+.hero h1, .hero h2, .section--light .cta-band h2, .section--light-2 .cta-band h2, .cta-band h2, .cta-band h3, .site-footer h2, .zora-dark h2, .zora-dark h3 { color: #fff; }
+.section--light .cta-band .lead, .section--light-2 .cta-band .lead, .cta-band .lead { color: #c9d5e3; }
+.section--light .cta-band .eyebrow, .section--light-2 .cta-band .eyebrow { color: var(--blue-300); }
+.section--light .cta-band .btn-ghost, .section--light-2 .cta-band .btn-ghost { --btn-bd: var(--line-dark-strong); --btn-fg: var(--text-on-dark); }
+.section--light .cta-band .btn-ghost:hover, .section--light-2 .cta-band .btn-ghost:hover { --btn-bg: rgba(255,255,255,.08); --btn-bd: rgba(255,255,255,.5); }
+.site-footer .footer-col h2 { color: var(--muted-on-dark); }
+.service-card, .section--light .service-card h3, .section--light-2 .service-card h3, .work-tile .caption { color: #fff; }
+.work-tile { color: #fff; }
+.site-header { color: var(--text-on-dark); }
+.site-header.is-solid, body:not(.has-hero) .site-header, .site-header.is-open { color: var(--text-on-light); }
