@@ -220,6 +220,8 @@
         li.hidden = !show;
         if (show) count++;
       });
+      // Service groups (projects page): hide a group when none of its items are shown
+      $$("[data-group]", gallery).forEach((g) => { g.hidden = !$$("[data-item]", g).some((li) => !li.hidden); });
       if (status) status.textContent = `${count} item${count === 1 ? "" : "s"} shown`;
     }));
 

@@ -45,7 +45,7 @@ for (const vp of VIEWPORTS) {
     // With normal motion: every image in <main> must have been revealed and loaded after scrolling
     await page.waitForTimeout(1200);
     const unloaded = await page.evaluate(() => [...document.querySelectorAll("main img")]
-      .filter((i) => !i.closest("[hidden], dialog, .mega, .hero-slide:not(.is-active)") && !(i.complete && i.naturalWidth > 0))
+      .filter((i) => !i.closest("[hidden], dialog, .mega, .hero-slide:not(.is-active)") && i.getBoundingClientRect().left < innerWidth && !(i.complete && i.naturalWidth > 0))
       .map((i) => i.getAttribute("src")));
     if (unloaded.length) note(`[${vp.name}] ${p}: images never loaded → ${unloaded.join(", ")}`);
     const hiddenReveals = await page.evaluate(() => [...document.querySelectorAll("[data-reveal]")].filter((el) => !el.classList.contains("is-visible")).length);

@@ -24,8 +24,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&amp;family=Inter:wght@400..600&amp;display=swap">
-  <link rel="stylesheet" href="assets/css/site.css?v=9">
-  <script src="assets/js/site.js?v=9" defer></script>
+  <link rel="stylesheet" href="assets/css/site.css?v=11">
+  <script src="assets/js/site.js?v=11" defer></script>
   <!-- /@head -->
 </head>
 <body>
@@ -128,167 +128,422 @@
 
     <section class="section section--light" aria-labelledby="gallery-title">
       <div class="container">
-        <h2 class="sr-only" id="gallery-title">Project gallery</h2>
+        <div class="section-head">
+          <span class="eyebrow">Projects &amp; references</span>
+          <h2 class="display-m" id="gallery-title">Our work, by service.</h2>
+        </div>
         <div class="filter-bar" role="group" aria-label="Filter projects">
-          <button type="button" data-filter="all" aria-pressed="true">All</button>
-          <button type="button" data-filter="video" aria-pressed="false">Films</button>
-          <button type="button" data-filter="environmental" aria-pressed="false">Environmental</button>
-          <button type="button" data-filter="manpower" aria-pressed="false">Manpower</button>
-          <button type="button" data-filter="food" aria-pressed="false">Fresh food</button>
-          <button type="button" data-filter="supply" aria-pressed="false">Supply</button>
-          <button type="button" data-filter="contracting" aria-pressed="false">Contracting</button>
+          <button type="button" data-filter="all" aria-pressed="true">All (24)</button>
+          <button type="button" data-filter="liquid" aria-pressed="false">Liquid waste (7)</button>
+          <button type="button" data-filter="solid" aria-pressed="false">Solid waste (4)</button>
+          <button type="button" data-filter="food" aria-pressed="false">Fresh food (4)</button>
+          <button type="button" data-filter="manpower" aria-pressed="false">Manpower (2)</button>
+          <button type="button" data-filter="supply" aria-pressed="false">Supply (3)</button>
+          <button type="button" data-filter="contracting" aria-pressed="false">Contracting (1)</button>
+          <button type="button" data-filter="video" aria-pressed="false">Films (3)</button>
         </div>
         <p class="sr-only" aria-live="polite" data-filter-status></p>
 
-        <ul class="masonry" role="list" data-gallery>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/liquid-tanker-sunset-1200.webp" data-caption="Liquid-transport tanker">
-              <img src="assets/img/fleet/liquid-tanker-sunset-640.webp" width="640" height="427" alt="S-TRADIX tanker at the depot at sunset" loading="lazy" decoding="async">
-              <span class="caption">Liquid-transport tanker<small>Environmental · Tankers</small></span>
-            </button>
+        <div class="project-groups" data-gallery>
+        <section class="project-group" data-group="liquid" aria-labelledby="pg-liquid">
+          <header class="project-group-head" data-category="liquid">
+            <div>
+              <span class="project-tag">7 projects</span>
+              <h3 class="title-s" id="pg-liquid">Liquid &amp; hazardous waste by tanker</h3>
+              <p>Collection, transport and disposal of liquid waste with our tanker fleet.</p>
+            </div>
+            <a class="btn btn-ghost btn-ghost--light btn-sm" href="liquid-waste.html">Liquid waste by tanker</a>
+          </header>
+          <ul class="project-grid" role="list">
+          <li data-item data-category="liquid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/liquid-tanker-sunset-1200.webp" data-caption="Liquid waste transport">
+                <img src="assets/img/fleet/liquid-tanker-sunset-640.webp" srcset="assets/img/fleet/liquid-tanker-sunset-640.webp 640w, assets/img/fleet/liquid-tanker-sunset-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="427" alt="S-TRADIX liquid-transport tanker at the depot" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Liquid waste</span>
+                <h3>Liquid waste transport</h3>
+                <p>Tanker collection and transport of liquid waste from client sites to treatment and disposal.</p>
+                <a class="link-arrow" href="liquid-waste.html">Liquid waste by tanker <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
           </li>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/solid-hooklift-tipping-1200.webp" data-caption="Hook-lift container truck">
-              <img src="assets/img/fleet/solid-hooklift-tipping-640.webp" width="640" height="427" alt="S-TRADIX hook-lift truck unloading a green container" loading="lazy" decoding="async">
-              <span class="caption">Hook-lift container truck<small>Environmental · Containers</small></span>
-            </button>
+          <li data-item data-category="liquid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/liquid-vacuum-truck-1200.webp" data-caption="Sewer cleaning & suction">
+                <img src="assets/img/fleet/liquid-vacuum-truck-640.webp" srcset="assets/img/fleet/liquid-vacuum-truck-640.webp 640w, assets/img/fleet/liquid-vacuum-truck-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="451" alt="S-TRADIX vacuum truck crew cleaning a sewer manhole" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Liquid waste</span>
+                <h3>Sewer cleaning & suction</h3>
+                <p>Vacuum-truck crews clearing sewers and drainage lines at client sites.</p>
+                <a class="link-arrow" href="liquid-waste.html">Liquid waste by tanker <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          <li data-item data-category="liquid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/hero-port-operations-1100.webp" data-caption="Port-side liquid operations">
+                <img src="assets/img/hero-port-operations-640.webp" srcset="assets/img/hero-port-operations-640.webp 640w, assets/img/hero-port-operations-1100.webp 1100w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="360" alt="S-TRADIX tankers and liquid storage tanks beside a vessel at port" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Liquid waste</span>
+                <h3>Port-side liquid operations</h3>
+                <p>Waste-water tankers, a vacuum truck and storage tanks serving operations at port.</p>
+                <a class="link-arrow" href="liquid-waste.html">Liquid waste by tanker <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          <li data-item data-category="liquid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/liquid-water-tanker-1200.webp" data-caption="Water supply by tanker">
+                <img src="assets/img/fleet/liquid-water-tanker-640.webp" srcset="assets/img/fleet/liquid-water-tanker-640.webp 640w, assets/img/fleet/liquid-water-tanker-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="427" alt="Blue S-TRADIX water tanker" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Liquid waste</span>
+                <h3>Water supply by tanker</h3>
+                <p>Water tankers supplying sites and operations, including fresh drinking water.</p>
+                <a class="link-arrow" href="liquid-waste.html">Liquid waste by tanker <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          <li data-item data-category="liquid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/liquid-wastewater-tanker-1200.webp" data-caption="Vacuum tanker operations">
+                <img src="assets/img/fleet/liquid-wastewater-tanker-640.webp" srcset="assets/img/fleet/liquid-wastewater-tanker-640.webp 640w, assets/img/fleet/liquid-wastewater-tanker-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="512" alt="Orange and white S-TRADIX vacuum tanker" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Liquid waste</span>
+                <h3>Vacuum tanker operations</h3>
+                <p>Removal of waste water, mud and sludge with vacuum tankers.</p>
+                <a class="link-arrow" href="liquid-waste.html">Liquid waste by tanker <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          <li data-item data-category="liquid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/work-sewer-cleaning-fleet-1000.webp" data-caption="Sewer-cleaning fleet">
+                <img src="assets/img/work-sewer-cleaning-fleet-640.webp" srcset="assets/img/work-sewer-cleaning-fleet-640.webp 640w, assets/img/work-sewer-cleaning-fleet-1000.webp 1000w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="320" alt="S-TRADIX sewer-cleaning tanker and skip-loader truck" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Liquid waste</span>
+                <h3>Sewer-cleaning fleet</h3>
+                <p>Sewer-cleaning tanker and skip-loader truck at the S-TRADIX depot.</p>
+                <a class="link-arrow" href="liquid-waste.html">Liquid waste by tanker <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          <li data-item data-category="liquid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/hero-environmental-fleet-1100.webp" data-caption="Environmental services depot">
+                <img src="assets/img/hero-environmental-fleet-640.webp" srcset="assets/img/hero-environmental-fleet-640.webp 640w, assets/img/hero-environmental-fleet-1100.webp 1100w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="301" alt="S-TRADIX environmental depot with tankers, waste trucks and recycling bins" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Liquid waste</span>
+                <h3>Environmental services depot</h3>
+                <p>Tankers, waste trucks and recycling bins ready for daily operations.</p>
+                <a class="link-arrow" href="liquid-waste.html">Liquid waste by tanker <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          </ul>
+        </section>
+        <section class="project-group" data-group="solid" aria-labelledby="pg-solid">
+          <header class="project-group-head" data-category="solid">
+            <div>
+              <span class="project-tag">4 projects</span>
+              <h3 class="title-s" id="pg-solid">Solid waste by container</h3>
+              <p>Roll-off and skip containers delivered, swapped and collected on schedule.</p>
+            </div>
+            <a class="btn btn-ghost btn-ghost--light btn-sm" href="solid-waste.html">Solid waste by container</a>
+          </header>
+          <ul class="project-grid" role="list">
+          <li data-item data-category="solid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/solid-hooklift-tipping-1200.webp" data-caption="Roll-off container service">
+                <img src="assets/img/fleet/solid-hooklift-tipping-640.webp" srcset="assets/img/fleet/solid-hooklift-tipping-640.webp 640w, assets/img/fleet/solid-hooklift-tipping-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="427" alt="S-TRADIX hook-lift truck unloading a green roll-off container" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Solid waste</span>
+                <h3>Roll-off container service</h3>
+                <p>Hook-lift trucks delivering, swapping and collecting large roll-off containers on schedule.</p>
+                <a class="link-arrow" href="solid-waste.html">Solid waste by container <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          <li data-item data-category="solid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/solid-containers-yard-1200.webp" data-caption="Skip container placement">
+                <img src="assets/img/fleet/solid-containers-yard-640.webp" srcset="assets/img/fleet/solid-containers-yard-640.webp 640w, assets/img/fleet/solid-containers-yard-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="361" alt="Stacked red S-TRADIX skip containers" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Solid waste</span>
+                <h3>Skip container placement</h3>
+                <p>Numbered S-TRADIX skip containers ready for placement on facilities and yards.</p>
+                <a class="link-arrow" href="solid-waste.html">Solid waste by container <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          <li data-item data-category="solid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/solid-skiploader-yard-1200.webp" data-caption="Skip-loader collection">
+                <img src="assets/img/fleet/solid-skiploader-yard-640.webp" srcset="assets/img/fleet/solid-skiploader-yard-640.webp 640w, assets/img/fleet/solid-skiploader-yard-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="427" alt="Blue S-TRADIX skip-loader truck carrying a skip" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Solid waste</span>
+                <h3>Skip-loader collection</h3>
+                <p>Skip-loader trucks collecting everyday waste from facilities and workshops.</p>
+                <a class="link-arrow" href="solid-waste.html">Solid waste by container <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          <li data-item data-category="solid">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/solid-yellow-fleet-640.webp" data-caption="Hook-lift fleet">
+                <img src="assets/img/fleet/solid-yellow-fleet-640.webp" width="640" height="227" alt="Row of yellow S-TRADIX hook-lift trucks" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Solid waste</span>
+                <h3>Hook-lift fleet</h3>
+                <p>A dedicated hook-lift fleet for high-volume industrial and construction sites.</p>
+                <a class="link-arrow" href="solid-waste.html">Solid waste by container <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          </ul>
+        </section>
+        <section class="project-group" data-group="food" aria-labelledby="pg-food">
+          <header class="project-group-head" data-category="food">
+            <div>
+              <span class="project-tag">4 projects</span>
+              <h3 class="title-s" id="pg-food">Fresh food supply from Egypt</h3>
+              <p>Fresh vegetables and fruits sourced in Egypt and delivered across Saudi Arabia.</p>
+            </div>
+            <a class="btn btn-ghost btn-ghost--light btn-sm" href="fresh-food.html">Fresh food supply</a>
+          </header>
+          <ul class="project-grid" role="list">
+          <li data-item data-category="food">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/food-harvest-sunrise-1200.webp" data-caption="Fresh vegetables from Egypt">
+                <img src="assets/img/fleet/food-harvest-sunrise-640.webp" srcset="assets/img/fleet/food-harvest-sunrise-640.webp 640w, assets/img/fleet/food-harvest-sunrise-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="427" alt="Crates of fresh vegetables at an Egyptian farm at sunrise" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Fresh food</span>
+                <h3>Fresh vegetables from Egypt</h3>
+                <p>Produce sourced from Egyptian farms, sorted and packed for clients across Saudi Arabia.</p>
+                <a class="link-arrow" href="fresh-food.html">Fresh food supply <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
           </li>
           <li data-item data-category="food">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/food-harvest-sunrise-1200.webp" data-caption="Egyptian harvest">
-              <img src="assets/img/fleet/food-harvest-sunrise-640.webp" width="640" height="427" alt="Crates of fresh vegetables at an Egyptian farm at sunrise" loading="lazy" decoding="async">
-              <span class="caption">Egyptian harvest<small>Fresh food</small></span>
-            </button>
-          </li>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/solid-containers-yard-1200.webp" data-caption="Skip containers">
-              <img src="assets/img/fleet/solid-containers-yard-640.webp" width="640" height="361" alt="Numbered red S-TRADIX skip containers" loading="lazy" decoding="async">
-              <span class="caption">Skip containers<small>Environmental · Containers</small></span>
-            </button>
-          </li>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/liquid-vacuum-truck-1200.webp" data-caption="Sewer cleaning">
-              <img src="assets/img/fleet/liquid-vacuum-truck-640.webp" width="640" height="451" alt="S-TRADIX vacuum truck crew cleaning a sewer" loading="lazy" decoding="async">
-              <span class="caption">Sewer cleaning<small>Environmental · Tankers</small></span>
-            </button>
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/food-port-loading-1200.webp" data-caption="Export & port loading">
+                <img src="assets/img/fleet/food-port-loading-640.webp" srcset="assets/img/fleet/food-port-loading-640.webp 640w, assets/img/fleet/food-port-loading-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="427" alt="S-TRADIX refrigerated trucks loading fresh produce at port" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Fresh food</span>
+                <h3>Export & port loading</h3>
+                <p>Refrigerated loading at port for sea freight from Egypt to the Kingdom.</p>
+                <a class="link-arrow" href="fresh-food.html">Fresh food supply <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
           </li>
           <li data-item data-category="food">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/food-distribution-center-1200.webp" data-caption="Fresh food distribution">
-              <img src="assets/img/fleet/food-distribution-center-640.webp" width="640" height="320" alt="S-TRADIX fresh food distribution centre" loading="lazy" decoding="async">
-              <span class="caption">Fresh food distribution<small>Fresh food</small></span>
-            </button>
-          </li>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/solid-skiploader-yard-1200.webp" data-caption="Skip-loader truck">
-              <img src="assets/img/fleet/solid-skiploader-yard-640.webp" width="640" height="427" alt="Blue S-TRADIX skip-loader truck" loading="lazy" decoding="async">
-              <span class="caption">Skip-loader truck<small>Environmental · Containers</small></span>
-            </button>
-          </li>
-          <li data-item data-category="food">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/food-port-loading-1200.webp" data-caption="Port loading">
-              <img src="assets/img/fleet/food-port-loading-640.webp" width="640" height="427" alt="Refrigerated S-TRADIX trucks loading produce at port" loading="lazy" decoding="async">
-              <span class="caption">Port loading<small>Fresh food</small></span>
-            </button>
-          </li>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/liquid-water-tanker-1200.webp" data-caption="Water tanker">
-              <img src="assets/img/fleet/liquid-water-tanker-640.webp" width="640" height="427" alt="Blue S-TRADIX water tanker" loading="lazy" decoding="async">
-              <span class="caption">Water tanker<small>Environmental · Tankers</small></span>
-            </button>
-          </li>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/solid-yellow-fleet-640.webp" data-caption="Hook-lift fleet">
-              <img src="assets/img/fleet/solid-yellow-fleet-640.webp" width="640" height="227" alt="Row of yellow S-TRADIX hook-lift trucks" loading="lazy" decoding="async">
-              <span class="caption">Hook-lift fleet<small>Environmental · Containers</small></span>
-            </button>
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/food-distribution-center-1200.webp" data-caption="Distribution centre">
+                <img src="assets/img/fleet/food-distribution-center-640.webp" srcset="assets/img/fleet/food-distribution-center-640.webp 640w, assets/img/fleet/food-distribution-center-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="320" alt="S-TRADIX fresh food distribution centre with refrigerated trucks" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Fresh food</span>
+                <h3>Distribution centre</h3>
+                <p>Fresh fruit, vegetables and chilled goods prepared for delivery across Saudi Arabia.</p>
+                <a class="link-arrow" href="fresh-food.html">Fresh food supply <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
           </li>
           <li data-item data-category="food">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/food-harvest-bounty-1200.webp" data-caption="Fruit harvest">
-              <img src="assets/img/fleet/food-harvest-bounty-640.webp" width="640" height="427" alt="Crates of fresh fruit at harvest" loading="lazy" decoding="async">
-              <span class="caption">Fruit harvest<small>Fresh food</small></span>
-            </button>
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/fleet/food-harvest-bounty-1200.webp" data-caption="Fresh fruit sourcing">
+                <img src="assets/img/fleet/food-harvest-bounty-640.webp" srcset="assets/img/fleet/food-harvest-bounty-640.webp 640w, assets/img/fleet/food-harvest-bounty-1200.webp 1200w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="427" alt="Crates of fresh fruit at harvest" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Fresh food</span>
+                <h3>Fresh fruit sourcing</h3>
+                <p>Citrus, mangoes, grapes, bananas and seasonal fruit selected at harvest.</p>
+                <a class="link-arrow" href="fresh-food.html">Fresh food supply <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
           </li>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/fleet/liquid-wastewater-tanker-1200.webp" data-caption="Vacuum tanker">
-              <img src="assets/img/fleet/liquid-wastewater-tanker-640.webp" width="640" height="512" alt="Orange and white S-TRADIX vacuum tanker" loading="lazy" decoding="async">
-              <span class="caption">Vacuum tanker<small>Environmental · Tankers</small></span>
-            </button>
-          </li>
-          <li data-item data-category="video">
-            <button class="work-tile" type="button" data-video="img/portfolio/thumb-01v1.mp4" data-poster="assets/img/work-offshore-crew-1000.webp" data-caption="Project film 01">
-              <img src="assets/img/work-offshore-crew-640.webp" width="640" height="320" alt="Play project film 01" loading="lazy" decoding="async">
-              <span class="video-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Film</span>
-              <span class="play-ring" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
-            </button>
+          </ul>
+        </section>
+        <section class="project-group" data-group="manpower" aria-labelledby="pg-manpower">
+          <header class="project-group-head" data-category="manpower">
+            <div>
+              <span class="project-tag">2 projects</span>
+              <h3 class="title-s" id="pg-manpower">Manpower supply</h3>
+              <p>Skilled crews and supervisors working safely on client sites.</p>
+            </div>
+            <a class="btn btn-ghost btn-ghost--light btn-sm" href="services.html#manpower">Manpower supply</a>
+          </header>
+          <ul class="project-grid" role="list">
+          <li data-item data-category="manpower">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/manpower-offshore-crew-1000.webp" data-caption="Offshore crew">
+                <img src="assets/img/manpower-offshore-crew-640.webp" srcset="assets/img/manpower-offshore-crew-640.webp 640w, assets/img/manpower-offshore-crew-1000.webp 1000w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="461" alt="S-TRADIX crew in orange coveralls on an offshore deck" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Manpower</span>
+                <h3>Offshore crew</h3>
+                <p>Skilled S-TRADIX crew in full safety gear on an offshore deck.</p>
+                <a class="link-arrow" href="services.html#manpower">Manpower supply <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
           </li>
           <li data-item data-category="manpower">
-            <button class="work-tile" type="button" data-full="assets/img/manpower-offshore-crew-1000.webp" data-caption="Offshore crew — manpower supply">
-              <img src="assets/img/manpower-offshore-crew-640.webp" width="640" height="461" alt="S-TRADIX crew in orange coveralls on an offshore deck" loading="lazy" decoding="async">
-              <span class="caption">Offshore crew<small>Manpower supply</small></span>
-            </button>
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/work-technician-training-1000.webp" data-caption="Technician safety briefing">
+                <img src="assets/img/work-technician-training-640.webp" srcset="assets/img/work-technician-training-640.webp 640w, assets/img/work-technician-training-1000.webp 1000w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="320" alt="Technicians in yellow hard hats during a safety briefing" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Manpower</span>
+                <h3>Technician safety briefing</h3>
+                <p>Technicians briefed on safety before starting work on site.</p>
+                <a class="link-arrow" href="services.html#manpower">Manpower supply <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
           </li>
-          <li data-item data-category="video">
-            <button class="work-tile" type="button" data-video="img/portfolio/thumb-02v1.mp4" data-poster="assets/img/work-video-2-1000.webp" data-caption="Project film 02">
-              <img src="assets/img/work-video-2-640.webp" width="640" height="320" alt="Play project film 02" loading="lazy" decoding="async">
-              <span class="video-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Film</span>
-              <span class="play-ring" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
-            </button>
+          </ul>
+        </section>
+        <section class="project-group" data-group="supply" aria-labelledby="pg-supply">
+          <header class="project-group-head" data-category="supply">
+            <div>
+              <span class="project-tag">3 projects</span>
+              <h3 class="title-s" id="pg-supply">Materials &amp; spare parts</h3>
+              <p>Safety equipment, spare parts, materials and tools for industrial clients.</p>
+            </div>
+            <a class="btn btn-ghost btn-ghost--light btn-sm" href="services.html#supply">Materials &amp; spare parts</a>
+          </header>
+          <ul class="project-grid" role="list">
+          <li data-item data-category="supply">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/work-safety-store-1000.webp" data-caption="Safety & rescue equipment">
+                <img src="assets/img/work-safety-store-640.webp" srcset="assets/img/work-safety-store-640.webp 640w, assets/img/work-safety-store-1000.webp 1000w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="320" alt="Store with life jackets, coveralls and rescue equipment" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Supply</span>
+                <h3>Safety & rescue equipment</h3>
+                <p>Supply of life jackets, coveralls and rescue equipment.</p>
+                <a class="link-arrow" href="services.html#supply">Materials & spare parts <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
           </li>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/work-sewer-cleaning-fleet-1000.webp" data-caption="Sewer-cleaning fleet — environmental services">
-              <img src="assets/img/work-sewer-cleaning-fleet-640.webp" width="640" height="320" alt="S-TRADIX sewer-cleaning tanker and skip-loader truck outside a depot" loading="lazy" decoding="async">
-              <span class="caption">Sewer-cleaning fleet<small>Environmental</small></span>
-            </button>
+          <li data-item data-category="supply">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/work-spare-parts-store-1000.webp" data-caption="Spare-parts warehouse">
+                <img src="assets/img/work-spare-parts-store-640.webp" srcset="assets/img/work-spare-parts-store-640.webp 640w, assets/img/work-spare-parts-store-1000.webp 1000w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="320" alt="Warehouse racking stocked with valves, flanges and cable reels" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Supply</span>
+                <h3>Spare-parts warehouse</h3>
+                <p>Valves, flanges, cables and tools stocked for industrial clients.</p>
+                <a class="link-arrow" href="services.html#supply">Materials & spare parts <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
           </li>
+          <li data-item data-category="supply">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/material-supply-1000.webp" data-caption="Material & equipment supply">
+                <img src="assets/img/material-supply-640.webp" srcset="assets/img/material-supply-640.webp 640w, assets/img/material-supply-1000.webp 1000w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="461" alt="Illustration of a warehouse with industrial parts, a truck and a forklift" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Supply</span>
+                <h3>Material & equipment supply</h3>
+                <p>Construction materials, tools and equipment delivered to site.</p>
+                <a class="link-arrow" href="services.html#supply">Materials & spare parts <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          </ul>
+        </section>
+        <section class="project-group" data-group="contracting" aria-labelledby="pg-contracting">
+          <header class="project-group-head" data-category="contracting">
+            <div>
+              <span class="project-tag">1 project</span>
+              <h3 class="title-s" id="pg-contracting">General contracting</h3>
+              <p>Planning, supervision and execution of infrastructure projects.</p>
+            </div>
+            <a class="btn btn-ghost btn-ghost--light btn-sm" href="services.html#contracting">General contracting</a>
+          </header>
+          <ul class="project-grid" role="list">
           <li data-item data-category="contracting">
-            <button class="work-tile" type="button" data-full="assets/img/work-construction-site-1000.webp" data-caption="Site supervision — general contracting">
-              <img src="assets/img/work-construction-site-640.webp" width="640" height="355" alt="Engineers in S-TRADIX hi-vis vests supervising a construction site" loading="lazy" decoding="async">
-              <span class="caption">Site supervision<small>Contracting</small></span>
-            </button>
+            <article class="project-card">
+              <button class="work-tile" type="button" data-full="assets/img/work-construction-site-1000.webp" data-caption="Site supervision">
+                <img src="assets/img/work-construction-site-640.webp" srcset="assets/img/work-construction-site-640.webp 640w, assets/img/work-construction-site-1000.webp 1000w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="355" alt="Engineers in S-TRADIX hi-vis vests supervising a construction site" loading="lazy" decoding="async">
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Contracting</span>
+                <h3>Site supervision</h3>
+                <p>Engineers supervising execution on an infrastructure construction site.</p>
+                <a class="link-arrow" href="services.html#contracting">General contracting <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              </div>
+            </article>
+          </li>
+          </ul>
+        </section>
+        <section class="project-group" data-group="video" aria-labelledby="pg-video">
+          <header class="project-group-head" data-category="video">
+            <div>
+              <span class="project-tag">3 projects</span>
+              <h3 class="title-s" id="pg-video">Project films</h3>
+              <p>Footage from S-TRADIX field operations.</p>
+            </div>
+          </header>
+          <ul class="project-grid" role="list">
+          <li data-item data-category="video">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-video="img/portfolio/thumb-01v1.mp4" data-poster="assets/img/work-offshore-crew-1000.webp" data-caption="Project film 01">
+                <img src="assets/img/work-offshore-crew-640.webp" srcset="assets/img/work-offshore-crew-640.webp 640w, assets/img/work-offshore-crew-1000.webp 1000w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="320" alt="Play project film 01" loading="lazy" decoding="async">
+                <span class="video-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Film</span>
+                <span class="play-ring" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Project film</span>
+                <h3>Project film 01</h3>
+                <p>Footage from S-TRADIX field operations.</p>
+              </div>
+            </article>
           </li>
           <li data-item data-category="video">
-            <button class="work-tile" type="button" data-video="img/portfolio/thumb-03v1.mp4" data-poster="assets/img/work-hazmat-transport-1000.webp" data-caption="Project film 03">
-              <img src="assets/img/work-hazmat-transport-640.webp" width="640" height="320" alt="Play project film 03" loading="lazy" decoding="async">
-              <span class="video-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Film</span>
-              <span class="play-ring" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
-            </button>
+            <article class="project-card">
+              <button class="work-tile" type="button" data-video="img/portfolio/thumb-02v1.mp4" data-poster="assets/img/work-video-2-1000.webp" data-caption="Project film 02">
+                <img src="assets/img/work-video-2-640.webp" srcset="assets/img/work-video-2-640.webp 640w, assets/img/work-video-2-1000.webp 1000w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="320" alt="Play project film 02" loading="lazy" decoding="async">
+                <span class="video-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Film</span>
+                <span class="play-ring" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Project film</span>
+                <h3>Project film 02</h3>
+                <p>Footage from S-TRADIX field operations.</p>
+              </div>
+            </article>
           </li>
-          <li data-item data-category="manpower">
-            <button class="work-tile" type="button" data-full="assets/img/work-technician-training-1000.webp" data-caption="Technician safety briefing">
-              <img src="assets/img/work-technician-training-640.webp" width="640" height="320" alt="Technicians in yellow hard hats during a safety briefing" loading="lazy" decoding="async">
-              <span class="caption">Technician briefing<small>Manpower</small></span>
-            </button>
+          <li data-item data-category="video">
+            <article class="project-card">
+              <button class="work-tile" type="button" data-video="img/portfolio/thumb-03v1.mp4" data-poster="assets/img/work-hazmat-transport-1000.webp" data-caption="Project film 03">
+                <img src="assets/img/work-hazmat-transport-640.webp" srcset="assets/img/work-hazmat-transport-640.webp 640w, assets/img/work-hazmat-transport-1000.webp 1000w" sizes="(min-width: 1280px) 400px, (min-width: 700px) 50vw, 100vw" width="640" height="320" alt="Play project film 03" loading="lazy" decoding="async">
+                <span class="video-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Film</span>
+                <span class="play-ring" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
+              </button>
+              <div class="project-body">
+                <span class="project-tag">Project film</span>
+                <h3>Project film 03</h3>
+                <p>Footage from S-TRADIX field operations.</p>
+              </div>
+            </article>
           </li>
-          <li data-item data-category="supply">
-            <button class="work-tile" type="button" data-full="assets/img/work-safety-store-1000.webp" data-caption="Safety and rescue equipment">
-              <img src="assets/img/work-safety-store-640.webp" width="640" height="320" alt="Store with life jackets, coveralls and rescue equipment" loading="lazy" decoding="async">
-              <span class="caption">Safety equipment<small>Supply</small></span>
-            </button>
-          </li>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/hero-environmental-fleet-1659.webp" data-caption="Environmental services depot">
-              <img src="assets/img/hero-environmental-fleet-640.webp" width="640" height="301" alt="S-TRADIX environmental depot with tankers, waste trucks and recycling bins" loading="lazy" decoding="async">
-              <span class="caption">Environmental depot<small>Environmental</small></span>
-            </button>
-          </li>
-          <li data-item data-category="supply">
-            <button class="work-tile" type="button" data-full="assets/img/work-spare-parts-store-1000.webp" data-caption="Spare-parts warehouse">
-              <img src="assets/img/work-spare-parts-store-640.webp" width="640" height="320" alt="Warehouse racking stocked with valves, flanges and cable reels" loading="lazy" decoding="async">
-              <span class="caption">Spare-parts warehouse<small>Supply</small></span>
-            </button>
-          </li>
-          <li data-item data-category="environmental">
-            <button class="work-tile" type="button" data-full="assets/img/hero-port-operations-1660.webp" data-caption="Liquid-waste and waste-water operations">
-              <img src="assets/img/hero-port-operations-640.webp" width="640" height="360" alt="Waste-water tankers and liquid storage tanks on an industrial site" loading="lazy" decoding="async">
-              <span class="caption">Liquid-waste operations<small>Environmental</small></span>
-            </button>
-          </li>
-          <li data-item data-category="supply">
-            <button class="work-tile" type="button" data-full="assets/img/material-supply-1000.webp" data-caption="Material and equipment supply">
-              <img src="assets/img/material-supply-640.webp" width="640" height="461" alt="Illustration of a warehouse with industrial parts, a truck and a forklift" loading="lazy" decoding="async">
-              <span class="caption">Material supply<small>Supply</small></span>
-            </button>
-          </li>
-        </ul>
+          </ul>
+        </section>
+        </div>
       </div>
     </section>
 
