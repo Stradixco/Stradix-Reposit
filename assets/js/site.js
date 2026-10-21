@@ -4,6 +4,14 @@
 
   const doc = document.documentElement;
   doc.classList.add("js");
+
+  // Old links ending in .html still work; show the clean URL in the address bar
+  const cleanPath = location.pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
+  if (cleanPath !== location.pathname && window.history && history.replaceState) {
+    // Wait for the cross-page view transition to finish; changing the URL mid-transition aborts it
+    const tidy = () => history.replaceState(history.state, "", cleanPath + location.search + location.hash);
+    window.addEventListener("load", () => setTimeout(tidy, 450), { once: true });
+  }
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));

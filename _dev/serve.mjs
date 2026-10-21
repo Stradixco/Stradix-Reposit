@@ -10,7 +10,7 @@ const port = Number(process.argv[2] || process.env.PORT || 8080);
 const TYPES = {
   ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",
   ".json": "application/json", ".webmanifest": "application/manifest+json", ".xml": "application/xml", ".txt": "text/plain; charset=utf-8",
-  ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".mp4": "video/mp4",
+  ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".mp4": "video/mp4", ".pdf": "application/pdf",
 };
 
 createServer(async (req, res) => {
@@ -18,6 +18,7 @@ createServer(async (req, res) => {
     const url = new URL(req.url, "http://localhost");
     let rel = decodeURIComponent(url.pathname);
     if (rel.endsWith("/")) rel += "index.html";
+    if (!path.extname(rel)) rel += ".html"; // clean URLs: /services -> services.html (as on GitHub Pages)
     const file = path.normalize(path.join(root, rel));
     // Block path traversal and the private dev folder
     if (!file.startsWith(root) || file.includes(`${path.sep}_dev${path.sep}`) || file.includes(`${path.sep}.git`)) throw Object.assign(new Error(), { code: "ENOENT" });

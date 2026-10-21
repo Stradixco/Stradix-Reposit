@@ -22,7 +22,9 @@ for (const page of PAGES) {
   for (const ref of refs) {
     if (/^(https?:|mailto:|tel:|data:)/.test(ref)) continue;
     const [p, hash] = ref.split("#");
-    const clean = p.split("?")[0].replace(/^\//, "");
+    let clean = p.split("?")[0].replace(/^\//, "");
+    if (p === "/") clean = "index.html";
+    else if (clean && !/\.[a-z0-9]+$/i.test(clean)) clean += ".html"; // /services -> services.html (as GitHub Pages serves it)
     if (clean) {
       if (!(await exists(path.join(root, clean)))) problems.push(`${page}: missing file → ${ref}`);
       else if (hash && clean.endsWith(".html")) {
@@ -51,7 +53,8 @@ for (const page of PAGES) {
 }
 
 for (const m of (await load("sitemap.xml")).matchAll(/<loc>https:\/\/www\.s-tradix\.com\/([^<]*)<\/loc>/g)) {
-  if (!(await exists(path.join(root, m[1] || "index.html")))) problems.push(`sitemap.xml: missing page → ${m[1]}`);
+  const page = m[1] ? (/\.[a-z0-9]+$/i.test(m[1]) ? m[1] : `${m[1]}.html`) : "index.html";
+  if (!(await exists(path.join(root, page)))) problems.push(`sitemap.xml: missing page → ${m[1]}`);
 }
 
 if (problems.length) { console.error(problems.join("\n")); console.error(`\n${problems.length} problem(s) found.`); process.exit(1); }

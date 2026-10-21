@@ -18,8 +18,9 @@ const partials = Object.fromEntries(
 
 function markCurrent(html, page) {
   // aria-current on top-level nav links that point at this page (no hash)
+  const clean = page === "index.html" ? "/" : page.replace(/\.html$/, "");
   let out = html.replace(/<a href="([^"#]+)"(?![^>]*aria-current)/g, (m, href) =>
-    href === page ? `<a href="${href}" aria-current="page"` : m
+    href === clean ? `<a href="${href}" aria-current="page"` : m
   );
   if (page === "services.html") out = out.replace('class="nav-trigger"', 'class="nav-trigger is-current"');
   return out;

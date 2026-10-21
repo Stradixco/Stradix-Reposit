@@ -1025,3 +1025,5 @@ body { background: var(--paper); }
 /* Open mobile menu: no backdrop-filter on any page (it would make the header the
    containing block of the fixed menu and collapse it to the header height) */
 .site-header.is-open, body:not(.has-hero) .site-header.is-open, .site-header.is-solid.is-open { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: var(--paper-2); }
+.btn-dl svg { transition: transform 0.35s var(--ease-out); }
+.btn-dl:hover svg { transform: translateY(2px); }
